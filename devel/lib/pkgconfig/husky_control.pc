@@ -1,0 +1,8 @@
+prefix=/home/mrjohd/Kinodynamic_ws/devel
+
+Name: husky_control
+Description: Description of husky_control
+Version: 0.4.2
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

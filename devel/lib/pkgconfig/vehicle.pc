@@ -1,0 +1,8 @@
+prefix=/home/mrjohd/Kinodynamic_ws/devel
+
+Name: vehicle
+Description: Description of vehicle
+Version: 0.3.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

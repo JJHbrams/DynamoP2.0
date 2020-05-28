@@ -1,0 +1,8 @@
+prefix=/home/mrjohd/Kinodynamic_ws/install
+
+Name: husky_bringup
+Description: Description of husky_bringup
+Version: 0.4.2
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

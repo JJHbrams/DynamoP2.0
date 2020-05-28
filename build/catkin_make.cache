@@ -1,0 +1,2 @@
+dynamo_planner:husky/husky_base:husky/husky_bringup:husky/husky_control:husky/husky_description:husky/husky_desktop:husky/husky_gazebo:husky/husky_msgs:husky/husky_navigation:husky/husky_robot:husky/husky_simulator:husky/husky_viz:vehicle
+-DCATKIN_DEVEL_PREFIX=/home/mrjohd/Kinodynamic_ws/devel -DCMAKE_INSTALL_PREFIX=/home/mrjohd/Kinodynamic_ws/install -G Unix Makefiles

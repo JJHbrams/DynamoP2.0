@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: dynamo_planner
+Description: Description of dynamo_planner
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -ldynamo_planner
+Requires: roscpp rospy std_msgs roscpp rospy gazebo_ros gazebo_plugins xacro

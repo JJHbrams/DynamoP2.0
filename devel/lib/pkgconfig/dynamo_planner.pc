@@ -1,0 +1,8 @@
+prefix=/home/mrjohd/Kinodynamic_ws/devel
+
+Name: dynamo_planner
+Description: Description of dynamo_planner
+Version: 0.0.0
+Cflags: -I/home/mrjohd/Kinodynamic_ws/devel/include -I/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/include
+Libs: -L${prefix}/lib -ldynamo_planner
+Requires: roscpp rospy std_msgs message_runtime roscpp rospy gazebo_ros gazebo_plugins xacro

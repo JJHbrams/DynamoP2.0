@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/mrjohd/husky_ws/src/dynamo_planner/cmake-build-debug/devel/setup.sh
