@@ -57,38 +57,38 @@ include dynamo_planner/CMakeFiles/propagator.dir/progress.make
 # Include the compile flags for this target's objects.
 include dynamo_planner/CMakeFiles/propagator.dir/flags.make
 
-dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.o: dynamo_planner/CMakeFiles/propagator.dir/flags.make
-dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.o: /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/src/propagator.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.o"
-	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/propagator.dir/src/propagator.cc.o -c /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/src/propagator.cc
+dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.o: dynamo_planner/CMakeFiles/propagator.dir/flags.make
+dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.o: /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/src/propagator_ODE.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.o"
+	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/propagator.dir/src/propagator_ODE.cc.o -c /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/src/propagator_ODE.cc
 
-dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/propagator.dir/src/propagator.cc.i"
-	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/src/propagator.cc > CMakeFiles/propagator.dir/src/propagator.cc.i
+dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/propagator.dir/src/propagator_ODE.cc.i"
+	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/src/propagator_ODE.cc > CMakeFiles/propagator.dir/src/propagator_ODE.cc.i
 
-dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/propagator.dir/src/propagator.cc.s"
-	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/src/propagator.cc -o CMakeFiles/propagator.dir/src/propagator.cc.s
+dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/propagator.dir/src/propagator_ODE.cc.s"
+	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/src/propagator_ODE.cc -o CMakeFiles/propagator.dir/src/propagator_ODE.cc.s
 
-dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.o.requires:
+dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.o.requires:
 
-.PHONY : dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.o.requires
+.PHONY : dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.o.requires
 
-dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.o.provides: dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.o.requires
-	$(MAKE) -f dynamo_planner/CMakeFiles/propagator.dir/build.make dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.o.provides.build
-.PHONY : dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.o.provides
+dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.o.provides: dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.o.requires
+	$(MAKE) -f dynamo_planner/CMakeFiles/propagator.dir/build.make dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.o.provides.build
+.PHONY : dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.o.provides
 
-dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.o.provides.build: dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.o
+dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.o.provides.build: dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.o
 
 
 # Object files for target propagator
 propagator_OBJECTS = \
-"CMakeFiles/propagator.dir/src/propagator.cc.o"
+"CMakeFiles/propagator.dir/src/propagator_ODE.cc.o"
 
 # External object files for target propagator
 propagator_EXTERNAL_OBJECTS =
 
-/home/mrjohd/Kinodynamic_ws/devel/lib/libpropagator.so: dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.o
+/home/mrjohd/Kinodynamic_ws/devel/lib/libpropagator.so: dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.o
 /home/mrjohd/Kinodynamic_ws/devel/lib/libpropagator.so: dynamo_planner/CMakeFiles/propagator.dir/build.make
 /home/mrjohd/Kinodynamic_ws/devel/lib/libpropagator.so: /opt/ros/melodic/lib/libgazebo_ros_api_plugin.so
 /home/mrjohd/Kinodynamic_ws/devel/lib/libpropagator.so: /opt/ros/melodic/lib/libgazebo_ros_paths_plugin.so
@@ -368,7 +368,7 @@ dynamo_planner/CMakeFiles/propagator.dir/build: /home/mrjohd/Kinodynamic_ws/deve
 
 .PHONY : dynamo_planner/CMakeFiles/propagator.dir/build
 
-dynamo_planner/CMakeFiles/propagator.dir/requires: dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.o.requires
+dynamo_planner/CMakeFiles/propagator.dir/requires: dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.o.requires
 
 .PHONY : dynamo_planner/CMakeFiles/propagator.dir/requires
 

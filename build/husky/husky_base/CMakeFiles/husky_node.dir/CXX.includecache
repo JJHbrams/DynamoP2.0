@@ -7,22 +7,6 @@
 #IncludeRegexTransform: 
 
 /home/mrjohd/Kinodynamic_ws/devel/include/husky_msgs/HuskyStatus.h
-string
--
-vector
--
-map
--
-ros/types.h
--
-ros/serialization.h
--
-ros/builtin_message_traits.h
--
-ros/message_operations.h
--
-std_msgs/Header.h
--
 
 /home/mrjohd/Kinodynamic_ws/src/husky/husky_base/include/husky_base/horizon_legacy/Exception.h
 iostream

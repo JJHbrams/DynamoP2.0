@@ -1832,32 +1832,32 @@ src/main.cpp.s:
 	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/main.dir/build.make dynamo_planner/CMakeFiles/main.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/propagator.o: src/propagator.cc.o
+src/propagator_ODE.o: src/propagator_ODE.cc.o
 
-.PHONY : src/propagator.o
+.PHONY : src/propagator_ODE.o
 
 # target to build an object file
-src/propagator.cc.o:
-	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator.dir/build.make dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.o
-.PHONY : src/propagator.cc.o
+src/propagator_ODE.cc.o:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator.dir/build.make dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.o
+.PHONY : src/propagator_ODE.cc.o
 
-src/propagator.i: src/propagator.cc.i
+src/propagator_ODE.i: src/propagator_ODE.cc.i
 
-.PHONY : src/propagator.i
+.PHONY : src/propagator_ODE.i
 
 # target to preprocess a source file
-src/propagator.cc.i:
-	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator.dir/build.make dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.i
-.PHONY : src/propagator.cc.i
+src/propagator_ODE.cc.i:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator.dir/build.make dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.i
+.PHONY : src/propagator_ODE.cc.i
 
-src/propagator.s: src/propagator.cc.s
+src/propagator_ODE.s: src/propagator_ODE.cc.s
 
-.PHONY : src/propagator.s
+.PHONY : src/propagator_ODE.s
 
 # target to generate assembly for a file
-src/propagator.cc.s:
-	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator.dir/build.make dynamo_planner/CMakeFiles/propagator.dir/src/propagator.cc.s
-.PHONY : src/propagator.cc.s
+src/propagator_ODE.cc.s:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator.dir/build.make dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.s
+.PHONY : src/propagator_ODE.cc.s
 
 # Help Target
 help:
@@ -1989,9 +1989,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/propagator.o"
-	@echo "... src/propagator.i"
-	@echo "... src/propagator.s"
+	@echo "... src/propagator_ODE.o"
+	@echo "... src/propagator_ODE.i"
+	@echo "... src/propagator_ODE.s"
 .PHONY : help
 
 

@@ -191,11 +191,13 @@ public:
       // }
       // while(!differ_meter.diff_x || !differ_meter.diff_y || !differ_meter.diff_yaw);
       // // while(!Next_state.flag);
+      pub_.publish(Curr_States);//Enable gazebo plugin's call back
+      ros::spinOnce();//Subscribe gazebo plugin's propagated state
       // Next_state.flag = false;
 
-      Next_state.x = Curr_States.x + Curr_States.controlX * Curr_States.duration;
-      Next_state.y = Curr_States.y + Curr_States.controlY * Curr_States.duration;
-      Next_state.yaw = Curr_States.yaw    + Curr_States.controlYAW * Curr_States.duration;
+      // Next_state.x = Curr_States.x + Curr_States.controlX * Curr_States.duration;
+      // Next_state.y = Curr_States.y + Curr_States.controlY * Curr_States.duration;
+      // Next_state.yaw = Curr_States.yaw    + Curr_States.controlYAW * Curr_States.duration;
   }
   //Faster propagator
   static void propagate(const ompl::base::State *start, const ompl::control::Control *control, const double duration, ompl::base::State *result)
@@ -413,202 +415,205 @@ int main(int argc, char** argv) {
 
     ros::Rate rate(1);//1Hz
 
-    ros::Time plannerST = ros::Time::now();
-    while(node_handle.ok()){
-      // wait until the goal is set
-      if(!required_plan){
-          ros::spinOnce();
-          scene->addCollisionObjects(tmp_collision_objects);
-          scene->updateCollisionScene();
 
-          // Start, Goal marker
-          visualization_msgs::Marker points;
-          geometry_msgs::Point pt;
-          points.header.frame_id ="world";
-          points.header.stamp= ros::Time();
+    // while(node_handle.ok()){
+    //
+    // }
+    // wait until the goal is set
+    if(!required_plan){
+        ros::spinOnce();
+        scene->addCollisionObjects(tmp_collision_objects);
+        scene->updateCollisionScene();
 
-          points.ns="Start_Pt";
-          points.id = 0;
-          points.type = visualization_msgs::Marker::POINTS;
-          points.scale.x = 0.3;
-          points.scale.y = 0.3;
-          points.color.a = 1.0; // Don't forget to set the alpha!
-          points.color.r = 0.0f;
-          points.color.g = 0.0f;
-          points.color.b = 1.0f;
-          pt.x = start_pose.position.x;
-          pt.y = start_pose.position.y;
-          points.points.push_back(pt);
-          point_pub.publish(points);//Pulish Start
+        // Start, Goal marker
+        visualization_msgs::Marker points;
+        geometry_msgs::Point pt;
+        points.header.frame_id ="world";
+        points.header.stamp= ros::Time();
 
-          points.points.clear();
-          points.ns="Goal_Pt";
-          points.id = 1;
-          points.type = visualization_msgs::Marker::POINTS;
-          points.scale.x = 0.3;
-          points.scale.y = 0.3;
-          points.color.r = 1.0f;
-          points.color.b = 0.0f;
-          points.color.g = 0.0f;
-          pt.x = goal_pose.position.x;
-          pt.y = goal_pose.position.y;
-          points.points.push_back(pt);
-          point_pub.publish(points);// Publish Goal
-          continue;
-      }
-      required_plan = false;
-      samples.points.clear();
-      props.points.clear();
+        points.ns="Start_Pt";
+        points.id = 0;
+        points.type = visualization_msgs::Marker::POINTS;
+        points.scale.x = 0.3;
+        points.scale.y = 0.3;
+        points.color.a = 1.0; // Don't forget to set the alpha!
+        points.color.r = 0.0f;
+        points.color.g = 0.0f;
+        points.color.b = 1.0f;
+        pt.x = start_pose.position.x;
+        pt.y = start_pose.position.y;
+        points.points.push_back(pt);
+        point_pub.publish(points);//Pulish Start
 
-      ROS_INFO("Initializing planning sequence!");
-
-      while(!map_loading)  ros::spinOnce();
-      ROS_INFO("Load planning scene!");
-      scene->addCollisionObjects(tmp_collision_objects);
-      scene->updateCollisionScene();
-
-      // Simpl setup
-      ompl::control::SimpleSetupPtr simple_setup;
-      simple_setup.reset(new ompl::control::SimpleSetup(control_space));
-
-      // State propagation routine
-      PlannerAndGazeboTest Planner_n_Gazebo;// PlannerAndGazebo Planner_n_Gazebo;
-      simple_setup->setStatePropagator(Planner_n_Gazebo.propagate);
-      // State validity checking
-      StateValidityCheckerPtr validity_checker;
-      validity_checker.reset(new StateValidityChecker(simple_setup->getSpaceInformation(), planning_scene, BASE_GROUP, collisionCheckGroup));
-      simple_setup->setStateValidityChecker(std::static_pointer_cast<ompl::base::StateValidityChecker>(validity_checker));
-
-      // Start state
-      ScopedState Start(state_space);
-      Start->setX(st[0]);// x
-      Start->setY(st[1]);// y
-      Start->setYaw(st[2]);// yaw
-
-      // Goal state
-      ScopedState Goal(state_space);
-      double quatx,quaty,quatz,quatw;
-      double roll,pitch,yaw;
-      quatx = goal_pose.orientation.x;
-      quaty = goal_pose.orientation.y;
-      quatz = goal_pose.orientation.z;
-      quatw = goal_pose.orientation.w;
-      tf2::Quaternion quat(quatx,quaty,quatz,quatw);
-      tf2::Matrix3x3 mat(quat);
-      mat.getRPY(roll,pitch,yaw);
-      Goal->setX(goal_pose.position.x);// x
-      Goal->setY(goal_pose.position.y);// y
-      Goal->setYaw(yaw);// yaw
-
-      // Start and goal states
-      simple_setup->setStartAndGoalStates(Start, Goal, 0.1);// setStartAndGoalStates(start, goal, threshold)
-
-      ROS_INFO("Start : %f , %f , %f   \nGoal : %f , %f , %f", Start[0], Start[1], Start[2], Goal[0], Goal[1], Goal[2]);
-
-      // Planning
-      ROS_INFO("Set planner...");
-      simple_setup->setPlanner(ompl::base::PlannerPtr(new ompl::control::DynaMoP(simple_setup->getSpaceInformation())));
-      ROS_INFO("Planning...");
-      simple_setup->solve(ompl::base::timedPlannerTerminationCondition(param));
-      // simple_setup->solve(ompl::base::timedPlannerTerminationCondition(PLANNING_TIME));
-      ros::Time plannerET = ros::Time::now();
-
-      if (simple_setup->haveSolutionPath()){
-        ROS_INFO("Solution Found!!!");
-        ROS_INFO("Number of samples : %lu", samples.points.size());
-
-        // Store path
-        ompl::control::PathControl &path = simple_setup->getSolutionPath();
-        // path.printAsMatrix(std::cout);
-
-        std::fstream fileout("/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/path/path.txt", std::ios::out);
-        path.printAsMatrix(fileout);
-        fileout.close();
-
-        std::fstream filein("/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/path/path.txt", std::ios::in);
-
-        char word;
-        char data[MAX_COLUMN][MAX_ROW][MAX_WORDS]={0};
-        int i=0, j=0, k;
-        //Read text
-        while(filein.get(word)){
-           // filein.get(word);
-            // std::cout << "Word : " << word << std::endl;
-            if((word == ' ') || (word == '\n') || (k>=MAX_WORDS)){
-              //Next column
-              k=0;
-              j++;
-              if(j>=MAX_ROW){
-              //Next row
-                  j=0;
-                  i++;
-              }
-            }
-            else{
-              data[i][j][k] = word;
-              k++;
-            }
-        }
-        filein.close();
-
-        //Robot trajectory
-        moveit_msgs::DisplayTrajectory display_trajectory;
-        moveit_msgs::RobotTrajectory robot_traj;
-
-        //Velocity publish
-        geometry_msgs::Twist vel;
-
-        //Path visualize
-        nav_msgs::Path path_vis;
-        geometry_msgs::PoseStamped robot_pose;
-
-        path_vis.poses.clear();
-        path_vis.header.stamp = ros::Time::now();
-        path_vis.header.frame_id = "world";
-
-        const moveit::core::JointModelGroup* model_group = planning_scene->getRobotModel()->getJointModelGroup(BASE_GROUP);
-        const std::vector<std::string>& active_joint_names = model_group->getActiveJointModelNames();
-        int NoPathPoints = path.getStateCount();//State
-        //uint NoPathPoints = path.getControlCount();//Control
-        robot_traj.joint_trajectory.joint_names = active_joint_names;
-        robot_traj.joint_trajectory.points.resize(NoPathPoints);
-
-        ROS_INFO("No. of States = %d", NoPathPoints);
-        //ROS_INFO("\nNo. of Controls = %d\n", NoPathPoints);
-
-        //States
-        for(uint i = 0; i < NoPathPoints; i++){
-            //StateTypePtr rstate = static_cast<StateTypePtr>(path.getState(i));
-            robot_traj.joint_trajectory.points[i].positions.resize(NUM_BASE_DOF);
-            for (uint j = 0; j < NUM_BASE_DOF; j++){
-                double traj_value = std::stod(static_cast<const std::string>(data[i][j]));
-                //robot_traj.joint_trajectory.points[i].positions[j] = rstate->values[j];
-                robot_traj.joint_trajectory.points[i].positions[j] = traj_value;
-            }
-            robot_pose.pose.position.x = robot_traj.joint_trajectory.points[i].positions[0];
-            robot_pose.pose.position.y = robot_traj.joint_trajectory.points[i].positions[1];
-            path_vis.poses.push_back(robot_pose);
-
-            robot_traj.joint_trajectory.points[i].time_from_start = ros::Duration(0.0);
-        }
-        display_trajectory.trajectory.push_back(robot_traj);
-        display_pub.publish(display_trajectory);
-
-        //Path visulaization
-        path_pub.publish(path_vis);
-      }
-
-      else
-        ROS_INFO("No solution found");
-
-
-      double planningTime = plannerET.toSec()-plannerST.toSec();
-      ROS_INFO("Start Time              : %f sec",plannerST.toSec());
-      ROS_INFO("End Time                : %f sec",plannerET.toSec());
-      ROS_INFO("Total planning time     : %f sec",planningTime);
-      ROS_INFO("Propagation time        : %f sec",PropTime);
-      ROS_INFO("Propagation proportion  : %f %%", PropTime/planningTime*100);
+        points.points.clear();
+        points.ns="Goal_Pt";
+        points.id = 1;
+        points.type = visualization_msgs::Marker::POINTS;
+        points.scale.x = 0.3;
+        points.scale.y = 0.3;
+        points.color.r = 1.0f;
+        points.color.b = 0.0f;
+        points.color.g = 0.0f;
+        pt.x = goal_pose.position.x;
+        pt.y = goal_pose.position.y;
+        points.points.push_back(pt);
+        point_pub.publish(points);// Publish Goal
+        // continue;
     }
+    required_plan = false;
+    samples.points.clear();
+    props.points.clear();
+
+    ROS_INFO("Initializing planning sequence!");
+
+    while(!map_loading)  ros::spinOnce();
+    ROS_INFO("Load planning scene!");
+    scene->addCollisionObjects(tmp_collision_objects);
+    scene->updateCollisionScene();
+
+    // Simpl setup
+    ompl::control::SimpleSetupPtr simple_setup;
+    simple_setup.reset(new ompl::control::SimpleSetup(control_space));
+
+    // State propagation routine
+    PlannerAndGazeboTest Planner_n_Gazebo;// PlannerAndGazebo Planner_n_Gazebo;
+    simple_setup->setStatePropagator(Planner_n_Gazebo.propagate);
+    // State validity checking
+    StateValidityCheckerPtr validity_checker;
+    validity_checker.reset(new StateValidityChecker(simple_setup->getSpaceInformation(), planning_scene, BASE_GROUP, collisionCheckGroup));
+    simple_setup->setStateValidityChecker(std::static_pointer_cast<ompl::base::StateValidityChecker>(validity_checker));
+
+    // Start state
+    ScopedState Start(state_space);
+    Start->setX(st[0]);// x
+    Start->setY(st[1]);// y
+    Start->setYaw(st[2]);// yaw
+
+    // Goal state
+    ScopedState Goal(state_space);
+    double quatx,quaty,quatz,quatw;
+    double roll,pitch,yaw;
+    quatx = goal_pose.orientation.x;
+    quaty = goal_pose.orientation.y;
+    quatz = goal_pose.orientation.z;
+    quatw = goal_pose.orientation.w;
+    tf2::Quaternion quat(quatx,quaty,quatz,quatw);
+    tf2::Matrix3x3 mat(quat);
+    mat.getRPY(roll,pitch,yaw);
+    Goal->setX(goal_pose.position.x);// x
+    Goal->setY(goal_pose.position.y);// y
+    Goal->setYaw(yaw);// yaw
+
+    // Start and goal states
+    simple_setup->setStartAndGoalStates(Start, Goal, 0.1);// setStartAndGoalStates(start, goal, threshold)
+
+    ROS_INFO("Start : %f , %f , %f   \nGoal : %f , %f , %f", Start[0], Start[1], Start[2], Goal[0], Goal[1], Goal[2]);
+
+    // Planning
+    ros::Time plannerST = ros::Time::now();
+    ROS_INFO("Set planner...");
+    simple_setup->setPlanner(ompl::base::PlannerPtr(new ompl::control::DynaMoP(simple_setup->getSpaceInformation())));
+    ROS_INFO("Planning...");
+    simple_setup->solve(ompl::base::timedPlannerTerminationCondition(param));
+    // simple_setup->solve(ompl::base::timedPlannerTerminationCondition(PLANNING_TIME));
+    ros::Time plannerET = ros::Time::now();
+
+    if (simple_setup->haveSolutionPath()){
+      ROS_INFO("Solution Found!!!");
+      ROS_INFO("Number of samples : %lu", samples.points.size());
+
+      // Store path
+      ompl::control::PathControl &path = simple_setup->getSolutionPath();
+      // path.printAsMatrix(std::cout);
+
+      std::fstream fileout("/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/path/path.txt", std::ios::out);
+      path.printAsMatrix(fileout);
+      fileout.close();
+
+      std::fstream filein("/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/path/path.txt", std::ios::in);
+
+      char word;
+      char data[MAX_COLUMN][MAX_ROW][MAX_WORDS]={0};
+      int i=0, j=0, k;
+      //Read text
+      while(filein.get(word)){
+         // filein.get(word);
+          // std::cout << "Word : " << word << std::endl;
+          if((word == ' ') || (word == '\n') || (k>=MAX_WORDS)){
+            //Next column
+            k=0;
+            j++;
+            if(j>=MAX_ROW){
+            //Next row
+                j=0;
+                i++;
+            }
+          }
+          else{
+            data[i][j][k] = word;
+            k++;
+          }
+      }
+      filein.close();
+
+      //Robot trajectory
+      moveit_msgs::DisplayTrajectory display_trajectory;
+      moveit_msgs::RobotTrajectory robot_traj;
+
+      //Velocity publish
+      geometry_msgs::Twist vel;
+
+      //Path visualize
+      nav_msgs::Path path_vis;
+      geometry_msgs::PoseStamped robot_pose;
+
+      path_vis.poses.clear();
+      path_vis.header.stamp = ros::Time::now();
+      path_vis.header.frame_id = "world";
+
+      const moveit::core::JointModelGroup* model_group = planning_scene->getRobotModel()->getJointModelGroup(BASE_GROUP);
+      const std::vector<std::string>& active_joint_names = model_group->getActiveJointModelNames();
+      int NoPathPoints = path.getStateCount();//State
+      //uint NoPathPoints = path.getControlCount();//Control
+      robot_traj.joint_trajectory.joint_names = active_joint_names;
+      robot_traj.joint_trajectory.points.resize(NoPathPoints);
+
+      ROS_INFO("No. of States = %d", NoPathPoints);
+      //ROS_INFO("\nNo. of Controls = %d\n", NoPathPoints);
+
+      //States
+      for(uint i = 0; i < NoPathPoints; i++){
+          //StateTypePtr rstate = static_cast<StateTypePtr>(path.getState(i));
+          robot_traj.joint_trajectory.points[i].positions.resize(NUM_BASE_DOF);
+          for (uint j = 0; j < NUM_BASE_DOF; j++){
+              double traj_value = std::stod(static_cast<const std::string>(data[i][j]));
+              //robot_traj.joint_trajectory.points[i].positions[j] = rstate->values[j];
+              robot_traj.joint_trajectory.points[i].positions[j] = traj_value;
+          }
+          robot_pose.pose.position.x = robot_traj.joint_trajectory.points[i].positions[0];
+          robot_pose.pose.position.y = robot_traj.joint_trajectory.points[i].positions[1];
+          path_vis.poses.push_back(robot_pose);
+
+          robot_traj.joint_trajectory.points[i].time_from_start = ros::Duration(0.0);
+      }
+      display_trajectory.trajectory.push_back(robot_traj);
+      display_pub.publish(display_trajectory);
+
+      //Path visulaization
+      path_pub.publish(path_vis);
+    }
+
+    else
+      ROS_INFO("No solution found");
+
+
+    double planningTime = plannerET.toSec()-plannerST.toSec();
+    ROS_INFO("Start Time              : %f sec",plannerST.toSec());
+    ROS_INFO("End Time                : %f sec",plannerET.toSec());
+    ROS_INFO("Total planning time     : %f sec",planningTime);
+    ROS_INFO("Propagation time        : %f sec",PropTime);
+    ROS_INFO("Propagation proportion  : %f %%", PropTime/planningTime*100);
+
     ros::Duration(1.0).sleep();
 
     return 0;

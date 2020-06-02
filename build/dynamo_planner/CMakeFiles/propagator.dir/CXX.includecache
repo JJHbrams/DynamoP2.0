@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/src/propagator.cc
+/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/src/propagator_ODE.cc
 ode/ode.h
 -
 gazebo/gazebo.hh
@@ -30,6 +30,8 @@ std_msgs/Float32MultiArray.h
 dynamo_planner/custom_states_msgs.h
 /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/src/dynamo_planner/custom_states_msgs.h
 geometry_msgs/Twist.h
+-
+math.h
 -
 
 /opt/ros/melodic/include/geometry_msgs/Quaternion.h

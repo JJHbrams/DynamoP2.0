@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/propagator.dir/src/propagator.cc.o"
+  "CMakeFiles/propagator.dir/src/propagator_ODE.cc.o"
   "/home/mrjohd/Kinodynamic_ws/devel/lib/libpropagator.pdb"
   "/home/mrjohd/Kinodynamic_ws/devel/lib/libpropagator.so"
 )

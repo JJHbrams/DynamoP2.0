@@ -231,7 +231,6 @@ add_dependencies(main ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARG
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(main
-        -lode
         ${PROJECT_NAME}
         ${catkin_LIBRARIES}
         ${OMPL_LIBRARIES}
@@ -241,9 +240,10 @@ target_link_libraries(main
         )
 
 add_library(propagator
-        src/propagator.cc
+        ./src/propagator_ODE.cc
         )
 target_link_libraries(propagator
+        -lode
         ${catkin_LIBRARIES}
         ${GAZEBO_LIBRARIES}
         )
