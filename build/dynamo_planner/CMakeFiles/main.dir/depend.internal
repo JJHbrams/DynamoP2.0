@@ -76,7 +76,6 @@ dynamo_planner/CMakeFiles/main.dir/src/main.cpp.o
  /opt/ros/melodic/include/moveit/kinematics_plugin_loader/kinematics_plugin_loader.h
  /opt/ros/melodic/include/moveit/macros/class_forward.h
  /opt/ros/melodic/include/moveit/macros/declare_ptr.h
- /opt/ros/melodic/include/moveit/macros/deprecation.h
  /opt/ros/melodic/include/moveit/move_group_interface/move_group_interface.h
  /opt/ros/melodic/include/moveit/occupancy_map_monitor/occupancy_map.h
  /opt/ros/melodic/include/moveit/occupancy_map_monitor/occupancy_map_monitor.h
@@ -136,6 +135,8 @@ dynamo_planner/CMakeFiles/main.dir/src/main.cpp.o
  /opt/ros/melodic/include/moveit_msgs/MoveItErrorCodes.h
  /opt/ros/melodic/include/moveit_msgs/ObjectColor.h
  /opt/ros/melodic/include/moveit_msgs/OrientationConstraint.h
+ /opt/ros/melodic/include/moveit_msgs/PickupGoal.h
+ /opt/ros/melodic/include/moveit_msgs/PlaceGoal.h
  /opt/ros/melodic/include/moveit_msgs/PlaceLocation.h
  /opt/ros/melodic/include/moveit_msgs/PlannerInterfaceDescription.h
  /opt/ros/melodic/include/moveit_msgs/PlanningOptions.h

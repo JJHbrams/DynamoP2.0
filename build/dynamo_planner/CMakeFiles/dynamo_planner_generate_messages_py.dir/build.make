@@ -54,7 +54,10 @@ CMAKE_BINARY_DIR = /home/mrjohd/Kinodynamic_ws/build
 include dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_py.dir/progress.make
 
 dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/_custom_states_msgs.py
+dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/_data_gen_msgs.py
+dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/srv/_physics_data_sampler.py
 dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/__init__.py
+dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/srv/__init__.py
 
 
 /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/_custom_states_msgs.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
@@ -62,14 +65,36 @@ dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_py: /home/mrjohd/Kino
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG dynamo_planner/custom_states_msgs"
 	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/custom_states_msgs.msg -Idynamo_planner:/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p dynamo_planner -o /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg
 
+/home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/_data_gen_msgs.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
+/home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/_data_gen_msgs.py: /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG dynamo_planner/data_gen_msgs"
+	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg -Idynamo_planner:/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p dynamo_planner -o /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg
+
+/home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/srv/_physics_data_sampler.py: /opt/ros/melodic/lib/genpy/gensrv_py.py
+/home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/srv/_physics_data_sampler.py: /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python code from SRV dynamo_planner/physics_data_sampler"
+	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv -Idynamo_planner:/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p dynamo_planner -o /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/srv
+
 /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/__init__.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
 /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/__init__.py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/_custom_states_msgs.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python msg __init__.py for dynamo_planner"
+/home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/__init__.py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/_data_gen_msgs.py
+/home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/__init__.py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/srv/_physics_data_sampler.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python msg __init__.py for dynamo_planner"
 	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg --initpy
+
+/home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/srv/__init__.py: /opt/ros/melodic/lib/genpy/genmsg_py.py
+/home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/srv/__init__.py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/_custom_states_msgs.py
+/home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/srv/__init__.py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/_data_gen_msgs.py
+/home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/srv/__init__.py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/srv/_physics_data_sampler.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Python srv __init__.py for dynamo_planner"
+	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/srv --initpy
 
 dynamo_planner_generate_messages_py: dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_py
 dynamo_planner_generate_messages_py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/_custom_states_msgs.py
+dynamo_planner_generate_messages_py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/_data_gen_msgs.py
+dynamo_planner_generate_messages_py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/srv/_physics_data_sampler.py
 dynamo_planner_generate_messages_py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/msg/__init__.py
+dynamo_planner_generate_messages_py: /home/mrjohd/Kinodynamic_ws/devel/lib/python2.7/dist-packages/dynamo_planner/srv/__init__.py
 dynamo_planner_generate_messages_py: dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_py.dir/build.make
 
 .PHONY : dynamo_planner_generate_messages_py

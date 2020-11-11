@@ -390,8 +390,13 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
       <topicName>gazebo_planning_scene</topicName>
     </plugin>
   </gazebo>
+  <!-- <gazebo>
+    <plugin name="propagator" filename="libpropagator_GAZEBO.so">
+      <robotNamespace>/</robotNamespace>
+    </plugin>
+  </gazebo> -->
   <gazebo>
-    <plugin name="propagator" filename="libpropagator.so">
+    <plugin name="physics_data_sampler" filename="libGAZEBO_ODE.so">
       <robotNamespace>/</robotNamespace>
     </plugin>
   </gazebo>

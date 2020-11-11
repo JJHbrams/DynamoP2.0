@@ -100,7 +100,7 @@ dxJointHinge2::dxJointHinge2( dxWorld *w ) :
 }
 
 
-void 
+void
 dxJointHinge2::getSureMaxInfo( SureMaxInfo* info )
 {
     info->max_m = 6;
@@ -155,9 +155,9 @@ dxJointHinge2::getAxisInfo(dVector3 ax1, dVector3 ax2, dVector3 axCross,
 
 
 void
-dxJointHinge2::getInfo2( dReal worldFPS, dReal worldERP, 
+dxJointHinge2::getInfo2( dReal worldFPS, dReal worldERP,
     int rowskip, dReal *J1, dReal *J2,
-    int pairskip, dReal *pairRhsCfm, dReal *pairLoHi, 
+    int pairskip, dReal *pairRhsCfm, dReal *pairLoHi,
     int *findex )
 {
     // get information we need to set the hinge row
@@ -227,7 +227,7 @@ dxJointHinge2::makeV1andV2()
         // modify axis 2 so it's perpendicular to axis 1
         dReal k = dCalcVectorDot3( ax1, ax2 );
         dAddVectorScaledVector3(ax2, ax2, ax1, -k);
-        
+
         if (dxSafeNormalize3( ax2 )) {
             // make v1 = modified axis2, v2 = axis1 x (modified axis2)
             dCalcVectorCross3( v, ax1, ax2 );
@@ -255,7 +255,7 @@ dxJointHinge2::makeW1andW2()
         // modify axis 1 so it's perpendicular to axis 2
         dReal k = dCalcVectorDot3( ax2, ax1 );
         dAddVectorScaledVector3(ax1, ax1, ax2, -k);
-        
+
         if (dxSafeNormalize3( ax1 )) {
             // make w1 = modified axis1, w2 = axis2 x (modified axis1)
             dCalcVectorCross3( w, ax2, ax1 );
@@ -277,7 +277,7 @@ void dJointSetHinge2Anchor( dJointID j, dReal x, dReal y, dReal z )
     checktype( joint, Hinge2 );
 
     setAnchors( joint, x, y, z, joint->anchor1, joint->anchor2 );
-    
+
     joint->makeV1andV2();
     joint->makeW1andW2();
 }
@@ -298,7 +298,7 @@ void dJointSetHinge2Axes (dJointID j, const dReal *axis1/*=[dSA__MAX],=NULL*/, c
     {
         setAxes(joint, axis1[dSA_X], axis1[dSA_Y], axis1[dSA_Z], joint->axis1, NULL);
     }
-    
+
     if ( axis2 != NULL )
     {
         setAxes(joint, axis2[dSA_X], axis2[dSA_Y], axis2[dSA_Z], NULL, joint->axis2);

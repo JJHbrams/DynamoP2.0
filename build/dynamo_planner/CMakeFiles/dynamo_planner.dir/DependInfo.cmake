@@ -39,8 +39,11 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/ignition/msgs1"
   "/usr/include/ignition/common1"
   "/usr/include/ignition/fuel_tools1"
+  "/usr/local/include"
   "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/include"
-  "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/ode/include"
+  "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/../ode/include"
+  "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/../ode/drawstuff/src"
+  "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/../ode/ode/src"
   "/usr/local/lib"
   "/opt/ros/melodic/include/ompl-1.4"
   )

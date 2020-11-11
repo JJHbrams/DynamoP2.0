@@ -14,7 +14,7 @@
 
 (defclass dynamo_planner::custom_states_msgs
   :super ros::object
-  :slots (_x _y _yaw _controlX _controlY _controlYAW _duration _pre_x _pre_y _pre_yaw _flag _tf_flag _diff_x _diff_y _diff_yaw ))
+  :slots (_x _y _yaw _controlA _controlB _control _controlYAW _duration _pre_x _pre_y _pre_yaw _pre_controlA _pre_controlB _flag _sub_flag _index ))
 
 (defmethod dynamo_planner::custom_states_msgs
   (:init
@@ -22,35 +22,37 @@
     ((:x __x) 0.0)
     ((:y __y) 0.0)
     ((:yaw __yaw) 0.0)
-    ((:controlX __controlX) 0.0)
-    ((:controlY __controlY) 0.0)
+    ((:controlA __controlA) 0.0)
+    ((:controlB __controlB) 0.0)
+    ((:control __control) 0.0)
     ((:controlYAW __controlYAW) 0.0)
     ((:duration __duration) 0.0)
     ((:pre_x __pre_x) 0.0)
     ((:pre_y __pre_y) 0.0)
     ((:pre_yaw __pre_yaw) 0.0)
+    ((:pre_controlA __pre_controlA) 0.0)
+    ((:pre_controlB __pre_controlB) 0.0)
     ((:flag __flag) nil)
-    ((:tf_flag __tf_flag) nil)
-    ((:diff_x __diff_x) nil)
-    ((:diff_y __diff_y) nil)
-    ((:diff_yaw __diff_yaw) nil)
+    ((:sub_flag __sub_flag) nil)
+    ((:index __index) 0)
     )
    (send-super :init)
    (setq _x (float __x))
    (setq _y (float __y))
    (setq _yaw (float __yaw))
-   (setq _controlX (float __controlX))
-   (setq _controlY (float __controlY))
+   (setq _controlA (float __controlA))
+   (setq _controlB (float __controlB))
+   (setq _control (float __control))
    (setq _controlYAW (float __controlYAW))
    (setq _duration (float __duration))
    (setq _pre_x (float __pre_x))
    (setq _pre_y (float __pre_y))
    (setq _pre_yaw (float __pre_yaw))
+   (setq _pre_controlA (float __pre_controlA))
+   (setq _pre_controlB (float __pre_controlB))
    (setq _flag __flag)
-   (setq _tf_flag __tf_flag)
-   (setq _diff_x __diff_x)
-   (setq _diff_y __diff_y)
-   (setq _diff_yaw __diff_yaw)
+   (setq _sub_flag __sub_flag)
+   (setq _index (round __index))
    self)
   (:x
    (&optional __x)
@@ -61,12 +63,15 @@
   (:yaw
    (&optional __yaw)
    (if __yaw (setq _yaw __yaw)) _yaw)
-  (:controlX
-   (&optional __controlX)
-   (if __controlX (setq _controlX __controlX)) _controlX)
-  (:controlY
-   (&optional __controlY)
-   (if __controlY (setq _controlY __controlY)) _controlY)
+  (:controlA
+   (&optional __controlA)
+   (if __controlA (setq _controlA __controlA)) _controlA)
+  (:controlB
+   (&optional __controlB)
+   (if __controlB (setq _controlB __controlB)) _controlB)
+  (:control
+   (&optional __control)
+   (if __control (setq _control __control)) _control)
   (:controlYAW
    (&optional __controlYAW)
    (if __controlYAW (setq _controlYAW __controlYAW)) _controlYAW)
@@ -82,21 +87,21 @@
   (:pre_yaw
    (&optional __pre_yaw)
    (if __pre_yaw (setq _pre_yaw __pre_yaw)) _pre_yaw)
+  (:pre_controlA
+   (&optional __pre_controlA)
+   (if __pre_controlA (setq _pre_controlA __pre_controlA)) _pre_controlA)
+  (:pre_controlB
+   (&optional __pre_controlB)
+   (if __pre_controlB (setq _pre_controlB __pre_controlB)) _pre_controlB)
   (:flag
    (&optional __flag)
    (if __flag (setq _flag __flag)) _flag)
-  (:tf_flag
-   (&optional __tf_flag)
-   (if __tf_flag (setq _tf_flag __tf_flag)) _tf_flag)
-  (:diff_x
-   (&optional __diff_x)
-   (if __diff_x (setq _diff_x __diff_x)) _diff_x)
-  (:diff_y
-   (&optional __diff_y)
-   (if __diff_y (setq _diff_y __diff_y)) _diff_y)
-  (:diff_yaw
-   (&optional __diff_yaw)
-   (if __diff_yaw (setq _diff_yaw __diff_yaw)) _diff_yaw)
+  (:sub_flag
+   (&optional __sub_flag)
+   (if __sub_flag (setq _sub_flag __sub_flag)) _sub_flag)
+  (:index
+   (&optional __index)
+   (if __index (setq _index __index)) _index)
   (:serialization-length
    ()
    (+
@@ -106,9 +111,11 @@
     8
     ;; float64 _yaw
     8
-    ;; float64 _controlX
+    ;; float64 _controlA
     8
-    ;; float64 _controlY
+    ;; float64 _controlB
+    8
+    ;; float64 _control
     8
     ;; float64 _controlYAW
     8
@@ -120,15 +127,15 @@
     8
     ;; float64 _pre_yaw
     8
+    ;; float64 _pre_controlA
+    8
+    ;; float64 _pre_controlB
+    8
     ;; bool _flag
     1
-    ;; bool _tf_flag
+    ;; bool _sub_flag
     1
-    ;; bool _diff_x
-    1
-    ;; bool _diff_y
-    1
-    ;; bool _diff_yaw
+    ;; int8 _index
     1
     ))
   (:serialize
@@ -141,10 +148,12 @@
        (sys::poke _y (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
      ;; float64 _yaw
        (sys::poke _yaw (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
-     ;; float64 _controlX
-       (sys::poke _controlX (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
-     ;; float64 _controlY
-       (sys::poke _controlY (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
+     ;; float64 _controlA
+       (sys::poke _controlA (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
+     ;; float64 _controlB
+       (sys::poke _controlB (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
+     ;; float64 _control
+       (sys::poke _control (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
      ;; float64 _controlYAW
        (sys::poke _controlYAW (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
      ;; float64 _duration
@@ -155,16 +164,16 @@
        (sys::poke _pre_y (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
      ;; float64 _pre_yaw
        (sys::poke _pre_yaw (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
+     ;; float64 _pre_controlA
+       (sys::poke _pre_controlA (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
+     ;; float64 _pre_controlB
+       (sys::poke _pre_controlB (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
      ;; bool _flag
        (if _flag (write-byte -1 s) (write-byte 0 s))
-     ;; bool _tf_flag
-       (if _tf_flag (write-byte -1 s) (write-byte 0 s))
-     ;; bool _diff_x
-       (if _diff_x (write-byte -1 s) (write-byte 0 s))
-     ;; bool _diff_y
-       (if _diff_y (write-byte -1 s) (write-byte 0 s))
-     ;; bool _diff_yaw
-       (if _diff_yaw (write-byte -1 s) (write-byte 0 s))
+     ;; bool _sub_flag
+       (if _sub_flag (write-byte -1 s) (write-byte 0 s))
+     ;; int8 _index
+       (write-byte _index s)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
@@ -175,10 +184,12 @@
      (setq _y (sys::peek buf ptr- :double)) (incf ptr- 8)
    ;; float64 _yaw
      (setq _yaw (sys::peek buf ptr- :double)) (incf ptr- 8)
-   ;; float64 _controlX
-     (setq _controlX (sys::peek buf ptr- :double)) (incf ptr- 8)
-   ;; float64 _controlY
-     (setq _controlY (sys::peek buf ptr- :double)) (incf ptr- 8)
+   ;; float64 _controlA
+     (setq _controlA (sys::peek buf ptr- :double)) (incf ptr- 8)
+   ;; float64 _controlB
+     (setq _controlB (sys::peek buf ptr- :double)) (incf ptr- 8)
+   ;; float64 _control
+     (setq _control (sys::peek buf ptr- :double)) (incf ptr- 8)
    ;; float64 _controlYAW
      (setq _controlYAW (sys::peek buf ptr- :double)) (incf ptr- 8)
    ;; float64 _duration
@@ -189,21 +200,22 @@
      (setq _pre_y (sys::peek buf ptr- :double)) (incf ptr- 8)
    ;; float64 _pre_yaw
      (setq _pre_yaw (sys::peek buf ptr- :double)) (incf ptr- 8)
+   ;; float64 _pre_controlA
+     (setq _pre_controlA (sys::peek buf ptr- :double)) (incf ptr- 8)
+   ;; float64 _pre_controlB
+     (setq _pre_controlB (sys::peek buf ptr- :double)) (incf ptr- 8)
    ;; bool _flag
      (setq _flag (not (= 0 (sys::peek buf ptr- :char)))) (incf ptr- 1)
-   ;; bool _tf_flag
-     (setq _tf_flag (not (= 0 (sys::peek buf ptr- :char)))) (incf ptr- 1)
-   ;; bool _diff_x
-     (setq _diff_x (not (= 0 (sys::peek buf ptr- :char)))) (incf ptr- 1)
-   ;; bool _diff_y
-     (setq _diff_y (not (= 0 (sys::peek buf ptr- :char)))) (incf ptr- 1)
-   ;; bool _diff_yaw
-     (setq _diff_yaw (not (= 0 (sys::peek buf ptr- :char)))) (incf ptr- 1)
+   ;; bool _sub_flag
+     (setq _sub_flag (not (= 0 (sys::peek buf ptr- :char)))) (incf ptr- 1)
+   ;; int8 _index
+     (setq _index (sys::peek buf ptr- :char)) (incf ptr- 1)
+     (if (> _index 127) (setq _index (- _index 256)))
    ;;
    self)
   )
 
-(setf (get dynamo_planner::custom_states_msgs :md5sum-) "3b52bf44a08210bd7d5f8e100b5f756a")
+(setf (get dynamo_planner::custom_states_msgs :md5sum-) "687ab8d67518730041fc3c6e12a166b7")
 (setf (get dynamo_planner::custom_states_msgs :datatype-) "dynamo_planner/custom_states_msgs")
 (setf (get dynamo_planner::custom_states_msgs :definition-)
       "# double type x y yaw control duration
@@ -211,8 +223,9 @@ float64 x
 float64 y
 float64 yaw
 
-float64 controlX
-float64 controlY
+float64 controlA
+float64 controlB
+float64 control
 float64 controlYAW
 
 float64 duration
@@ -220,18 +233,18 @@ float64 duration
 float64 pre_x
 float64 pre_y
 float64 pre_yaw
+float64 pre_controlA
+float64 pre_controlB
 
 bool flag
-bool tf_flag
+bool sub_flag
 
-bool diff_x
-bool diff_y
-bool diff_yaw
+int8 index
 
 ")
 
 
 
-(provide :dynamo_planner/custom_states_msgs "3b52bf44a08210bd7d5f8e100b5f756a")
+(provide :dynamo_planner/custom_states_msgs "687ab8d67518730041fc3c6e12a166b7")
 
 

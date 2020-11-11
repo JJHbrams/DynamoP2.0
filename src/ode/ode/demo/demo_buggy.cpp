@@ -32,6 +32,13 @@ this also shows you how to use geom groups.
 #include <drawstuff/drawstuff.h>
 #include "texturepath.h"
 
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <time.h>
+#include <random>
+#include <iomanip>
+
 #ifdef _MSC_VER
 #pragma warning(disable:4244 4305)  // for VC++, no precision loss complaints
 #endif
@@ -48,13 +55,24 @@ this also shows you how to use geom groups.
 
 // some constants
 
-#define LENGTH 0.7	// chassis length
-#define WIDTH 0.5	// chassis width
-#define HEIGHT 0.2	// chassis height
-#define RADIUS 0.18	// wheel radius
-#define STARTZ 0.5	// starting height of chassis
-#define CMASS 1		// chassis mass
-#define WMASS 0.2	// wheel mass
+#define LENGTH 0.98740000	// chassis length
+#define WIDTH 0.57090000	// chassis width
+#define HEIGHT 0.24750000	// chassis height
+#define RADIUS 0.1651	// wheel radius
+#define STARTZ 0.25	// starting height of chassis
+#define CMASS 46.034		// chassis mass
+#define WMASS 2.637	// wheel mass
+#define WLENGTH 0.1143
+#define WOFFSET 0.03282
+#define WBASE 0.5120
+#define TRACK 0.5708
+
+#define X 0
+#define Y 1
+#define Z 2
+
+#define M_PI 3.14159265359
+
 
 static const dVector3 yunit = { 0, 1, 0 }, zunit = { 0, 0, 1 };
 
@@ -63,26 +81,33 @@ static const dVector3 yunit = { 0, 1, 0 }, zunit = { 0, 0, 1 };
 
 static dWorldID world;
 static dSpaceID space;
-static dBodyID body[4];
-static dJointID joint[3];	// joint[0] is the front wheel
+static dBodyID body[5];
+static dJointID joint[4];	// joint[0] is the front wheel
 static dJointGroupID contactgroup;
 static dGeomID ground;
 static dSpaceID car_space;
 static dGeomID box[1];
-static dGeomID sphere[3];
+static dGeomID sphere[4];
 static dGeomID ground_box;
 
 
 // things that the user controls
 
-static dReal speed=0,steer=0;	// user commands
+dsFunctions fn;
+// static dReal speedA=0,speedB=0;	// user commands
 
+dReal ORI[5][3];
+
+dReal X_set, Y_set, YAW_set, speedA, speedB, TIME_set;
+dReal wL=0, wL2=0, wR=0, wR2=0;
+double NUM_SAMPLES = 0;
+
+int RESET_cnt=5000;
 
 // this is called by dSpaceCollide when two objects in space are
 // potentially colliding.
 
-static void nearCallback (void *, dGeomID o1, dGeomID o2)
-{
+static void nearCallback (void *, dGeomID o1, dGeomID o2){
   int i,n;
 
   // only collide things with the ground
@@ -95,8 +120,7 @@ static void nearCallback (void *, dGeomID o1, dGeomID o2)
   n = dCollide (o1,o2,N,&contact[0].geom,sizeof(dContact));
   if (n > 0) {
     for (i=0; i<n; i++) {
-      contact[i].surface.mode = dContactSlip1 | dContactSlip2 |
-	dContactSoftERP | dContactSoftCFM | dContactApprox1;
+      contact[i].surface.mode = dContactSlip1 | dContactSlip2 |	dContactSoftERP | dContactSoftCFM | dContactApprox1;
       contact[i].surface.mu = dInfinity;
       contact[i].surface.slip1 = 0.1;
       contact[i].surface.slip2 = 0.1;
@@ -109,16 +133,118 @@ static void nearCallback (void *, dGeomID o1, dGeomID o2)
     }
   }
 }
+/*static void nearCallback (void *, dGeomID o1, dGeomID o2){
+  int i,num_Col;
+
+  // exit without doing anything if the two bodies are connected by a joint
+  dBodyID b1 = dGeomGetBody(o1);
+  dBodyID b2 = dGeomGetBody(o2);
+
+  // if (b1 && b2 && dAreConnected (b1,b2)) return;
+  // if (b1 && b2 && dAreConnectedExcluding(b1,b2,dJointTypeContact)) return;//Self collision
+
+  // only collide things with the ground
+  int g1 = (o1 == ground || o1 == ground_box);
+  int g2 = (o2 == ground || o2 == ground_box);
+  if (!(g1 ^ g2)) return;
+
+  const int NUM = 30;
+  dContact contact[NUM];
+  num_Col = dCollide (o1,o2,NUM,&contact[0].geom,sizeof(dContact));
+  if (num_Col > 0) {
+    for (i=0; i<num_Col; i++) {
+      contact[i].surface.mode = dContactSlip1 | dContactSlip2 | dContactSoftERP | dContactSoftCFM | dContactApprox1;
+      contact[i].surface.mu = dInfinity;
+      contact[i].surface.slip1 = 0.1;
+      contact[i].surface.slip2 = 0.1;
+      contact[i].surface.soft_erp = 0.5;
+      contact[i].surface.soft_cfm = 0.3;
+      dJointID col = dJointCreateContact (world,contactgroup,&contact[i]);
+      dJointAttach (col, dGeomGetBody(contact[i].geom.g1), dGeomGetBody(contact[i].geom.g2));
+
+      // Visulize contact
+      dMatrix3 RI;
+      dRSetIdentity(RI);
+      const dReal ss_rad = 0.07, ss_len = 0.01;
+      dsSetColor(1,0,1);
+      dsDrawCylinder(contact[i].geom.pos,RI,ss_len,ss_rad);
+      // dsDrawSphere(contact[i].geom.pos,RI,ss_rad);
+    }
+  }
+}*/
+int sgn(dReal Val){
+  if(Val==0)  return 0;
+  else        return ((Val > 0) - (Val < 0));
+}
+dReal MV_AX(dReal YAW){
+  return sgn(YAW)*((2/M_PI)*abs(YAW-sgn(YAW)*(M_PI/2))-1);
+}
+dReal MV_AY(dReal YAW){
+  return -(2/M_PI)*abs(YAW)+1;
+}
+void vehicle_def(dReal X_POS, dReal Y_POS, dReal YAW){
+
+  int i;
+  dMass mass;
+  dMatrix3 R;
+
+  dReal POS[5][3];
+
+  for (i=0; i<=4; i++){
+    POS[i][X] = (ORI[i][X])*cos(YAW)-(ORI[i][Y])*sin(YAW);
+    POS[i][Y] = (ORI[i][X])*sin(YAW)+(ORI[i][Y])*cos(YAW);
+    POS[i][Z] = ORI[i][Z];
+  }
+
+  // chassis body
+  // body[0] = dBodyCreate (world);
+  dRFromAxisAndAngle(R,0,0,1,YAW);
+  dBodySetRotation(body[0], R);
+  dBodySetPosition (body[0],X_POS,Y_POS,POS[0][Z]);
+  dMassSetBox (&mass,1,LENGTH,WIDTH,HEIGHT);
+  dMassAdjust (&mass,CMASS);
+  dBodySetMass (body[0],&mass);
+  // box[0] = dCreateBox (0,LENGTH,WIDTH,HEIGHT);
+  dGeomSetBody (box[0],body[0]);
 
 
+  // wheel bodies
+  for (i=1; i<=4; i++) {
+    dRFromEulerAngles(R,M_PI/2,YAW,0);
+    dBodySetRotation(body[i],R);
+
+    dMassSetSphere (&mass,1,RADIUS);
+    dMassAdjust (&mass,WMASS);
+    dBodySetMass (body[i],&mass);
+    // sphere[i-1] = dCreateSphere (0,RADIUS);
+    dGeomSetBody (sphere[i-1],body[i]);
+    dBodySetPosition (body[i],POS[i][X]+X_POS,POS[i][Y]+Y_POS,POS[i][Z]);
+  }
+
+  // front and back wheel hinges
+  for (i=0; i<4; i++) {
+    // joint[i] = dJointCreateHinge2(world,0);
+    dJointAttach(joint[i],body[0],body[i+1]);
+    const dReal *axis = dBodyGetPosition(body[i+1]);
+    dJointSetHinge2Anchor(joint[i],axis[0],axis[1],axis[2]);
+    // dJointSetHinge2Axes (joint[i], zunit, yunit);
+    dJointSetHinge2Axis1(joint[i],0,0,1);
+    dJointSetHinge2Axis2(joint[i],MV_AX(YAW),MV_AY(YAW),0);
+  }
+
+  // lock back wheels along the steering axis
+  for (i=0; i<4; i++) {
+    // set stops to make sure wheels always stay in alignment
+    dJointSetHinge2Param (joint[i],dParamLoStop,0);
+    dJointSetHinge2Param (joint[i],dParamHiStop,0);
+  }
+}
 // start simulation - set viewpoint
-
-static void start()
-{
+static void start(){
   dAllocateODEDataForThread(dAllocateMaskAll);
 
-  static float xyz[3] = {0.8317f,-0.9817f,0.8000f};
-  static float hpr[3] = {121.0000f,-27.5000f,0.0000f};
+  static float xyz[3] = {0.0f,-0.0f,5.8000f};
+  static float hpr[3] = {90.0000f,-90.0000f,0.0000f};
   dsSetViewpoint (xyz,hpr);
   printf ("Press:\t'a' to increase speed.\n"
 	  "\t'z' to decrease speed.\n"
@@ -127,28 +253,28 @@ static void start()
 	  "\t' ' to reset speed and steering.\n"
 	  "\t'1' to save the current state to 'state.dif'.\n");
 }
-
-
 // called when a key pressed
-
-static void command (int cmd)
-{
+static void command (int cmd){
   switch (cmd) {
   case 'a': case 'A':
-    speed += 0.3;
+    speedA += 0.3;
+    speedB += 0.3;
     break;
   case 'z': case 'Z':
-    speed -= 0.3;
+    speedA -= 0.3;
+    speedB -= 0.3;
     break;
   case ',':
-    steer -= 0.5;
+    speedA -= 0.3;
+    speedB += 0.3;
     break;
   case '.':
-    steer += 0.5;
+    speedA += 0.3;
+    speedB -= 0.3;
     break;
   case ' ':
-    speed = 0;
-    steer = 0;
+    speedA = 0.5;
+    speedB = 0.5;
     break;
   case '1': {
       FILE *f = fopen ("state.dif","wt");
@@ -159,59 +285,242 @@ static void command (int cmd)
     }
   }
 }
+std::mt19937 generator;
+double RAND_VAL(double MIN, double MAX, char MODE){
+  switch(MODE){
+    case 'u':{
+      // Uniform distribution
+      std::uniform_real_distribution<double> uniform(MIN, MAX);
+      srand(uniform(generator)*(time(NULL)));
+      break;
+    }
 
+    case 'n':{
+      // Normaldistribution
+      double mean = (MAX+MIN)/2;
+      double stddev  = 1;
+      std::normal_distribution<double> normal(mean, stddev);
+      srand(normal(generator)*(time(NULL)));
+      break;
+    }
+
+  }
+
+  // std::cerr << "Normal: " << normal(generator) << std::endl;
+  double RES = 1E4;
+  int DIV = static_cast<int>((MAX-MIN)*RES+1);
+  double SHIFT = ((MAX-MIN)/2.)*RES;
+  double MEAN = (MAX+MIN)/2*RES;
+
+  return (rand()%DIV - SHIFT + MEAN)/RES;
+}
 
 // simulation loop
-
-static void simLoop (int pause)
-{
+std::string TR_FILE = "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/data/TR_two_wheeled.txt";
+std::string TE_FILE = "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/data/TE_two_wheeled.txt";
+std::fstream dataout(TR_FILE, std::ios::out);
+static void simLoop (int pause){
   int i;
-  if (!pause) {
-    // motor
-    dJointSetHinge2Param (joint[0],dParamVel2,-speed);
-    dJointSetHinge2Param (joint[0],dParamFMax2,0.1);
+  dVector3 dpos,dpos2;
+  dMatrix3 drot,drot2;
+  const dReal *dlinvel, *dlinvel2 ,*dangvel, *dangvel2;
+  dReal dyaw,dyaw2;
+  dQuaternion dquar;//w x y z
+/*
+  dReal X_set = RAND_VAL(-1,1,'u'), Y_set = RAND_VAL(-1,1,'u'), YAW_set = RAND_VAL(-M_PI,M_PI,'u');
+  dReal speedA = RAND_VAL(-100.0,100.0,'n'), speedB = RAND_VAL(-100.0,100.0,'n');
+  dReal TIME_set = RAND_VAL(100, 1500,'u');
+*/
+  double SIM_TIME = 0.001;//0.581393388217187;
+  double TIME_DENOM = 1000;
+  TIME_set=500;//dt=0.5s
 
-    // steering
-    dReal v = steer - dJointGetHinge2Angle1 (joint[0]);
-    if (v > 0.1) v = 0.1;
-    if (v < -0.1) v = -0.1;
-    v *= 10.0;
-    dJointSetHinge2Param (joint[0],dParamVel,v);
-    dJointSetHinge2Param (joint[0],dParamFMax,0.2);
-    dJointSetHinge2Param (joint[0],dParamLoStop,-0.75);
-    dJointSetHinge2Param (joint[0],dParamHiStop,0.75);
-    dJointSetHinge2Param (joint[0],dParamFudgeFactor,0.1);
+  // TIME_set = 0.581393388217187;
 
-    dSpaceCollide (space,0,&nearCallback);
-    dWorldStep (world,0.05);
+/*
+  dMatrix3 R;
+  dReal POS[4][3];
+  for (i=0; i<=3; i++){
+    POS[i][X] = (ORI[i][X]+X_set)*cos(YAW)-(ORI[i][Y]+Y_set)*sin(YAW);
+    POS[i][Y] = (ORI[i][X]+X_set)*sin(YAW)+(ORI[i][Y]+Y_set)*cos(YAW);
+    POS[i][Z] = ORI[i][Z];
+  }
+  dReal MV_AX, MV_AY;
+  MV_AX = sgn(YAW)*((2/M_PI)*abs(YAW-sgn(YAW)*(M_PI/2))-1);
+  MV_AY = -(2/M_PI)*abs(YAW)+1;
+  dRFromAxisAndAngle(R,0,0,1,YAW);
+  dBodySetRotation(body[0], R);
+  dBodySetPosition (body[0],POS[0][X],POS[0][Y],POS[0][Z]);
+  for (i=1; i<=3; i++) {
+    dRFromEulerAngles(R,M_PI/2,YAW,0);
+    dBodySetRotation(body[i],R);
+    dBodySetPosition (body[i],POS[i][X],POS[i][Y],POS[i][Z]);
+  }
+
+  dJointAttach(joint[i],body[0],body[i+1]);
+  const dReal *axis = dBodyGetPosition(body[i+1]);
+  dJointSetHinge2Anchor(joint[i],axis[0],axis[1],axis[2]);
+  // dJointSetHinge2Axes (joint[i], zunit, yunit);
+  dJointSetHinge2Axis1(joint[i],0,0,1);
+  dJointSetHinge2Axis2(joint[i],MV_AX,MV_AY,0);
+
+*/
+  // Generate data
+  double NUM_TR = 1000000;
+  double NUM_TE = 5000;
+  if(NUM_SAMPLES >= NUM_TR) {
+    dataout.close();
+    return;
+  }
+
+  if(RESET_cnt == 5000) {
+    // X_set = RAND_VAL(-5,5,'u'), Y_set = RAND_VAL(-5,5,'u'), YAW_set = RAND_VAL(-M_PI,M_PI,'u');
+    // speedA = RAND_VAL(-10.0,10.0,'u'), speedB = RAND_VAL(-10.0,10.0,'u');
+    // TIME_set = RAND_VAL(100, 1500,'u');
+
+    X_set=0;Y_set=0;YAW_set=0;
+    vehicle_def(X_set,Y_set,YAW_set);
+
+    RESET_cnt=0;
+  }
+  speedA = RAND_VAL(-0.5,0.5,'n'), speedB = RAND_VAL(-0.5,0.5,'n');
+
+/*
+  dsSetColor (0,1,1);
+  dsSetTexture (DS_WOOD);
+  dReal sides[3] = {LENGTH,WIDTH,HEIGHT};
+  dsDrawBox(dBodyGetPosition(body[0]),dBodyGetRotation(body[0]),sides);
+  dsSetColor (1,0,0);
+  for (i=1; i<=2; i++) dsDrawCylinder(dBodyGetPosition(body[i]), dBodyGetRotation(body[i]),0.02f,RADIUS);
+  dsSetColor (1,1,1);
+  for (i=3; i<=4; i++) dsDrawCylinder(dBodyGetPosition(body[i]), dBodyGetRotation(body[i]),0.02f,RADIUS);
+*/
+  dBodyCopyPosition(body[0],dpos);
+  // Rotation matrix to Euler angle
+  dBodyCopyRotation(body[0],drot);
+  dyaw = atan2(drot[4],drot[0]);
+
+  dlinvel=dBodyGetLinearVel(body[0]);
+  dangvel=dBodyGetAngularVel(body[0]);
+  const dReal vx = dlinvel[0];
+  const dReal vy = dlinvel[1];
+  const dReal vyaw = dangvel[2];
+
+  wR = dBodyGetAngularVel(body[1])[2];
+  wL = dBodyGetAngularVel(body[2])[2];
+  // std::cout << dlinvel[0] << ", " << dlinvel[1] << ", " << dlinvel[2] << std::endl;
+  // std::cout << dangvel[0] << ", " << dangvel[1] << ", " << dangvel[2] << std::endl;
+
+  std::cout << "IN  : ";
+  std::cout.width(12);std::cout << dpos[0] << ", ";
+  std::cout.width(12);std::cout << dpos[1] << ", ";
+  std::cout.width(12);std::cout << dyaw/M_PI*180 << ", ";
+  std::cout.width(12);std::cout << dlinvel[0] << ", ";
+  std::cout.width(12);std::cout << dlinvel[1] << ", ";
+  std::cout.width(12);std::cout << dangvel[2] << ", ";
+  std::cout.width(12);std::cout << wR << ", ";
+  std::cout.width(12);std::cout << wL << ", ";
+  std::cout.width(12);std::cout << speedA << ", ";
+  std::cout.width(12);std::cout << speedB << ", ";
+  std::cout.width(12);std::cout << TIME_set*SIM_TIME << std::endl;
+  // std::cout << "      ";
+
+
+  for(int cnt=0;cnt<TIME_set;cnt++) {// dt=TIME_set*SIM_TIME
+
+    if (!pause) {
+      // for(int wait=0;wait<100000;wait++);
+      // motor
+      // dReal MAX_WHEEL_TORQUE = dInfinity;
+			// dJointSetHinge2Param (joint[0],dParamVel2,-speedA);
+      dJointAddHinge2Torques(joint[0],0,speedA);
+	    // dJointSetHinge2Param (joint[0],dParamFMax2,MAX_WHEEL_TORQUE);
+
+      // dJointSetHinge2Param (joint[1],dParamVel2,-speedB);
+      dJointAddHinge2Torques(joint[1],0,speedB);
+	    // dJointSetHinge2Param (joint[1],dParamFMax2,MAX_WHEEL_TORQUE);
+
+      // dJointSetHinge2Param (joint[2],dParamVel2,-speedA);
+      dJointAddHinge2Torques(joint[2],0,speedA);
+	    // dJointSetHinge2Param (joint[2],dParamFMax2,MAX_WHEEL_TORQUE);
+
+      // dJointSetHinge2Param (joint[3],dParamVel2,-speedB);
+      dJointAddHinge2Torques(joint[3],0,speedB);
+	    // dJointSetHinge2Param (joint[3],dParamFMax2,MAX_WHEEL_TORQUE);
+
+      dSpaceCollide (space,0,&nearCallback);
+      dWorldQuickStep (world,SIM_TIME);
+/*
+      dsSetColorAlpha (1,1,0, 1);
+      dsSetTexture (DS_WOOD);
+      dReal sides[3] = {LENGTH,WIDTH,HEIGHT};
+      dsDrawBox(dBodyGetPosition(body[0]),dBodyGetRotation(body[0]),sides);
+      dsSetColor (1,0,0);
+      for (i=1; i<=2; i++) dsDrawCylinder(dBodyGetPosition(body[i]), dBodyGetRotation(body[i]),WLENGTH,RADIUS);
+      dsSetColor (1,1,1);
+      for (i=3; i<=4; i++) dsDrawCylinder(dBodyGetPosition(body[i]), dBodyGetRotation(body[i]),WLENGTH,RADIUS);
+*/
+    }
 
     // remove all contact joints
     dJointGroupEmpty (contactgroup);
 
+    //
+    // dVector3 ss;
+    // dGeomBoxGetLengths (ground_box,ss);
+    // dsDrawBox (dGeomGetPosition(ground_box),dGeomGetRotation(ground_box),ss);
   }
 
-  dsSetColor (0,1,1);
+  dsSetColor (1,1,0);
   dsSetTexture (DS_WOOD);
   dReal sides[3] = {LENGTH,WIDTH,HEIGHT};
-  dsDrawBox (dBodyGetPosition(body[0]),dBodyGetRotation(body[0]),sides);
+  dsDrawBox(dBodyGetPosition(body[0]),dBodyGetRotation(body[0]),sides);
+  dsSetColor (1,0,0);
+  for (i=1; i<=2; i++) dsDrawCylinder(dBodyGetPosition(body[i]), dBodyGetRotation(body[i]),WLENGTH,RADIUS);
   dsSetColor (1,1,1);
-  for (i=1; i<=3; i++) dsDrawCylinder (dBodyGetPosition(body[i]),
-				       dBodyGetRotation(body[i]),0.02f,RADIUS);
+  for (i=3; i<=4; i++) dsDrawCylinder(dBodyGetPosition(body[i]), dBodyGetRotation(body[i]),WLENGTH,RADIUS);
 
-  dVector3 ss;
-  dGeomBoxGetLengths (ground_box,ss);
-  dsDrawBox (dGeomGetPosition(ground_box),dGeomGetRotation(ground_box),ss);
+  dBodyCopyPosition(body[0],dpos2);
+  // Rotation matrix to Euler angle
+  dBodyCopyRotation(body[0],drot2);
+  dyaw2 = atan2(drot2[4],drot2[0]);
 
+  dlinvel2=dBodyGetLinearVel(body[0]);
+  dangvel2=dBodyGetAngularVel(body[0]);
+  const dReal vx2 = dlinvel2[0];
+  const dReal vy2 = dlinvel2[1];
+  const dReal vyaw2 = dangvel2[2];
+
+  wR2 = dBodyGetAngularVel(body[1])[2];
+  wL2 = dBodyGetAngularVel(body[2])[2];
+
+  std::cout << "OUT : ";
+  std::cout.width(12);std::cout << dpos2[0] << ", ";
+  std::cout.width(12);std::cout << dpos2[1] << ", ";
+  std::cout.width(12);std::cout << dyaw2/M_PI*180 << ", ";
+  std::cout.width(12);std::cout << dlinvel2[0] << ", ";
+  std::cout.width(12);std::cout << dlinvel2[1] << ", ";
+  std::cout.width(12);std::cout << dangvel2[2] << ", ";
+  std::cout.width(12);std::cout << wR2 << ", ";
+  std::cout.width(12);std::cout << wL2 << std::endl;
+
+  dyaw=dyaw/M_PI*180;
+  dyaw2=dyaw2/M_PI*180;
+  if(dataout.is_open()){
+    if(NUM_SAMPLES == 0)
+    dataout << "         " << ", " << "Xa"    << ","  << "Ya"    << ", " << "YAWa"<< ", " << "Vx"<< ", " << "Vy"<< ", " << "Vyaw"<< ", " << "wR" << ", " << "wL"<< ", " << "CTRLA"  << ", " << "CTRLB"  << ", " <<"Xb"      << ", " << "Yb"     << ", " << "YAWb"<< ", " << "Vx"       << ", " << "Vy"       << ", " << "Vyaw"     << ", " << "wR2"<< ", " << "wL2" "\n";
+    dataout << NUM_SAMPLES << ", " << dpos[0] << ", " << dpos[1] << ", " << dyaw  << ", " << vx  << ", " << vy  << ", " << vyaw  << ", " <<  wR  << ", " <<  wL << ", " <<  speedA  << ", " <<  speedB  <<", "  << dpos2[0] << ", " << dpos2[1] << ", " << dyaw2 << ", " << vx2<< ", " << vy2<< ", " << vyaw2<< ", " <<  wR2 << ", " <<  wL2<< "\n";
+  }
+
+  NUM_SAMPLES++;
+  RESET_cnt++;
+  return;
 }
 
-
-int main (int argc, char **argv)
-{
+void init_ODE(){
   int i;
-  dMass m;
-
+  dReal YAW = 0.0;
   // setup pointers to drawstuff callback functions
-  dsFunctions fn;
   fn.version = DS_VERSION;
   fn.start = &start;
   fn.step = &simLoop;
@@ -219,64 +528,28 @@ int main (int argc, char **argv)
   fn.stop = 0;
   fn.path_to_textures = DRAWSTUFF_TEXTURE_PATH;
 
+  ORI[0][X] = 0.0;          ORI[0][Y] = 0.0;         ORI[0][Z] = STARTZ;
+  ORI[1][X] = WBASE/2;   ORI[1][Y] = TRACK*0.5;   ORI[1][Z] = STARTZ-HEIGHT/2+WOFFSET;
+  ORI[2][X] = WBASE/2;   ORI[2][Y] = -TRACK*0.5;  ORI[2][Z] = STARTZ-HEIGHT/2+WOFFSET;
+  ORI[3][X] = -WBASE/2;  ORI[3][Y] = TRACK*0.5;   ORI[3][Z] = STARTZ-HEIGHT/2+WOFFSET;
+  ORI[4][X] = -WBASE/2;  ORI[4][Y] = -TRACK*0.5;  ORI[4][Z] = STARTZ-HEIGHT/2+WOFFSET;
+
   // create world
   dInitODE2(0);
   world = dWorldCreate();
   space = dHashSpaceCreate (0);
   contactgroup = dJointGroupCreate (0);
-  dWorldSetGravity (world,0,0,-0.5);
+  dWorldSetGravity (world,0,0,-9.81);
   ground = dCreatePlane (space,0,0,1,0);
 
-  // chassis body
   body[0] = dBodyCreate (world);
-  dBodySetPosition (body[0],0,0,STARTZ);
-  dMassSetBox (&m,1,LENGTH,WIDTH,HEIGHT);
-  dMassAdjust (&m,CMASS);
-  dBodySetMass (body[0],&m);
   box[0] = dCreateBox (0,LENGTH,WIDTH,HEIGHT);
-  dGeomSetBody (box[0],body[0]);
-
-  // wheel bodies
-  for (i=1; i<=3; i++) {
+  for (i=1; i<=4; i++) {
     body[i] = dBodyCreate (world);
-    dQuaternion q;
-    dQFromAxisAndAngle (q,1,0,0,M_PI*0.5);
-    dBodySetQuaternion (body[i],q);
-    dMassSetSphere (&m,1,RADIUS);
-    dMassAdjust (&m,WMASS);
-    dBodySetMass (body[i],&m);
-    sphere[i-1] = dCreateSphere (0,RADIUS);
-    dGeomSetBody (sphere[i-1],body[i]);
+    sphere[i-1] = dCreateSphere(0,RADIUS);
+    joint[i-1] = dJointCreateHinge2(world,0);
   }
-  dBodySetPosition (body[1],0.5*LENGTH,0,STARTZ-HEIGHT*0.5);
-  dBodySetPosition (body[2],-0.5*LENGTH, WIDTH*0.5,STARTZ-HEIGHT*0.5);
-  dBodySetPosition (body[3],-0.5*LENGTH,-WIDTH*0.5,STARTZ-HEIGHT*0.5);
-
-  // front and back wheel hinges
-  for (i=0; i<3; i++) {
-    joint[i] = dJointCreateHinge2 (world,0);
-    dJointAttach (joint[i],body[0],body[i+1]);
-    const dReal *a = dBodyGetPosition (body[i+1]);
-    dJointSetHinge2Anchor (joint[i],a[0],a[1],a[2]);
-    dJointSetHinge2Axes (joint[i], zunit, yunit);
-  }
-
-  // set joint suspension
-  for (i=0; i<3; i++) {
-    dJointSetHinge2Param (joint[i],dParamSuspensionERP,0.4);
-    dJointSetHinge2Param (joint[i],dParamSuspensionCFM,0.8);
-  }
-
-  // lock back wheels along the steering axis
-  for (i=1; i<3; i++) {
-    // set stops to make sure wheels always stay in alignment
-    dJointSetHinge2Param (joint[i],dParamLoStop,0);
-    dJointSetHinge2Param (joint[i],dParamHiStop,0);
-    // the following alternative method is no good as the wheels may get out
-    // of alignment:
-    //   dJointSetHinge2Param (joint[i],dParamVel,0);
-    //   dJointSetHinge2Param (joint[i],dParamFMax,dInfinity);
-  }
+  vehicle_def(0,0,YAW);
 
   // create car space and add it to the top level space
   car_space = dSimpleSpaceCreate (space);
@@ -285,21 +558,66 @@ int main (int argc, char **argv)
   dSpaceAdd (car_space,sphere[0]);
   dSpaceAdd (car_space,sphere[1]);
   dSpaceAdd (car_space,sphere[2]);
+  dSpaceAdd (car_space,sphere[3]);
 
-  // environment
+  /*  // environment
   ground_box = dCreateBox (space,2,1.5,1);
   dMatrix3 R;
   dRFromAxisAndAngle (R,0,1,0,-0.15);
   dGeomSetPosition (ground_box,2,0,-0.34);
-  dGeomSetRotation (ground_box,R);
+  dGeomSetRotation (ground_box,R);*/
+}
 
+
+int main (int argc, char **argv)
+{
+  // Init world
+  init_ODE();
   // run simulation
-  dsSimulationLoop (argc,argv,352,288,&fn);
+  dsSimulationLoop (argc,argv,1280,768,&fn);
+
+  /*while(1){
+    int i;
+    dVector3 dpos;
+    dMatrix3 drot;
+    dReal dyaw;
+    dQuaternion dquar;//w x y z
+    dMatrix3 R;
+
+    srand((int)time(NULL));
+    dReal X_set = (rand()%200-100)/100, Y_set = (rand()%200-100)/100, YAW = (rand()%628-314)/100, DELTA = 0.0;
+
+    vehicle_def(X_set,Y_set,M_PI/6);
+
+    dBodyCopyPosition(body[0],dpos);
+    dBodyCopyRotation(body[0],drot);
+    dyaw = atan2(drot[4],drot[0]);
+    std::cout << "A.Get pose : " << dpos[0] << ", " << dpos[1] << ", " << dyaw/M_PI*180 << std::endl;
+
+    for(int cnt=0;cnt<1000;cnt++) {
+      // motor
+      dJointSetHinge2Param (joint[1],dParamVel2,-speedA);
+      dJointSetHinge2Param (joint[1],dParamFMax2,0.1);
+      dJointSetHinge2Param (joint[2],dParamVel2,-speedB);
+      dJointSetHinge2Param (joint[2],dParamFMax2,0.1);
+
+      dSpaceCollide (space,0,&nearCallback);
+      dWorldStep (world,0.001);//1ms
+
+      // remove all contact joints
+      dJointGroupEmpty (contactgroup);
+    }
+    dBodyCopyPosition(body[0],dpos);
+    dBodyCopyRotation(body[0],drot);
+    dyaw = atan2(drot[4],drot[0]);
+    std::cout << "B.Get pose : " << dpos[0] << ", " << dpos[1] << ", " << dyaw/M_PI*180 << time(NULL) << std::endl;
+  }*/
 
   dGeomDestroy (box[0]);
   dGeomDestroy (sphere[0]);
   dGeomDestroy (sphere[1]);
   dGeomDestroy (sphere[2]);
+  dGeomDestroy (sphere[3]);
   dJointGroupDestroy (contactgroup);
   dSpaceDestroy (space);
   dWorldDestroy (world);

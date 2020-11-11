@@ -90,7 +90,7 @@ std_msgs/Float32.h
 std_msgs/Float32MultiArray.h
 -
 dynamo_planner/custom_states_msgs.h
-/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/src/dynamo_planner/custom_states_msgs.h
+-
 sensor_msgs/JointState.h
 -
 boost/scope_exit.hpp
@@ -115,6 +115,8 @@ ompl/base/spaces/SE2StateSpace.h
 -
 ompl/base/spaces/SE3StateSpace.h
 -
+ompl/base/ProblemDefinition.h
+/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/src/ompl/base/ProblemDefinition.h
 ompl/datastructures/NearestNeighbors.h
 -
 ompl/config.h
@@ -1089,8 +1091,6 @@ moveit_msgs/MoveItErrorCodes.h
 -
 moveit/macros/class_forward.h
 -
-moveit/macros/deprecation.h
--
 ros/node_handle.h
 -
 boost/function.hpp
@@ -1116,12 +1116,8 @@ moveit/macros/declare_ptr.h
 memory
 -
 
-/opt/ros/melodic/include/moveit/macros/deprecation.h
-
 /opt/ros/melodic/include/moveit/move_group_interface/move_group_interface.h
 moveit/macros/class_forward.h
--
-moveit/macros/deprecation.h
 -
 moveit/robot_state/robot_state.h
 -
@@ -1136,6 +1132,10 @@ moveit_msgs/Constraints.h
 moveit_msgs/Grasp.h
 -
 moveit_msgs/PlaceLocation.h
+-
+moveit_msgs/PickupGoal.h
+-
+moveit_msgs/PlaceGoal.h
 -
 moveit_msgs/MotionPlanRequest.h
 -
@@ -1152,6 +1152,8 @@ tf2_ros/buffer.h
 
 /opt/ros/melodic/include/moveit/occupancy_map_monitor/occupancy_map.h
 octomap/octomap.h
+-
+boost/thread/locks.hpp
 -
 boost/thread/shared_mutex.hpp
 -
@@ -1241,8 +1243,6 @@ moveit/robot_trajectory/robot_trajectory.h
 -
 moveit/macros/class_forward.h
 -
-moveit/macros/deprecation.h
--
 moveit_msgs/PlanningScene.h
 -
 moveit_msgs/RobotTrajectory.h
@@ -1310,6 +1310,8 @@ moveit/occupancy_map_monitor/occupancy_map_monitor.h
 moveit/planning_scene_monitor/current_state_monitor.h
 -
 moveit/collision_plugin_loader/collision_plugin_loader.h
+-
+moveit_msgs/GetPlanningScene.h
 -
 boost/noncopyable.hpp
 -
@@ -1447,8 +1449,6 @@ moveit/robot_model/robot_model.h
 -
 moveit/robot_state/attached_body.h
 -
-moveit/macros/deprecation.h
--
 sensor_msgs/JointState.h
 -
 visualization_msgs/MarkerArray.h
@@ -1464,8 +1464,6 @@ boost/assert.hpp
 
 /opt/ros/melodic/include/moveit/robot_trajectory/robot_trajectory.h
 moveit/macros/class_forward.h
--
-moveit/macros/deprecation.h
 -
 moveit/robot_state/robot_state.h
 -
@@ -2126,6 +2124,50 @@ ros/message_operations.h
 std_msgs/Header.h
 -
 geometry_msgs/Quaternion.h
+-
+
+/opt/ros/melodic/include/moveit_msgs/PickupGoal.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+moveit_msgs/Grasp.h
+-
+moveit_msgs/Constraints.h
+-
+moveit_msgs/PlanningOptions.h
+-
+
+/opt/ros/melodic/include/moveit_msgs/PlaceGoal.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+moveit_msgs/PlaceLocation.h
+-
+moveit_msgs/Constraints.h
+-
+moveit_msgs/PlanningOptions.h
 -
 
 /opt/ros/melodic/include/moveit_msgs/PlaceLocation.h

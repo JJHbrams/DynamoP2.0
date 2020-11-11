@@ -54,6 +54,8 @@ CMAKE_BINARY_DIR = /home/mrjohd/Kinodynamic_ws/build
 include dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_nodejs.dir/progress.make
 
 dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_nodejs: /home/mrjohd/Kinodynamic_ws/devel/share/gennodejs/ros/dynamo_planner/msg/custom_states_msgs.js
+dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_nodejs: /home/mrjohd/Kinodynamic_ws/devel/share/gennodejs/ros/dynamo_planner/msg/data_gen_msgs.js
+dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_nodejs: /home/mrjohd/Kinodynamic_ws/devel/share/gennodejs/ros/dynamo_planner/srv/physics_data_sampler.js
 
 
 /home/mrjohd/Kinodynamic_ws/devel/share/gennodejs/ros/dynamo_planner/msg/custom_states_msgs.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
@@ -61,8 +63,20 @@ dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_nodejs: /home/mrjohd/
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from dynamo_planner/custom_states_msgs.msg"
 	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/custom_states_msgs.msg -Idynamo_planner:/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p dynamo_planner -o /home/mrjohd/Kinodynamic_ws/devel/share/gennodejs/ros/dynamo_planner/msg
 
+/home/mrjohd/Kinodynamic_ws/devel/share/gennodejs/ros/dynamo_planner/msg/data_gen_msgs.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
+/home/mrjohd/Kinodynamic_ws/devel/share/gennodejs/ros/dynamo_planner/msg/data_gen_msgs.js: /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Javascript code from dynamo_planner/data_gen_msgs.msg"
+	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg -Idynamo_planner:/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p dynamo_planner -o /home/mrjohd/Kinodynamic_ws/devel/share/gennodejs/ros/dynamo_planner/msg
+
+/home/mrjohd/Kinodynamic_ws/devel/share/gennodejs/ros/dynamo_planner/srv/physics_data_sampler.js: /opt/ros/melodic/lib/gennodejs/gen_nodejs.py
+/home/mrjohd/Kinodynamic_ws/devel/share/gennodejs/ros/dynamo_planner/srv/physics_data_sampler.js: /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Javascript code from dynamo_planner/physics_data_sampler.srv"
+	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv -Idynamo_planner:/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p dynamo_planner -o /home/mrjohd/Kinodynamic_ws/devel/share/gennodejs/ros/dynamo_planner/srv
+
 dynamo_planner_generate_messages_nodejs: dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_nodejs
 dynamo_planner_generate_messages_nodejs: /home/mrjohd/Kinodynamic_ws/devel/share/gennodejs/ros/dynamo_planner/msg/custom_states_msgs.js
+dynamo_planner_generate_messages_nodejs: /home/mrjohd/Kinodynamic_ws/devel/share/gennodejs/ros/dynamo_planner/msg/data_gen_msgs.js
+dynamo_planner_generate_messages_nodejs: /home/mrjohd/Kinodynamic_ws/devel/share/gennodejs/ros/dynamo_planner/srv/physics_data_sampler.js
 dynamo_planner_generate_messages_nodejs: dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_nodejs.dir/build.make
 
 .PHONY : dynamo_planner_generate_messages_nodejs

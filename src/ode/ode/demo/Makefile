@@ -119,7 +119,7 @@ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
 	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
 	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
-	$(top_srcdir)/m4/pkg.m4 $(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/pkg.m4 $(top_srcdir)/configuredemo.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(noinst_HEADERS) \
@@ -141,7 +141,7 @@ demo_I_DEPENDENCIES = $(top_builddir)/drawstuff/src/libdrawstuff.la \
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
-am__v_lt_1 = 
+am__v_lt_1 =
 demo_basket_SOURCES = demo_basket.cpp
 demo_basket_OBJECTS = demo_basket.$(OBJEXT)
 demo_basket_LDADD = $(LDADD)
@@ -374,11 +374,11 @@ am__v_P_1 = :
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN     " $@;
-am__v_GEN_1 = 
+am__v_GEN_1 =
 AM_V_at = $(am__v_at_$(V))
 am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
 am__v_at_0 = @
-am__v_at_1 = 
+am__v_at_1 =
 DEFAULT_INCLUDES = -I. -I$(top_builddir)/ode/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -392,7 +392,7 @@ LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 AM_V_CC = $(am__v_CC_$(V))
 am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
 am__v_CC_0 = @echo "  CC      " $@;
-am__v_CC_1 = 
+am__v_CC_1 =
 CCLD = $(CC)
 LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -400,7 +400,7 @@ LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
-am__v_CCLD_1 = 
+am__v_CCLD_1 =
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 LTCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
@@ -410,7 +410,7 @@ LTCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 AM_V_CXX = $(am__v_CXX_$(V))
 am__v_CXX_ = $(am__v_CXX_$(AM_DEFAULT_VERBOSITY))
 am__v_CXX_0 = @echo "  CXX     " $@;
-am__v_CXX_1 = 
+am__v_CXX_1 =
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -418,7 +418,7 @@ CXXLINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 AM_V_CXXLD = $(am__v_CXXLD_$(V))
 am__v_CXXLD_ = $(am__v_CXXLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
-am__v_CXXLD_1 = 
+am__v_CXXLD_1 =
 SOURCES = demo_I.cpp demo_basket.cpp demo_boxstack.cpp demo_buggy.cpp \
 	demo_cards.cpp $(demo_chain1_SOURCES) demo_chain2.cpp \
 	demo_collision.cpp demo_convex.cpp demo_crash.cpp demo_cyl.cpp \
@@ -473,7 +473,7 @@ CTAGS = ctags
 am__DIST_COMMON = $(srcdir)/Makefile.in $(top_srcdir)/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = ${SHELL} /home/mrjohd/Kinodynamic_ws/src/ode/missing aclocal-1.15
-ALLOCA = 
+ALLOCA =
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
@@ -484,11 +484,11 @@ AUTOMAKE = ${SHELL} /home/mrjohd/Kinodynamic_ws/src/ode/missing automake-1.15
 AWK = mawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CCD_CFLAGS = 
-CCD_LIBS = 
+CCD_CFLAGS =
+CCD_LIBS =
 CFLAGS = -g -O2
 CPP = gcc -E
-CPPFLAGS = 
+CPPFLAGS =
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -497,15 +497,15 @@ CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
 DLLTOOL = false
-DOXYGEN = 
-DSYMUTIL = 
-DUMPBIN = 
-ECHO_C = 
+DOXYGEN =
+DSYMUTIL =
+DUMPBIN =
+ECHO_C =
 ECHO_N = -n
-ECHO_T = 
+ECHO_T =
 EGREP = /bin/grep -E
-EXEEXT = 
-EXTRA_LIBTOOL_LDFLAGS = 
+EXEEXT =
+EXTRA_LIBTOOL_LDFLAGS =
 FGREP = /bin/grep -F
 GL_LIBS = -lGLU -lGL
 GREP = /bin/grep
@@ -515,46 +515,46 @@ INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LD = /usr/bin/ld -m elf_x86_64
-LDFLAGS = 
-LIBOBJS = 
+LDFLAGS =
+LIBOBJS =
 LIBS = -lrt -lm  -lpthread
 LIBSTDCXX = -lstdc++
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
-LIPO = 
+LIPO =
 LN_S = ln -s
-LTLIBOBJS = 
-LT_SYS_LIBRARY_PATH = 
+LTLIBOBJS =
+LT_SYS_LIBRARY_PATH =
 MAKEINFO = ${SHELL} /home/mrjohd/Kinodynamic_ws/src/ode/missing makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = /bin/mkdir -p
 NM = /usr/bin/nm -B
-NMEDIT = 
+NMEDIT =
 OBJDUMP = objdump
 OBJEXT = o
 ODE_PRECISION = dDOUBLE
 ODE_VERSION = 0.16.1
 ODE_VERSION_INFO = -version-info 8:1:0
-OTOOL = 
-OTOOL64 = 
+OTOOL =
+OTOOL64 =
 PACKAGE = ode
 PACKAGE_BUGREPORT = ode@ode.org
 PACKAGE_NAME = ODE
 PACKAGE_STRING = ODE 0.16.1
 PACKAGE_TARNAME = ode
-PACKAGE_URL = 
+PACKAGE_URL =
 PACKAGE_VERSION = 0.16.1
 PATH_SEPARATOR = :
 PKG_CONFIG = /usr/bin/pkg-config
-PKG_CONFIG_LIBDIR = 
+PKG_CONFIG_LIBDIR =
 PKG_CONFIG_PATH = /opt/ros/melodic/lib/pkgconfig
 RANLIB = ranlib
 SED = /bin/sed
-SET_MAKE = 
+SET_MAKE =
 SHELL = /bin/bash
 STRIP = strip
 VERSION = 0.16.1
-WINDRES = 
-X11_CFLAGS = 
+WINDRES =
+X11_CFLAGS =
 X11_LIBS = -lX11
 abs_builddir = /home/mrjohd/Kinodynamic_ws/src/ode/ode/demo
 abs_srcdir = /home/mrjohd/Kinodynamic_ws/src/ode/ode/demo
@@ -563,16 +563,16 @@ abs_top_srcdir = /home/mrjohd/Kinodynamic_ws/src/ode
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_CXX = g++
-ac_ct_DUMPBIN = 
-ac_ct_WINDRES = 
+ac_ct_DUMPBIN =
+ac_ct_WINDRES =
 am__include = include
 am__leading_dot = .
-am__quote = 
+am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
 build = x86_64-pc-linux-gnu
-build_alias = 
+build_alias =
 build_cpu = x86_64
 build_os = linux-gnu
 build_vendor = pc
@@ -583,7 +583,7 @@ docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
 host = x86_64-pc-linux-gnu
-host_alias = 
+host_alias =
 host_cpu = x86_64
 host_os = linux-gnu
 host_vendor = pc
@@ -608,7 +608,7 @@ sharedstatedir = ${prefix}/com
 srcdir = .
 subdirs =  ou libccd
 sysconfdir = ${prefix}/etc
-target_alias = 
+target_alias =
 top_build_prefix = ../../
 top_builddir = ../..
 top_srcdir = ../..
@@ -625,7 +625,7 @@ noinst_HEADERS = basket_geom.h bunny_geom.h convex_bunny_geom.h convex_prism.h \
 
 AM_DEFAULT_SOURCE_EXT = .cpp
 demo_chain1_SOURCES = demo_chain1.c
-demo_chain1_LDADD = $(LDADD) -lstdc++ 
+demo_chain1_LDADD = $(LDADD) -lstdc++
 all: all-am
 
 .SUFFIXES:
@@ -669,159 +669,159 @@ clean-noinstPROGRAMS:
 	echo " rm -f" $$list; \
 	rm -f $$list
 
-demo_I$(EXEEXT): $(demo_I_OBJECTS) $(demo_I_DEPENDENCIES) $(EXTRA_demo_I_DEPENDENCIES) 
+demo_I$(EXEEXT): $(demo_I_OBJECTS) $(demo_I_DEPENDENCIES) $(EXTRA_demo_I_DEPENDENCIES)
 	@rm -f demo_I$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_I_OBJECTS) $(demo_I_LDADD) $(LIBS)
 
-demo_basket$(EXEEXT): $(demo_basket_OBJECTS) $(demo_basket_DEPENDENCIES) $(EXTRA_demo_basket_DEPENDENCIES) 
+demo_basket$(EXEEXT): $(demo_basket_OBJECTS) $(demo_basket_DEPENDENCIES) $(EXTRA_demo_basket_DEPENDENCIES)
 	@rm -f demo_basket$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_basket_OBJECTS) $(demo_basket_LDADD) $(LIBS)
 
-demo_boxstack$(EXEEXT): $(demo_boxstack_OBJECTS) $(demo_boxstack_DEPENDENCIES) $(EXTRA_demo_boxstack_DEPENDENCIES) 
+demo_boxstack$(EXEEXT): $(demo_boxstack_OBJECTS) $(demo_boxstack_DEPENDENCIES) $(EXTRA_demo_boxstack_DEPENDENCIES)
 	@rm -f demo_boxstack$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_boxstack_OBJECTS) $(demo_boxstack_LDADD) $(LIBS)
 
-demo_buggy$(EXEEXT): $(demo_buggy_OBJECTS) $(demo_buggy_DEPENDENCIES) $(EXTRA_demo_buggy_DEPENDENCIES) 
+demo_buggy$(EXEEXT): $(demo_buggy_OBJECTS) $(demo_buggy_DEPENDENCIES) $(EXTRA_demo_buggy_DEPENDENCIES)
 	@rm -f demo_buggy$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_buggy_OBJECTS) $(demo_buggy_LDADD) $(LIBS)
 
-demo_cards$(EXEEXT): $(demo_cards_OBJECTS) $(demo_cards_DEPENDENCIES) $(EXTRA_demo_cards_DEPENDENCIES) 
+demo_cards$(EXEEXT): $(demo_cards_OBJECTS) $(demo_cards_DEPENDENCIES) $(EXTRA_demo_cards_DEPENDENCIES)
 	@rm -f demo_cards$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_cards_OBJECTS) $(demo_cards_LDADD) $(LIBS)
 
-demo_chain1$(EXEEXT): $(demo_chain1_OBJECTS) $(demo_chain1_DEPENDENCIES) $(EXTRA_demo_chain1_DEPENDENCIES) 
+demo_chain1$(EXEEXT): $(demo_chain1_OBJECTS) $(demo_chain1_DEPENDENCIES) $(EXTRA_demo_chain1_DEPENDENCIES)
 	@rm -f demo_chain1$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(demo_chain1_OBJECTS) $(demo_chain1_LDADD) $(LIBS)
 
-demo_chain2$(EXEEXT): $(demo_chain2_OBJECTS) $(demo_chain2_DEPENDENCIES) $(EXTRA_demo_chain2_DEPENDENCIES) 
+demo_chain2$(EXEEXT): $(demo_chain2_OBJECTS) $(demo_chain2_DEPENDENCIES) $(EXTRA_demo_chain2_DEPENDENCIES)
 	@rm -f demo_chain2$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_chain2_OBJECTS) $(demo_chain2_LDADD) $(LIBS)
 
-demo_collision$(EXEEXT): $(demo_collision_OBJECTS) $(demo_collision_DEPENDENCIES) $(EXTRA_demo_collision_DEPENDENCIES) 
+demo_collision$(EXEEXT): $(demo_collision_OBJECTS) $(demo_collision_DEPENDENCIES) $(EXTRA_demo_collision_DEPENDENCIES)
 	@rm -f demo_collision$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_collision_OBJECTS) $(demo_collision_LDADD) $(LIBS)
 
-demo_convex$(EXEEXT): $(demo_convex_OBJECTS) $(demo_convex_DEPENDENCIES) $(EXTRA_demo_convex_DEPENDENCIES) 
+demo_convex$(EXEEXT): $(demo_convex_OBJECTS) $(demo_convex_DEPENDENCIES) $(EXTRA_demo_convex_DEPENDENCIES)
 	@rm -f demo_convex$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_convex_OBJECTS) $(demo_convex_LDADD) $(LIBS)
 
-demo_crash$(EXEEXT): $(demo_crash_OBJECTS) $(demo_crash_DEPENDENCIES) $(EXTRA_demo_crash_DEPENDENCIES) 
+demo_crash$(EXEEXT): $(demo_crash_OBJECTS) $(demo_crash_DEPENDENCIES) $(EXTRA_demo_crash_DEPENDENCIES)
 	@rm -f demo_crash$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_crash_OBJECTS) $(demo_crash_LDADD) $(LIBS)
 
-demo_cyl$(EXEEXT): $(demo_cyl_OBJECTS) $(demo_cyl_DEPENDENCIES) $(EXTRA_demo_cyl_DEPENDENCIES) 
+demo_cyl$(EXEEXT): $(demo_cyl_OBJECTS) $(demo_cyl_DEPENDENCIES) $(EXTRA_demo_cyl_DEPENDENCIES)
 	@rm -f demo_cyl$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_cyl_OBJECTS) $(demo_cyl_LDADD) $(LIBS)
 
-demo_cylvssphere$(EXEEXT): $(demo_cylvssphere_OBJECTS) $(demo_cylvssphere_DEPENDENCIES) $(EXTRA_demo_cylvssphere_DEPENDENCIES) 
+demo_cylvssphere$(EXEEXT): $(demo_cylvssphere_OBJECTS) $(demo_cylvssphere_DEPENDENCIES) $(EXTRA_demo_cylvssphere_DEPENDENCIES)
 	@rm -f demo_cylvssphere$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_cylvssphere_OBJECTS) $(demo_cylvssphere_LDADD) $(LIBS)
 
-demo_dball$(EXEEXT): $(demo_dball_OBJECTS) $(demo_dball_DEPENDENCIES) $(EXTRA_demo_dball_DEPENDENCIES) 
+demo_dball$(EXEEXT): $(demo_dball_OBJECTS) $(demo_dball_DEPENDENCIES) $(EXTRA_demo_dball_DEPENDENCIES)
 	@rm -f demo_dball$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_dball_OBJECTS) $(demo_dball_LDADD) $(LIBS)
 
-demo_dhinge$(EXEEXT): $(demo_dhinge_OBJECTS) $(demo_dhinge_DEPENDENCIES) $(EXTRA_demo_dhinge_DEPENDENCIES) 
+demo_dhinge$(EXEEXT): $(demo_dhinge_OBJECTS) $(demo_dhinge_DEPENDENCIES) $(EXTRA_demo_dhinge_DEPENDENCIES)
 	@rm -f demo_dhinge$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_dhinge_OBJECTS) $(demo_dhinge_LDADD) $(LIBS)
 
-demo_feedback$(EXEEXT): $(demo_feedback_OBJECTS) $(demo_feedback_DEPENDENCIES) $(EXTRA_demo_feedback_DEPENDENCIES) 
+demo_feedback$(EXEEXT): $(demo_feedback_OBJECTS) $(demo_feedback_DEPENDENCIES) $(EXTRA_demo_feedback_DEPENDENCIES)
 	@rm -f demo_feedback$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_feedback_OBJECTS) $(demo_feedback_LDADD) $(LIBS)
 
-demo_friction$(EXEEXT): $(demo_friction_OBJECTS) $(demo_friction_DEPENDENCIES) $(EXTRA_demo_friction_DEPENDENCIES) 
+demo_friction$(EXEEXT): $(demo_friction_OBJECTS) $(demo_friction_DEPENDENCIES) $(EXTRA_demo_friction_DEPENDENCIES)
 	@rm -f demo_friction$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_friction_OBJECTS) $(demo_friction_LDADD) $(LIBS)
 
-demo_gyro2$(EXEEXT): $(demo_gyro2_OBJECTS) $(demo_gyro2_DEPENDENCIES) $(EXTRA_demo_gyro2_DEPENDENCIES) 
+demo_gyro2$(EXEEXT): $(demo_gyro2_OBJECTS) $(demo_gyro2_DEPENDENCIES) $(EXTRA_demo_gyro2_DEPENDENCIES)
 	@rm -f demo_gyro2$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_gyro2_OBJECTS) $(demo_gyro2_LDADD) $(LIBS)
 
-demo_gyroscopic$(EXEEXT): $(demo_gyroscopic_OBJECTS) $(demo_gyroscopic_DEPENDENCIES) $(EXTRA_demo_gyroscopic_DEPENDENCIES) 
+demo_gyroscopic$(EXEEXT): $(demo_gyroscopic_OBJECTS) $(demo_gyroscopic_DEPENDENCIES) $(EXTRA_demo_gyroscopic_DEPENDENCIES)
 	@rm -f demo_gyroscopic$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_gyroscopic_OBJECTS) $(demo_gyroscopic_LDADD) $(LIBS)
 
-demo_heightfield$(EXEEXT): $(demo_heightfield_OBJECTS) $(demo_heightfield_DEPENDENCIES) $(EXTRA_demo_heightfield_DEPENDENCIES) 
+demo_heightfield$(EXEEXT): $(demo_heightfield_OBJECTS) $(demo_heightfield_DEPENDENCIES) $(EXTRA_demo_heightfield_DEPENDENCIES)
 	@rm -f demo_heightfield$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_heightfield_OBJECTS) $(demo_heightfield_LDADD) $(LIBS)
 
-demo_hinge$(EXEEXT): $(demo_hinge_OBJECTS) $(demo_hinge_DEPENDENCIES) $(EXTRA_demo_hinge_DEPENDENCIES) 
+demo_hinge$(EXEEXT): $(demo_hinge_OBJECTS) $(demo_hinge_DEPENDENCIES) $(EXTRA_demo_hinge_DEPENDENCIES)
 	@rm -f demo_hinge$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_hinge_OBJECTS) $(demo_hinge_LDADD) $(LIBS)
 
-demo_jointPR$(EXEEXT): $(demo_jointPR_OBJECTS) $(demo_jointPR_DEPENDENCIES) $(EXTRA_demo_jointPR_DEPENDENCIES) 
+demo_jointPR$(EXEEXT): $(demo_jointPR_OBJECTS) $(demo_jointPR_DEPENDENCIES) $(EXTRA_demo_jointPR_DEPENDENCIES)
 	@rm -f demo_jointPR$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_jointPR_OBJECTS) $(demo_jointPR_LDADD) $(LIBS)
 
-demo_jointPU$(EXEEXT): $(demo_jointPU_OBJECTS) $(demo_jointPU_DEPENDENCIES) $(EXTRA_demo_jointPU_DEPENDENCIES) 
+demo_jointPU$(EXEEXT): $(demo_jointPU_OBJECTS) $(demo_jointPU_DEPENDENCIES) $(EXTRA_demo_jointPU_DEPENDENCIES)
 	@rm -f demo_jointPU$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_jointPU_OBJECTS) $(demo_jointPU_LDADD) $(LIBS)
 
-demo_joints$(EXEEXT): $(demo_joints_OBJECTS) $(demo_joints_DEPENDENCIES) $(EXTRA_demo_joints_DEPENDENCIES) 
+demo_joints$(EXEEXT): $(demo_joints_OBJECTS) $(demo_joints_DEPENDENCIES) $(EXTRA_demo_joints_DEPENDENCIES)
 	@rm -f demo_joints$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_joints_OBJECTS) $(demo_joints_LDADD) $(LIBS)
 
-demo_kinematic$(EXEEXT): $(demo_kinematic_OBJECTS) $(demo_kinematic_DEPENDENCIES) $(EXTRA_demo_kinematic_DEPENDENCIES) 
+demo_kinematic$(EXEEXT): $(demo_kinematic_OBJECTS) $(demo_kinematic_DEPENDENCIES) $(EXTRA_demo_kinematic_DEPENDENCIES)
 	@rm -f demo_kinematic$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_kinematic_OBJECTS) $(demo_kinematic_LDADD) $(LIBS)
 
-demo_motion$(EXEEXT): $(demo_motion_OBJECTS) $(demo_motion_DEPENDENCIES) $(EXTRA_demo_motion_DEPENDENCIES) 
+demo_motion$(EXEEXT): $(demo_motion_OBJECTS) $(demo_motion_DEPENDENCIES) $(EXTRA_demo_motion_DEPENDENCIES)
 	@rm -f demo_motion$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_motion_OBJECTS) $(demo_motion_LDADD) $(LIBS)
 
-demo_motor$(EXEEXT): $(demo_motor_OBJECTS) $(demo_motor_DEPENDENCIES) $(EXTRA_demo_motor_DEPENDENCIES) 
+demo_motor$(EXEEXT): $(demo_motor_OBJECTS) $(demo_motor_DEPENDENCIES) $(EXTRA_demo_motor_DEPENDENCIES)
 	@rm -f demo_motor$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_motor_OBJECTS) $(demo_motor_LDADD) $(LIBS)
 
-demo_moving_convex$(EXEEXT): $(demo_moving_convex_OBJECTS) $(demo_moving_convex_DEPENDENCIES) $(EXTRA_demo_moving_convex_DEPENDENCIES) 
+demo_moving_convex$(EXEEXT): $(demo_moving_convex_OBJECTS) $(demo_moving_convex_DEPENDENCIES) $(EXTRA_demo_moving_convex_DEPENDENCIES)
 	@rm -f demo_moving_convex$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_moving_convex_OBJECTS) $(demo_moving_convex_LDADD) $(LIBS)
 
-demo_moving_trimesh$(EXEEXT): $(demo_moving_trimesh_OBJECTS) $(demo_moving_trimesh_DEPENDENCIES) $(EXTRA_demo_moving_trimesh_DEPENDENCIES) 
+demo_moving_trimesh$(EXEEXT): $(demo_moving_trimesh_OBJECTS) $(demo_moving_trimesh_DEPENDENCIES) $(EXTRA_demo_moving_trimesh_DEPENDENCIES)
 	@rm -f demo_moving_trimesh$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_moving_trimesh_OBJECTS) $(demo_moving_trimesh_LDADD) $(LIBS)
 
-demo_ode$(EXEEXT): $(demo_ode_OBJECTS) $(demo_ode_DEPENDENCIES) $(EXTRA_demo_ode_DEPENDENCIES) 
+demo_ode$(EXEEXT): $(demo_ode_OBJECTS) $(demo_ode_DEPENDENCIES) $(EXTRA_demo_ode_DEPENDENCIES)
 	@rm -f demo_ode$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_ode_OBJECTS) $(demo_ode_LDADD) $(LIBS)
 
-demo_piston$(EXEEXT): $(demo_piston_OBJECTS) $(demo_piston_DEPENDENCIES) $(EXTRA_demo_piston_DEPENDENCIES) 
+demo_piston$(EXEEXT): $(demo_piston_OBJECTS) $(demo_piston_DEPENDENCIES) $(EXTRA_demo_piston_DEPENDENCIES)
 	@rm -f demo_piston$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_piston_OBJECTS) $(demo_piston_LDADD) $(LIBS)
 
-demo_plane2d$(EXEEXT): $(demo_plane2d_OBJECTS) $(demo_plane2d_DEPENDENCIES) $(EXTRA_demo_plane2d_DEPENDENCIES) 
+demo_plane2d$(EXEEXT): $(demo_plane2d_OBJECTS) $(demo_plane2d_DEPENDENCIES) $(EXTRA_demo_plane2d_DEPENDENCIES)
 	@rm -f demo_plane2d$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_plane2d_OBJECTS) $(demo_plane2d_LDADD) $(LIBS)
 
-demo_rfriction$(EXEEXT): $(demo_rfriction_OBJECTS) $(demo_rfriction_DEPENDENCIES) $(EXTRA_demo_rfriction_DEPENDENCIES) 
+demo_rfriction$(EXEEXT): $(demo_rfriction_OBJECTS) $(demo_rfriction_DEPENDENCIES) $(EXTRA_demo_rfriction_DEPENDENCIES)
 	@rm -f demo_rfriction$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_rfriction_OBJECTS) $(demo_rfriction_LDADD) $(LIBS)
 
-demo_slider$(EXEEXT): $(demo_slider_OBJECTS) $(demo_slider_DEPENDENCIES) $(EXTRA_demo_slider_DEPENDENCIES) 
+demo_slider$(EXEEXT): $(demo_slider_OBJECTS) $(demo_slider_DEPENDENCIES) $(EXTRA_demo_slider_DEPENDENCIES)
 	@rm -f demo_slider$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_slider_OBJECTS) $(demo_slider_LDADD) $(LIBS)
 
-demo_space$(EXEEXT): $(demo_space_OBJECTS) $(demo_space_DEPENDENCIES) $(EXTRA_demo_space_DEPENDENCIES) 
+demo_space$(EXEEXT): $(demo_space_OBJECTS) $(demo_space_DEPENDENCIES) $(EXTRA_demo_space_DEPENDENCIES)
 	@rm -f demo_space$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_space_OBJECTS) $(demo_space_LDADD) $(LIBS)
 
-demo_space_stress$(EXEEXT): $(demo_space_stress_OBJECTS) $(demo_space_stress_DEPENDENCIES) $(EXTRA_demo_space_stress_DEPENDENCIES) 
+demo_space_stress$(EXEEXT): $(demo_space_stress_OBJECTS) $(demo_space_stress_DEPENDENCIES) $(EXTRA_demo_space_stress_DEPENDENCIES)
 	@rm -f demo_space_stress$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_space_stress_OBJECTS) $(demo_space_stress_LDADD) $(LIBS)
 
-demo_step$(EXEEXT): $(demo_step_OBJECTS) $(demo_step_DEPENDENCIES) $(EXTRA_demo_step_DEPENDENCIES) 
+demo_step$(EXEEXT): $(demo_step_OBJECTS) $(demo_step_DEPENDENCIES) $(EXTRA_demo_step_DEPENDENCIES)
 	@rm -f demo_step$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_step_OBJECTS) $(demo_step_LDADD) $(LIBS)
 
-demo_tracks$(EXEEXT): $(demo_tracks_OBJECTS) $(demo_tracks_DEPENDENCIES) $(EXTRA_demo_tracks_DEPENDENCIES) 
+demo_tracks$(EXEEXT): $(demo_tracks_OBJECTS) $(demo_tracks_DEPENDENCIES) $(EXTRA_demo_tracks_DEPENDENCIES)
 	@rm -f demo_tracks$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_tracks_OBJECTS) $(demo_tracks_LDADD) $(LIBS)
 
-demo_transmission$(EXEEXT): $(demo_transmission_OBJECTS) $(demo_transmission_DEPENDENCIES) $(EXTRA_demo_transmission_DEPENDENCIES) 
+demo_transmission$(EXEEXT): $(demo_transmission_OBJECTS) $(demo_transmission_DEPENDENCIES) $(EXTRA_demo_transmission_DEPENDENCIES)
 	@rm -f demo_transmission$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_transmission_OBJECTS) $(demo_transmission_LDADD) $(LIBS)
 
-demo_trimesh$(EXEEXT): $(demo_trimesh_OBJECTS) $(demo_trimesh_DEPENDENCIES) $(EXTRA_demo_trimesh_DEPENDENCIES) 
+demo_trimesh$(EXEEXT): $(demo_trimesh_OBJECTS) $(demo_trimesh_DEPENDENCIES) $(EXTRA_demo_trimesh_DEPENDENCIES)
 	@rm -f demo_trimesh$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(demo_trimesh_OBJECTS) $(demo_trimesh_LDADD) $(LIBS)
 

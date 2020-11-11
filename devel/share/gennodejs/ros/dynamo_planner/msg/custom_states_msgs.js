@@ -21,18 +21,19 @@ class custom_states_msgs {
       this.x = null;
       this.y = null;
       this.yaw = null;
-      this.controlX = null;
-      this.controlY = null;
+      this.controlA = null;
+      this.controlB = null;
+      this.control = null;
       this.controlYAW = null;
       this.duration = null;
       this.pre_x = null;
       this.pre_y = null;
       this.pre_yaw = null;
+      this.pre_controlA = null;
+      this.pre_controlB = null;
       this.flag = null;
-      this.tf_flag = null;
-      this.diff_x = null;
-      this.diff_y = null;
-      this.diff_yaw = null;
+      this.sub_flag = null;
+      this.index = null;
     }
     else {
       if (initObj.hasOwnProperty('x')) {
@@ -53,17 +54,23 @@ class custom_states_msgs {
       else {
         this.yaw = 0.0;
       }
-      if (initObj.hasOwnProperty('controlX')) {
-        this.controlX = initObj.controlX
+      if (initObj.hasOwnProperty('controlA')) {
+        this.controlA = initObj.controlA
       }
       else {
-        this.controlX = 0.0;
+        this.controlA = 0.0;
       }
-      if (initObj.hasOwnProperty('controlY')) {
-        this.controlY = initObj.controlY
+      if (initObj.hasOwnProperty('controlB')) {
+        this.controlB = initObj.controlB
       }
       else {
-        this.controlY = 0.0;
+        this.controlB = 0.0;
+      }
+      if (initObj.hasOwnProperty('control')) {
+        this.control = initObj.control
+      }
+      else {
+        this.control = 0.0;
       }
       if (initObj.hasOwnProperty('controlYAW')) {
         this.controlYAW = initObj.controlYAW
@@ -95,35 +102,35 @@ class custom_states_msgs {
       else {
         this.pre_yaw = 0.0;
       }
+      if (initObj.hasOwnProperty('pre_controlA')) {
+        this.pre_controlA = initObj.pre_controlA
+      }
+      else {
+        this.pre_controlA = 0.0;
+      }
+      if (initObj.hasOwnProperty('pre_controlB')) {
+        this.pre_controlB = initObj.pre_controlB
+      }
+      else {
+        this.pre_controlB = 0.0;
+      }
       if (initObj.hasOwnProperty('flag')) {
         this.flag = initObj.flag
       }
       else {
         this.flag = false;
       }
-      if (initObj.hasOwnProperty('tf_flag')) {
-        this.tf_flag = initObj.tf_flag
+      if (initObj.hasOwnProperty('sub_flag')) {
+        this.sub_flag = initObj.sub_flag
       }
       else {
-        this.tf_flag = false;
+        this.sub_flag = false;
       }
-      if (initObj.hasOwnProperty('diff_x')) {
-        this.diff_x = initObj.diff_x
-      }
-      else {
-        this.diff_x = false;
-      }
-      if (initObj.hasOwnProperty('diff_y')) {
-        this.diff_y = initObj.diff_y
+      if (initObj.hasOwnProperty('index')) {
+        this.index = initObj.index
       }
       else {
-        this.diff_y = false;
-      }
-      if (initObj.hasOwnProperty('diff_yaw')) {
-        this.diff_yaw = initObj.diff_yaw
-      }
-      else {
-        this.diff_yaw = false;
+        this.index = 0;
       }
     }
   }
@@ -136,10 +143,12 @@ class custom_states_msgs {
     bufferOffset = _serializer.float64(obj.y, buffer, bufferOffset);
     // Serialize message field [yaw]
     bufferOffset = _serializer.float64(obj.yaw, buffer, bufferOffset);
-    // Serialize message field [controlX]
-    bufferOffset = _serializer.float64(obj.controlX, buffer, bufferOffset);
-    // Serialize message field [controlY]
-    bufferOffset = _serializer.float64(obj.controlY, buffer, bufferOffset);
+    // Serialize message field [controlA]
+    bufferOffset = _serializer.float64(obj.controlA, buffer, bufferOffset);
+    // Serialize message field [controlB]
+    bufferOffset = _serializer.float64(obj.controlB, buffer, bufferOffset);
+    // Serialize message field [control]
+    bufferOffset = _serializer.float64(obj.control, buffer, bufferOffset);
     // Serialize message field [controlYAW]
     bufferOffset = _serializer.float64(obj.controlYAW, buffer, bufferOffset);
     // Serialize message field [duration]
@@ -150,16 +159,16 @@ class custom_states_msgs {
     bufferOffset = _serializer.float64(obj.pre_y, buffer, bufferOffset);
     // Serialize message field [pre_yaw]
     bufferOffset = _serializer.float64(obj.pre_yaw, buffer, bufferOffset);
+    // Serialize message field [pre_controlA]
+    bufferOffset = _serializer.float64(obj.pre_controlA, buffer, bufferOffset);
+    // Serialize message field [pre_controlB]
+    bufferOffset = _serializer.float64(obj.pre_controlB, buffer, bufferOffset);
     // Serialize message field [flag]
     bufferOffset = _serializer.bool(obj.flag, buffer, bufferOffset);
-    // Serialize message field [tf_flag]
-    bufferOffset = _serializer.bool(obj.tf_flag, buffer, bufferOffset);
-    // Serialize message field [diff_x]
-    bufferOffset = _serializer.bool(obj.diff_x, buffer, bufferOffset);
-    // Serialize message field [diff_y]
-    bufferOffset = _serializer.bool(obj.diff_y, buffer, bufferOffset);
-    // Serialize message field [diff_yaw]
-    bufferOffset = _serializer.bool(obj.diff_yaw, buffer, bufferOffset);
+    // Serialize message field [sub_flag]
+    bufferOffset = _serializer.bool(obj.sub_flag, buffer, bufferOffset);
+    // Serialize message field [index]
+    bufferOffset = _serializer.int8(obj.index, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -173,10 +182,12 @@ class custom_states_msgs {
     data.y = _deserializer.float64(buffer, bufferOffset);
     // Deserialize message field [yaw]
     data.yaw = _deserializer.float64(buffer, bufferOffset);
-    // Deserialize message field [controlX]
-    data.controlX = _deserializer.float64(buffer, bufferOffset);
-    // Deserialize message field [controlY]
-    data.controlY = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [controlA]
+    data.controlA = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [controlB]
+    data.controlB = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [control]
+    data.control = _deserializer.float64(buffer, bufferOffset);
     // Deserialize message field [controlYAW]
     data.controlYAW = _deserializer.float64(buffer, bufferOffset);
     // Deserialize message field [duration]
@@ -187,21 +198,21 @@ class custom_states_msgs {
     data.pre_y = _deserializer.float64(buffer, bufferOffset);
     // Deserialize message field [pre_yaw]
     data.pre_yaw = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [pre_controlA]
+    data.pre_controlA = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [pre_controlB]
+    data.pre_controlB = _deserializer.float64(buffer, bufferOffset);
     // Deserialize message field [flag]
     data.flag = _deserializer.bool(buffer, bufferOffset);
-    // Deserialize message field [tf_flag]
-    data.tf_flag = _deserializer.bool(buffer, bufferOffset);
-    // Deserialize message field [diff_x]
-    data.diff_x = _deserializer.bool(buffer, bufferOffset);
-    // Deserialize message field [diff_y]
-    data.diff_y = _deserializer.bool(buffer, bufferOffset);
-    // Deserialize message field [diff_yaw]
-    data.diff_yaw = _deserializer.bool(buffer, bufferOffset);
+    // Deserialize message field [sub_flag]
+    data.sub_flag = _deserializer.bool(buffer, bufferOffset);
+    // Deserialize message field [index]
+    data.index = _deserializer.int8(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    return 85;
+    return 107;
   }
 
   static datatype() {
@@ -211,7 +222,7 @@ class custom_states_msgs {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '3b52bf44a08210bd7d5f8e100b5f756a';
+    return '687ab8d67518730041fc3c6e12a166b7';
   }
 
   static messageDefinition() {
@@ -222,8 +233,9 @@ class custom_states_msgs {
     float64 y
     float64 yaw
     
-    float64 controlX
-    float64 controlY
+    float64 controlA
+    float64 controlB
+    float64 control
     float64 controlYAW
     
     float64 duration
@@ -231,13 +243,13 @@ class custom_states_msgs {
     float64 pre_x
     float64 pre_y
     float64 pre_yaw
+    float64 pre_controlA
+    float64 pre_controlB
     
     bool flag
-    bool tf_flag
+    bool sub_flag
     
-    bool diff_x
-    bool diff_y
-    bool diff_yaw
+    int8 index
     
     `;
   }
@@ -269,18 +281,25 @@ class custom_states_msgs {
       resolved.yaw = 0.0
     }
 
-    if (msg.controlX !== undefined) {
-      resolved.controlX = msg.controlX;
+    if (msg.controlA !== undefined) {
+      resolved.controlA = msg.controlA;
     }
     else {
-      resolved.controlX = 0.0
+      resolved.controlA = 0.0
     }
 
-    if (msg.controlY !== undefined) {
-      resolved.controlY = msg.controlY;
+    if (msg.controlB !== undefined) {
+      resolved.controlB = msg.controlB;
     }
     else {
-      resolved.controlY = 0.0
+      resolved.controlB = 0.0
+    }
+
+    if (msg.control !== undefined) {
+      resolved.control = msg.control;
+    }
+    else {
+      resolved.control = 0.0
     }
 
     if (msg.controlYAW !== undefined) {
@@ -318,6 +337,20 @@ class custom_states_msgs {
       resolved.pre_yaw = 0.0
     }
 
+    if (msg.pre_controlA !== undefined) {
+      resolved.pre_controlA = msg.pre_controlA;
+    }
+    else {
+      resolved.pre_controlA = 0.0
+    }
+
+    if (msg.pre_controlB !== undefined) {
+      resolved.pre_controlB = msg.pre_controlB;
+    }
+    else {
+      resolved.pre_controlB = 0.0
+    }
+
     if (msg.flag !== undefined) {
       resolved.flag = msg.flag;
     }
@@ -325,32 +358,18 @@ class custom_states_msgs {
       resolved.flag = false
     }
 
-    if (msg.tf_flag !== undefined) {
-      resolved.tf_flag = msg.tf_flag;
+    if (msg.sub_flag !== undefined) {
+      resolved.sub_flag = msg.sub_flag;
     }
     else {
-      resolved.tf_flag = false
+      resolved.sub_flag = false
     }
 
-    if (msg.diff_x !== undefined) {
-      resolved.diff_x = msg.diff_x;
+    if (msg.index !== undefined) {
+      resolved.index = msg.index;
     }
     else {
-      resolved.diff_x = false
-    }
-
-    if (msg.diff_y !== undefined) {
-      resolved.diff_y = msg.diff_y;
-    }
-    else {
-      resolved.diff_y = false
-    }
-
-    if (msg.diff_yaw !== undefined) {
-      resolved.diff_yaw = msg.diff_yaw;
-    }
-    else {
-      resolved.diff_yaw = false
+      resolved.index = 0
     }
 
     return resolved;

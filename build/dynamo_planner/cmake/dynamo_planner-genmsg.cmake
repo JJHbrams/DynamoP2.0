@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "dynamo_planner: 1 messages, 0 services")
+message(STATUS "dynamo_planner: 2 messages, 1 services")
 
 set(MSG_I_FLAGS "-Idynamo_planner:/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg;-Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg")
 
@@ -22,6 +22,16 @@ add_custom_target(_dynamo_planner_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "dynamo_planner" "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/custom_states_msgs.msg" ""
 )
 
+get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg" NAME_WE)
+add_custom_target(_dynamo_planner_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "dynamo_planner" "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg" ""
+)
+
+get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv" NAME_WE)
+add_custom_target(_dynamo_planner_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "dynamo_planner" "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv" ""
+)
+
 #
 #  langs = gencpp;geneus;genlisp;gennodejs;genpy
 #
@@ -34,8 +44,20 @@ _generate_msg_cpp(dynamo_planner
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/dynamo_planner
 )
+_generate_msg_cpp(dynamo_planner
+  "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/dynamo_planner
+)
 
 ### Generating Services
+_generate_srv_cpp(dynamo_planner
+  "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/dynamo_planner
+)
 
 ### Generating Module File
 _generate_module_cpp(dynamo_planner
@@ -50,6 +72,10 @@ add_dependencies(dynamo_planner_generate_messages dynamo_planner_generate_messag
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/custom_states_msgs.msg" NAME_WE)
+add_dependencies(dynamo_planner_generate_messages_cpp _dynamo_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg" NAME_WE)
+add_dependencies(dynamo_planner_generate_messages_cpp _dynamo_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv" NAME_WE)
 add_dependencies(dynamo_planner_generate_messages_cpp _dynamo_planner_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -67,8 +93,20 @@ _generate_msg_eus(dynamo_planner
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/dynamo_planner
 )
+_generate_msg_eus(dynamo_planner
+  "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/dynamo_planner
+)
 
 ### Generating Services
+_generate_srv_eus(dynamo_planner
+  "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/dynamo_planner
+)
 
 ### Generating Module File
 _generate_module_eus(dynamo_planner
@@ -83,6 +121,10 @@ add_dependencies(dynamo_planner_generate_messages dynamo_planner_generate_messag
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/custom_states_msgs.msg" NAME_WE)
+add_dependencies(dynamo_planner_generate_messages_eus _dynamo_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg" NAME_WE)
+add_dependencies(dynamo_planner_generate_messages_eus _dynamo_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv" NAME_WE)
 add_dependencies(dynamo_planner_generate_messages_eus _dynamo_planner_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -100,8 +142,20 @@ _generate_msg_lisp(dynamo_planner
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/dynamo_planner
 )
+_generate_msg_lisp(dynamo_planner
+  "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/dynamo_planner
+)
 
 ### Generating Services
+_generate_srv_lisp(dynamo_planner
+  "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/dynamo_planner
+)
 
 ### Generating Module File
 _generate_module_lisp(dynamo_planner
@@ -116,6 +170,10 @@ add_dependencies(dynamo_planner_generate_messages dynamo_planner_generate_messag
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/custom_states_msgs.msg" NAME_WE)
+add_dependencies(dynamo_planner_generate_messages_lisp _dynamo_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg" NAME_WE)
+add_dependencies(dynamo_planner_generate_messages_lisp _dynamo_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv" NAME_WE)
 add_dependencies(dynamo_planner_generate_messages_lisp _dynamo_planner_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -133,8 +191,20 @@ _generate_msg_nodejs(dynamo_planner
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/dynamo_planner
 )
+_generate_msg_nodejs(dynamo_planner
+  "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/dynamo_planner
+)
 
 ### Generating Services
+_generate_srv_nodejs(dynamo_planner
+  "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/dynamo_planner
+)
 
 ### Generating Module File
 _generate_module_nodejs(dynamo_planner
@@ -149,6 +219,10 @@ add_dependencies(dynamo_planner_generate_messages dynamo_planner_generate_messag
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/custom_states_msgs.msg" NAME_WE)
+add_dependencies(dynamo_planner_generate_messages_nodejs _dynamo_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg" NAME_WE)
+add_dependencies(dynamo_planner_generate_messages_nodejs _dynamo_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv" NAME_WE)
 add_dependencies(dynamo_planner_generate_messages_nodejs _dynamo_planner_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -166,8 +240,20 @@ _generate_msg_py(dynamo_planner
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/dynamo_planner
 )
+_generate_msg_py(dynamo_planner
+  "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/dynamo_planner
+)
 
 ### Generating Services
+_generate_srv_py(dynamo_planner
+  "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/dynamo_planner
+)
 
 ### Generating Module File
 _generate_module_py(dynamo_planner
@@ -182,6 +268,10 @@ add_dependencies(dynamo_planner_generate_messages dynamo_planner_generate_messag
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/custom_states_msgs.msg" NAME_WE)
+add_dependencies(dynamo_planner_generate_messages_py _dynamo_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg" NAME_WE)
+add_dependencies(dynamo_planner_generate_messages_py _dynamo_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv" NAME_WE)
 add_dependencies(dynamo_planner_generate_messages_py _dynamo_planner_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

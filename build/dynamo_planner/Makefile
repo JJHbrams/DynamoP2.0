@@ -183,6 +183,51 @@ gazebo_ros_moveit_planning_scene/fast:
 .PHONY : gazebo_ros_moveit_planning_scene/fast
 
 # Convenience name for target.
+dynamo_planner/CMakeFiles/propagator_GAZEBO.dir/rule:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f CMakeFiles/Makefile2 dynamo_planner/CMakeFiles/propagator_GAZEBO.dir/rule
+.PHONY : dynamo_planner/CMakeFiles/propagator_GAZEBO.dir/rule
+
+# Convenience name for target.
+propagator_GAZEBO: dynamo_planner/CMakeFiles/propagator_GAZEBO.dir/rule
+
+.PHONY : propagator_GAZEBO
+
+# fast build rule for target.
+propagator_GAZEBO/fast:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator_GAZEBO.dir/build.make dynamo_planner/CMakeFiles/propagator_GAZEBO.dir/build
+.PHONY : propagator_GAZEBO/fast
+
+# Convenience name for target.
+dynamo_planner/CMakeFiles/URDF_sampler.dir/rule:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f CMakeFiles/Makefile2 dynamo_planner/CMakeFiles/URDF_sampler.dir/rule
+.PHONY : dynamo_planner/CMakeFiles/URDF_sampler.dir/rule
+
+# Convenience name for target.
+URDF_sampler: dynamo_planner/CMakeFiles/URDF_sampler.dir/rule
+
+.PHONY : URDF_sampler
+
+# fast build rule for target.
+URDF_sampler/fast:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/URDF_sampler.dir/build.make dynamo_planner/CMakeFiles/URDF_sampler.dir/build
+.PHONY : URDF_sampler/fast
+
+# Convenience name for target.
+dynamo_planner/CMakeFiles/propagator_ODE.dir/rule:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f CMakeFiles/Makefile2 dynamo_planner/CMakeFiles/propagator_ODE.dir/rule
+.PHONY : dynamo_planner/CMakeFiles/propagator_ODE.dir/rule
+
+# Convenience name for target.
+propagator_ODE: dynamo_planner/CMakeFiles/propagator_ODE.dir/rule
+
+.PHONY : propagator_ODE
+
+# fast build rule for target.
+propagator_ODE/fast:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator_ODE.dir/build.make dynamo_planner/CMakeFiles/propagator_ODE.dir/build
+.PHONY : propagator_ODE/fast
+
+# Convenience name for target.
 dynamo_planner/CMakeFiles/main.dir/rule:
 	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f CMakeFiles/Makefile2 dynamo_planner/CMakeFiles/main.dir/rule
 .PHONY : dynamo_planner/CMakeFiles/main.dir/rule
@@ -286,6 +331,36 @@ dynamo_planner_generate_messages_cpp: dynamo_planner/CMakeFiles/dynamo_planner_g
 dynamo_planner_generate_messages_cpp/fast:
 	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_cpp.dir/build.make dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_cpp.dir/build
 .PHONY : dynamo_planner_generate_messages_cpp/fast
+
+# Convenience name for target.
+dynamo_planner/CMakeFiles/_dynamo_planner_generate_messages_check_deps_physics_data_sampler.dir/rule:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f CMakeFiles/Makefile2 dynamo_planner/CMakeFiles/_dynamo_planner_generate_messages_check_deps_physics_data_sampler.dir/rule
+.PHONY : dynamo_planner/CMakeFiles/_dynamo_planner_generate_messages_check_deps_physics_data_sampler.dir/rule
+
+# Convenience name for target.
+_dynamo_planner_generate_messages_check_deps_physics_data_sampler: dynamo_planner/CMakeFiles/_dynamo_planner_generate_messages_check_deps_physics_data_sampler.dir/rule
+
+.PHONY : _dynamo_planner_generate_messages_check_deps_physics_data_sampler
+
+# fast build rule for target.
+_dynamo_planner_generate_messages_check_deps_physics_data_sampler/fast:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/_dynamo_planner_generate_messages_check_deps_physics_data_sampler.dir/build.make dynamo_planner/CMakeFiles/_dynamo_planner_generate_messages_check_deps_physics_data_sampler.dir/build
+.PHONY : _dynamo_planner_generate_messages_check_deps_physics_data_sampler/fast
+
+# Convenience name for target.
+dynamo_planner/CMakeFiles/_dynamo_planner_generate_messages_check_deps_data_gen_msgs.dir/rule:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f CMakeFiles/Makefile2 dynamo_planner/CMakeFiles/_dynamo_planner_generate_messages_check_deps_data_gen_msgs.dir/rule
+.PHONY : dynamo_planner/CMakeFiles/_dynamo_planner_generate_messages_check_deps_data_gen_msgs.dir/rule
+
+# Convenience name for target.
+_dynamo_planner_generate_messages_check_deps_data_gen_msgs: dynamo_planner/CMakeFiles/_dynamo_planner_generate_messages_check_deps_data_gen_msgs.dir/rule
+
+.PHONY : _dynamo_planner_generate_messages_check_deps_data_gen_msgs
+
+# fast build rule for target.
+_dynamo_planner_generate_messages_check_deps_data_gen_msgs/fast:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/_dynamo_planner_generate_messages_check_deps_data_gen_msgs.dir/build.make dynamo_planner/CMakeFiles/_dynamo_planner_generate_messages_check_deps_data_gen_msgs.dir/build
+.PHONY : _dynamo_planner_generate_messages_check_deps_data_gen_msgs/fast
 
 # Convenience name for target.
 dynamo_planner/CMakeFiles/moveit_ros_manipulation_gencfg.dir/rule:
@@ -796,6 +871,21 @@ std_srvs_generate_messages_lisp: dynamo_planner/CMakeFiles/std_srvs_generate_mes
 std_srvs_generate_messages_lisp/fast:
 	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/std_srvs_generate_messages_lisp.dir/build.make dynamo_planner/CMakeFiles/std_srvs_generate_messages_lisp.dir/build
 .PHONY : std_srvs_generate_messages_lisp/fast
+
+# Convenience name for target.
+dynamo_planner/CMakeFiles/GAZEBO_ODE.dir/rule:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f CMakeFiles/Makefile2 dynamo_planner/CMakeFiles/GAZEBO_ODE.dir/rule
+.PHONY : dynamo_planner/CMakeFiles/GAZEBO_ODE.dir/rule
+
+# Convenience name for target.
+GAZEBO_ODE: dynamo_planner/CMakeFiles/GAZEBO_ODE.dir/rule
+
+.PHONY : GAZEBO_ODE
+
+# fast build rule for target.
+GAZEBO_ODE/fast:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/GAZEBO_ODE.dir/build.make dynamo_planner/CMakeFiles/GAZEBO_ODE.dir/build
+.PHONY : GAZEBO_ODE/fast
 
 # Convenience name for target.
 dynamo_planner/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/rule:
@@ -1383,21 +1473,6 @@ moveit_msgs_generate_messages_nodejs/fast:
 .PHONY : moveit_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
-dynamo_planner/CMakeFiles/propagator.dir/rule:
-	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f CMakeFiles/Makefile2 dynamo_planner/CMakeFiles/propagator.dir/rule
-.PHONY : dynamo_planner/CMakeFiles/propagator.dir/rule
-
-# Convenience name for target.
-propagator: dynamo_planner/CMakeFiles/propagator.dir/rule
-
-.PHONY : propagator
-
-# fast build rule for target.
-propagator/fast:
-	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator.dir/build.make dynamo_planner/CMakeFiles/propagator.dir/build
-.PHONY : propagator/fast
-
-# Convenience name for target.
 dynamo_planner/CMakeFiles/trajectory_msgs_generate_messages_nodejs.dir/rule:
 	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f CMakeFiles/Makefile2 dynamo_planner/CMakeFiles/trajectory_msgs_generate_messages_nodejs.dir/rule
 .PHONY : dynamo_planner/CMakeFiles/trajectory_msgs_generate_messages_nodejs.dir/rule
@@ -1724,6 +1799,33 @@ src/DynaMoP.cpp.s:
 	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/dynamo_planner.dir/build.make dynamo_planner/CMakeFiles/dynamo_planner.dir/src/DynaMoP.cpp.s
 .PHONY : src/DynaMoP.cpp.s
 
+src/GAZEBO_ODE.o: src/GAZEBO_ODE.cc.o
+
+.PHONY : src/GAZEBO_ODE.o
+
+# target to build an object file
+src/GAZEBO_ODE.cc.o:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/GAZEBO_ODE.dir/build.make dynamo_planner/CMakeFiles/GAZEBO_ODE.dir/src/GAZEBO_ODE.cc.o
+.PHONY : src/GAZEBO_ODE.cc.o
+
+src/GAZEBO_ODE.i: src/GAZEBO_ODE.cc.i
+
+.PHONY : src/GAZEBO_ODE.i
+
+# target to preprocess a source file
+src/GAZEBO_ODE.cc.i:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/GAZEBO_ODE.dir/build.make dynamo_planner/CMakeFiles/GAZEBO_ODE.dir/src/GAZEBO_ODE.cc.i
+.PHONY : src/GAZEBO_ODE.cc.i
+
+src/GAZEBO_ODE.s: src/GAZEBO_ODE.cc.s
+
+.PHONY : src/GAZEBO_ODE.s
+
+# target to generate assembly for a file
+src/GAZEBO_ODE.cc.s:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/GAZEBO_ODE.dir/build.make dynamo_planner/CMakeFiles/GAZEBO_ODE.dir/src/GAZEBO_ODE.cc.s
+.PHONY : src/GAZEBO_ODE.cc.s
+
 src/Scene.o: src/Scene.cpp.o
 
 .PHONY : src/Scene.o
@@ -1777,6 +1879,33 @@ src/StateSpaces.s: src/StateSpaces.cpp.s
 src/StateSpaces.cpp.s:
 	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/dynamo_planner.dir/build.make dynamo_planner/CMakeFiles/dynamo_planner.dir/src/StateSpaces.cpp.s
 .PHONY : src/StateSpaces.cpp.s
+
+src/URDF_sampler.o: src/URDF_sampler.cpp.o
+
+.PHONY : src/URDF_sampler.o
+
+# target to build an object file
+src/URDF_sampler.cpp.o:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/URDF_sampler.dir/build.make dynamo_planner/CMakeFiles/URDF_sampler.dir/src/URDF_sampler.cpp.o
+.PHONY : src/URDF_sampler.cpp.o
+
+src/URDF_sampler.i: src/URDF_sampler.cpp.i
+
+.PHONY : src/URDF_sampler.i
+
+# target to preprocess a source file
+src/URDF_sampler.cpp.i:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/URDF_sampler.dir/build.make dynamo_planner/CMakeFiles/URDF_sampler.dir/src/URDF_sampler.cpp.i
+.PHONY : src/URDF_sampler.cpp.i
+
+src/URDF_sampler.s: src/URDF_sampler.cpp.s
+
+.PHONY : src/URDF_sampler.s
+
+# target to generate assembly for a file
+src/URDF_sampler.cpp.s:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/URDF_sampler.dir/build.make dynamo_planner/CMakeFiles/URDF_sampler.dir/src/URDF_sampler.cpp.s
+.PHONY : src/URDF_sampler.cpp.s
 
 src/gazebo_ros_moveit_planning_scene.o: src/gazebo_ros_moveit_planning_scene.cpp.o
 
@@ -1832,32 +1961,59 @@ src/main.cpp.s:
 	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/main.dir/build.make dynamo_planner/CMakeFiles/main.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/propagator_ODE.o: src/propagator_ODE.cc.o
+src/propagator_GAZEBO.o: src/propagator_GAZEBO.cc.o
+
+.PHONY : src/propagator_GAZEBO.o
+
+# target to build an object file
+src/propagator_GAZEBO.cc.o:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator_GAZEBO.dir/build.make dynamo_planner/CMakeFiles/propagator_GAZEBO.dir/src/propagator_GAZEBO.cc.o
+.PHONY : src/propagator_GAZEBO.cc.o
+
+src/propagator_GAZEBO.i: src/propagator_GAZEBO.cc.i
+
+.PHONY : src/propagator_GAZEBO.i
+
+# target to preprocess a source file
+src/propagator_GAZEBO.cc.i:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator_GAZEBO.dir/build.make dynamo_planner/CMakeFiles/propagator_GAZEBO.dir/src/propagator_GAZEBO.cc.i
+.PHONY : src/propagator_GAZEBO.cc.i
+
+src/propagator_GAZEBO.s: src/propagator_GAZEBO.cc.s
+
+.PHONY : src/propagator_GAZEBO.s
+
+# target to generate assembly for a file
+src/propagator_GAZEBO.cc.s:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator_GAZEBO.dir/build.make dynamo_planner/CMakeFiles/propagator_GAZEBO.dir/src/propagator_GAZEBO.cc.s
+.PHONY : src/propagator_GAZEBO.cc.s
+
+src/propagator_ODE.o: src/propagator_ODE.cpp.o
 
 .PHONY : src/propagator_ODE.o
 
 # target to build an object file
-src/propagator_ODE.cc.o:
-	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator.dir/build.make dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.o
-.PHONY : src/propagator_ODE.cc.o
+src/propagator_ODE.cpp.o:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator_ODE.dir/build.make dynamo_planner/CMakeFiles/propagator_ODE.dir/src/propagator_ODE.cpp.o
+.PHONY : src/propagator_ODE.cpp.o
 
-src/propagator_ODE.i: src/propagator_ODE.cc.i
+src/propagator_ODE.i: src/propagator_ODE.cpp.i
 
 .PHONY : src/propagator_ODE.i
 
 # target to preprocess a source file
-src/propagator_ODE.cc.i:
-	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator.dir/build.make dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.i
-.PHONY : src/propagator_ODE.cc.i
+src/propagator_ODE.cpp.i:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator_ODE.dir/build.make dynamo_planner/CMakeFiles/propagator_ODE.dir/src/propagator_ODE.cpp.i
+.PHONY : src/propagator_ODE.cpp.i
 
-src/propagator_ODE.s: src/propagator_ODE.cc.s
+src/propagator_ODE.s: src/propagator_ODE.cpp.s
 
 .PHONY : src/propagator_ODE.s
 
 # target to generate assembly for a file
-src/propagator_ODE.cc.s:
-	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator.dir/build.make dynamo_planner/CMakeFiles/propagator.dir/src/propagator_ODE.cc.s
-.PHONY : src/propagator_ODE.cc.s
+src/propagator_ODE.cpp.s:
+	cd /home/mrjohd/Kinodynamic_ws/build && $(MAKE) -f dynamo_planner/CMakeFiles/propagator_ODE.dir/build.make dynamo_planner/CMakeFiles/propagator_ODE.dir/src/propagator_ODE.cpp.s
+.PHONY : src/propagator_ODE.cpp.s
 
 # Help Target
 help:
@@ -1870,6 +2026,9 @@ help:
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... gazebo_ros_moveit_planning_scene"
+	@echo "... propagator_GAZEBO"
+	@echo "... URDF_sampler"
+	@echo "... propagator_ODE"
 	@echo "... main"
 	@echo "... dynamo_planner"
 	@echo "... dynamo_planner_generate_messages_py"
@@ -1877,6 +2036,8 @@ help:
 	@echo "... dynamo_planner_genlisp"
 	@echo "... dynamo_planner_generate_messages_lisp"
 	@echo "... dynamo_planner_generate_messages_cpp"
+	@echo "... _dynamo_planner_generate_messages_check_deps_physics_data_sampler"
+	@echo "... _dynamo_planner_generate_messages_check_deps_data_gen_msgs"
 	@echo "... moveit_ros_manipulation_gencfg"
 	@echo "... moveit_ros_planning_gencfg"
 	@echo "... octomap_msgs_generate_messages_eus"
@@ -1911,6 +2072,7 @@ help:
 	@echo "... octomap_msgs_generate_messages_lisp"
 	@echo "... std_srvs_generate_messages_eus"
 	@echo "... std_srvs_generate_messages_lisp"
+	@echo "... GAZEBO_ODE"
 	@echo "... tf2_msgs_generate_messages_nodejs"
 	@echo "... dynamo_planner_generate_messages_eus"
 	@echo "... octomap_msgs_generate_messages_py"
@@ -1952,7 +2114,6 @@ help:
 	@echo "... visualization_msgs_generate_messages_lisp"
 	@echo "... visualization_msgs_generate_messages_nodejs"
 	@echo "... moveit_msgs_generate_messages_nodejs"
-	@echo "... propagator"
 	@echo "... trajectory_msgs_generate_messages_nodejs"
 	@echo "... bond_generate_messages_nodejs"
 	@echo "... tf2_msgs_generate_messages_eus"
@@ -1977,18 +2138,27 @@ help:
 	@echo "... src/DynaMoP.o"
 	@echo "... src/DynaMoP.i"
 	@echo "... src/DynaMoP.s"
+	@echo "... src/GAZEBO_ODE.o"
+	@echo "... src/GAZEBO_ODE.i"
+	@echo "... src/GAZEBO_ODE.s"
 	@echo "... src/Scene.o"
 	@echo "... src/Scene.i"
 	@echo "... src/Scene.s"
 	@echo "... src/StateSpaces.o"
 	@echo "... src/StateSpaces.i"
 	@echo "... src/StateSpaces.s"
+	@echo "... src/URDF_sampler.o"
+	@echo "... src/URDF_sampler.i"
+	@echo "... src/URDF_sampler.s"
 	@echo "... src/gazebo_ros_moveit_planning_scene.o"
 	@echo "... src/gazebo_ros_moveit_planning_scene.i"
 	@echo "... src/gazebo_ros_moveit_planning_scene.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/propagator_GAZEBO.o"
+	@echo "... src/propagator_GAZEBO.i"
+	@echo "... src/propagator_GAZEBO.s"
 	@echo "... src/propagator_ODE.o"
 	@echo "... src/propagator_ODE.i"
 	@echo "... src/propagator_ODE.s"

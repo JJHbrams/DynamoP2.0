@@ -7,7 +7,7 @@ import struct
 
 
 class custom_states_msgs(genpy.Message):
-  _md5sum = "3b52bf44a08210bd7d5f8e100b5f756a"
+  _md5sum = "687ab8d67518730041fc3c6e12a166b7"
   _type = "dynamo_planner/custom_states_msgs"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """# double type x y yaw control duration
@@ -15,8 +15,9 @@ float64 x
 float64 y
 float64 yaw
 
-float64 controlX
-float64 controlY
+float64 controlA
+float64 controlB
+float64 control
 float64 controlYAW
 
 float64 duration
@@ -24,16 +25,16 @@ float64 duration
 float64 pre_x
 float64 pre_y
 float64 pre_yaw
+float64 pre_controlA
+float64 pre_controlB
 
 bool flag
-bool tf_flag
+bool sub_flag
 
-bool diff_x
-bool diff_y
-bool diff_yaw
+int8 index
 """
-  __slots__ = ['x','y','yaw','controlX','controlY','controlYAW','duration','pre_x','pre_y','pre_yaw','flag','tf_flag','diff_x','diff_y','diff_yaw']
-  _slot_types = ['float64','float64','float64','float64','float64','float64','float64','float64','float64','float64','bool','bool','bool','bool','bool']
+  __slots__ = ['x','y','yaw','controlA','controlB','control','controlYAW','duration','pre_x','pre_y','pre_yaw','pre_controlA','pre_controlB','flag','sub_flag','index']
+  _slot_types = ['float64','float64','float64','float64','float64','float64','float64','float64','float64','float64','float64','float64','float64','bool','bool','int8']
 
   def __init__(self, *args, **kwds):
     """
@@ -43,7 +44,7 @@ bool diff_yaw
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       x,y,yaw,controlX,controlY,controlYAW,duration,pre_x,pre_y,pre_yaw,flag,tf_flag,diff_x,diff_y,diff_yaw
+       x,y,yaw,controlA,controlB,control,controlYAW,duration,pre_x,pre_y,pre_yaw,pre_controlA,pre_controlB,flag,sub_flag,index
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -58,10 +59,12 @@ bool diff_yaw
         self.y = 0.
       if self.yaw is None:
         self.yaw = 0.
-      if self.controlX is None:
-        self.controlX = 0.
-      if self.controlY is None:
-        self.controlY = 0.
+      if self.controlA is None:
+        self.controlA = 0.
+      if self.controlB is None:
+        self.controlB = 0.
+      if self.control is None:
+        self.control = 0.
       if self.controlYAW is None:
         self.controlYAW = 0.
       if self.duration is None:
@@ -72,32 +75,33 @@ bool diff_yaw
         self.pre_y = 0.
       if self.pre_yaw is None:
         self.pre_yaw = 0.
+      if self.pre_controlA is None:
+        self.pre_controlA = 0.
+      if self.pre_controlB is None:
+        self.pre_controlB = 0.
       if self.flag is None:
         self.flag = False
-      if self.tf_flag is None:
-        self.tf_flag = False
-      if self.diff_x is None:
-        self.diff_x = False
-      if self.diff_y is None:
-        self.diff_y = False
-      if self.diff_yaw is None:
-        self.diff_yaw = False
+      if self.sub_flag is None:
+        self.sub_flag = False
+      if self.index is None:
+        self.index = 0
     else:
       self.x = 0.
       self.y = 0.
       self.yaw = 0.
-      self.controlX = 0.
-      self.controlY = 0.
+      self.controlA = 0.
+      self.controlB = 0.
+      self.control = 0.
       self.controlYAW = 0.
       self.duration = 0.
       self.pre_x = 0.
       self.pre_y = 0.
       self.pre_yaw = 0.
+      self.pre_controlA = 0.
+      self.pre_controlB = 0.
       self.flag = False
-      self.tf_flag = False
-      self.diff_x = False
-      self.diff_y = False
-      self.diff_yaw = False
+      self.sub_flag = False
+      self.index = 0
 
   def _get_types(self):
     """
@@ -112,7 +116,7 @@ bool diff_yaw
     """
     try:
       _x = self
-      buff.write(_get_struct_10d5B().pack(_x.x, _x.y, _x.yaw, _x.controlX, _x.controlY, _x.controlYAW, _x.duration, _x.pre_x, _x.pre_y, _x.pre_yaw, _x.flag, _x.tf_flag, _x.diff_x, _x.diff_y, _x.diff_yaw))
+      buff.write(_get_struct_13d2Bb().pack(_x.x, _x.y, _x.yaw, _x.controlA, _x.controlB, _x.control, _x.controlYAW, _x.duration, _x.pre_x, _x.pre_y, _x.pre_yaw, _x.pre_controlA, _x.pre_controlB, _x.flag, _x.sub_flag, _x.index))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -125,13 +129,10 @@ bool diff_yaw
       end = 0
       _x = self
       start = end
-      end += 85
-      (_x.x, _x.y, _x.yaw, _x.controlX, _x.controlY, _x.controlYAW, _x.duration, _x.pre_x, _x.pre_y, _x.pre_yaw, _x.flag, _x.tf_flag, _x.diff_x, _x.diff_y, _x.diff_yaw,) = _get_struct_10d5B().unpack(str[start:end])
+      end += 107
+      (_x.x, _x.y, _x.yaw, _x.controlA, _x.controlB, _x.control, _x.controlYAW, _x.duration, _x.pre_x, _x.pre_y, _x.pre_yaw, _x.pre_controlA, _x.pre_controlB, _x.flag, _x.sub_flag, _x.index,) = _get_struct_13d2Bb().unpack(str[start:end])
       self.flag = bool(self.flag)
-      self.tf_flag = bool(self.tf_flag)
-      self.diff_x = bool(self.diff_x)
-      self.diff_y = bool(self.diff_y)
-      self.diff_yaw = bool(self.diff_yaw)
+      self.sub_flag = bool(self.sub_flag)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -145,7 +146,7 @@ bool diff_yaw
     """
     try:
       _x = self
-      buff.write(_get_struct_10d5B().pack(_x.x, _x.y, _x.yaw, _x.controlX, _x.controlY, _x.controlYAW, _x.duration, _x.pre_x, _x.pre_y, _x.pre_yaw, _x.flag, _x.tf_flag, _x.diff_x, _x.diff_y, _x.diff_yaw))
+      buff.write(_get_struct_13d2Bb().pack(_x.x, _x.y, _x.yaw, _x.controlA, _x.controlB, _x.control, _x.controlYAW, _x.duration, _x.pre_x, _x.pre_y, _x.pre_yaw, _x.pre_controlA, _x.pre_controlB, _x.flag, _x.sub_flag, _x.index))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -159,13 +160,10 @@ bool diff_yaw
       end = 0
       _x = self
       start = end
-      end += 85
-      (_x.x, _x.y, _x.yaw, _x.controlX, _x.controlY, _x.controlYAW, _x.duration, _x.pre_x, _x.pre_y, _x.pre_yaw, _x.flag, _x.tf_flag, _x.diff_x, _x.diff_y, _x.diff_yaw,) = _get_struct_10d5B().unpack(str[start:end])
+      end += 107
+      (_x.x, _x.y, _x.yaw, _x.controlA, _x.controlB, _x.control, _x.controlYAW, _x.duration, _x.pre_x, _x.pre_y, _x.pre_yaw, _x.pre_controlA, _x.pre_controlB, _x.flag, _x.sub_flag, _x.index,) = _get_struct_13d2Bb().unpack(str[start:end])
       self.flag = bool(self.flag)
-      self.tf_flag = bool(self.tf_flag)
-      self.diff_x = bool(self.diff_x)
-      self.diff_y = bool(self.diff_y)
-      self.diff_yaw = bool(self.diff_yaw)
+      self.sub_flag = bool(self.sub_flag)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -174,9 +172,9 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_10d5B = None
-def _get_struct_10d5B():
-    global _struct_10d5B
-    if _struct_10d5B is None:
-        _struct_10d5B = struct.Struct("<10d5B")
-    return _struct_10d5B
+_struct_13d2Bb = None
+def _get_struct_13d2Bb():
+    global _struct_13d2Bb
+    if _struct_13d2Bb is None:
+        _struct_13d2Bb = struct.Struct("<13d2Bb")
+    return _struct_13d2Bb

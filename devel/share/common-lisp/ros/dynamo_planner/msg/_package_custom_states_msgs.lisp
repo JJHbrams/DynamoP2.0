@@ -5,10 +5,12 @@
           Y
           YAW-VAL
           YAW
-          CONTROLX-VAL
-          CONTROLX
-          CONTROLY-VAL
-          CONTROLY
+          CONTROLA-VAL
+          CONTROLA
+          CONTROLB-VAL
+          CONTROLB
+          CONTROL-VAL
+          CONTROL
           CONTROLYAW-VAL
           CONTROLYAW
           DURATION-VAL
@@ -19,14 +21,14 @@
           PRE_Y
           PRE_YAW-VAL
           PRE_YAW
+          PRE_CONTROLA-VAL
+          PRE_CONTROLA
+          PRE_CONTROLB-VAL
+          PRE_CONTROLB
           FLAG-VAL
           FLAG
-          TF_FLAG-VAL
-          TF_FLAG
-          DIFF_X-VAL
-          DIFF_X
-          DIFF_Y-VAL
-          DIFF_Y
-          DIFF_YAW-VAL
-          DIFF_YAW
+          SUB_FLAG-VAL
+          SUB_FLAG
+          INDEX-VAL
+          INDEX
 ))

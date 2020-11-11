@@ -1,0 +1,209 @@
+-- Dynamics Interchange Format v0.1
+
+world = dynamics.world {
+	gravity = {0,0,-0.5},
+	ODE = {
+		ERP = 0.2,
+		CFM = 1e-10,
+		auto_disable = {
+			linear_threshold = 0.0001,
+			angular_threshold = 0.0001,
+			average_samples = 1,
+			idle_time = 0,
+			idle_steps = 10,
+		},
+	},
+}
+body = {}
+body[0] = dynamics.body {
+	world = world,
+	pos = {-2.60573667338212,1.44365029474829,0.18324449583092},
+	q = {0.70685359512522,-0.336720057301161,0.621787425903019,-0.0189207573461515},
+	lvel = {-1.38993702073105e-15,-3.00838397484086e-16,-1.14491749414469e-16},
+	avel = {-0.00569891823807013,-0.00289170418264984,-2.21814143318674e-16},
+	mass = 0.2,
+	I = {{0.002592,0,0},{0,0.002592,0},{0,0,0.002592}},
+	ODE = {
+	},
+	geometry = {
+		{
+			type = "sphere",
+			radius = 0.18,
+		},
+	},
+}
+body[1] = dynamics.body {
+	world = world,
+	pos = {-3.05162034928311,1.2174032007006,0.18324449583092},
+	q = {-0.0652558821520851,0.657411711974402,0.260403227627627,0.704089248493792},
+	lvel = {-1.38570185599478e-15,-1.18885531941723e-15,1.17961196366423e-16},
+	avel = {0.00524767001843582,0.00266273505033157,-2.23409003617383e-16},
+	mass = 0.2,
+	I = {{0.002592,0,0},{0,0.002592,0},{0,0,0.002592}},
+	ODE = {
+	},
+	geometry = {
+		{
+			type = "sphere",
+			radius = 0.18,
+		},
+	},
+}
+body[2] = dynamics.body {
+	world = world,
+	pos = {-2.51193331678462,0.706291054163408,0.184754666391014},
+	q = {0.650641948765013,-0.541328303026268,0.454932597581995,-0.276884550864195},
+	lvel = {-1.39087553323661e-15,5.82874841602614e-16,-1.11022302462516e-16},
+	avel = {-3.65846932121194e-17,8.6136827169116e-17,4.84052167645826e-18},
+	mass = 0.2,
+	I = {{0.002592,0,0},{0,0.002592,0},{0,0,0.002592}},
+	ODE = {
+	},
+	geometry = {
+		{
+			type = "sphere",
+			radius = 0.18,
+		},
+	},
+}
+body[3] = dynamics.body {
+	world = world,
+	pos = {-2.67021805559856,1.01823575108186,0.0939997672839006},
+	q = {-0.000564387758887585,-0.852200826683911,0.523213711038579,-0.000919264355170587},
+	lvel = {2.02046236323146e-19,1.6381923310229e-19,1.14152162227396e-17},
+	avel = {3.07847724285166e-17,-3.17532065473332e-17,3.82089147098473e-18},
+	mass = 1,
+	I = {{0.0241666666666667,0,0},{0,0.0441666666666667,0},{0,0,0.0616666666666667}},
+	ODE = {
+	},
+	geometry = {
+		{
+			type = "box",
+			sides = {0.7,0.5,0.2},
+		},
+	},
+}
+joint = {}
+joint[0] = dynamics.ODE_hinge2_joint {
+	world = world,
+	body = {body[3],body[0]}
+	anchor1 = {-0.35,-0.25,-0.1},
+	anchor2 = {0,0,0},
+	axis1 = {0,0,1},
+	axis2 = {0,2.22044604925031e-16,-1},
+	v1 = {0,1,0},
+	v2 = {-1,0,0},
+	susp_erp = 0.4,
+	susp_cfm = 0.8,
+	limit1 = {
+		low_stop = 0,
+		high_stop = 0,
+		ODE = {
+			stop_erp = 0.2,
+			stop_cfm = 1e-10,
+		},
+	},
+	motor1 = {
+		ODE = {
+			fudge_factor = 1,
+			normal_cfm = 1e-10,
+		},
+	},
+	limit2 = {
+		low_stop = -inf,
+		high_stop = inf,
+		ODE = {
+			stop_erp = 0.2,
+			stop_cfm = 1e-10,
+		},
+	},
+	motor2 = {
+		ODE = {
+			fudge_factor = 1,
+			normal_cfm = 1e-10,
+		},
+	},
+}
+joint[1] = dynamics.ODE_hinge2_joint {
+	world = world,
+	body = {body[3],body[1]}
+	anchor1 = {-0.35,0.25,-0.1},
+	anchor2 = {0,0,0},
+	axis1 = {0,0,1},
+	axis2 = {0,2.22044604925031e-16,-1},
+	v1 = {0,1,0},
+	v2 = {-1,0,0},
+	susp_erp = 0.4,
+	susp_cfm = 0.8,
+	limit1 = {
+		low_stop = 0,
+		high_stop = 0,
+		ODE = {
+			stop_erp = 0.2,
+			stop_cfm = 1e-10,
+		},
+	},
+	motor1 = {
+		ODE = {
+			fudge_factor = 1,
+			normal_cfm = 1e-10,
+		},
+	},
+	limit2 = {
+		low_stop = -inf,
+		high_stop = inf,
+		ODE = {
+			stop_erp = 0.2,
+			stop_cfm = 1e-10,
+		},
+	},
+	motor2 = {
+		ODE = {
+			fudge_factor = 1,
+			normal_cfm = 1e-10,
+		},
+	},
+}
+joint[2] = dynamics.ODE_hinge2_joint {
+	world = world,
+	body = {body[3],body[2]}
+	anchor1 = {0.35,0,-0.1},
+	anchor2 = {0,0,0},
+	axis1 = {0,0,1},
+	axis2 = {0,2.22044604925031e-16,-1},
+	v1 = {0,1,0},
+	v2 = {-1,0,0},
+	susp_erp = 0.4,
+	susp_cfm = 0.8,
+	limit1 = {
+		low_stop = -0.75,
+		high_stop = 0.75,
+		ODE = {
+			stop_erp = 0.2,
+			stop_cfm = 1e-10,
+		},
+	},
+	motor1 = {
+		vel = 9.88488082017706e-19,
+		fmax = 0.2,
+		ODE = {
+			fudge_factor = 0.1,
+			normal_cfm = 1e-10,
+		},
+	},
+	limit2 = {
+		low_stop = -inf,
+		high_stop = inf,
+		ODE = {
+			stop_erp = 0.2,
+			stop_cfm = 1e-10,
+		},
+	},
+	motor2 = {
+		fmax = 0.1,
+		ODE = {
+			fudge_factor = 1,
+			normal_cfm = 1e-10,
+		},
+	},
+}

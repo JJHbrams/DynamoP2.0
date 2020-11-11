@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<sdf version="1.4">
+  <world name="default">
+    <physics type="ode">
+      <ode>
+        <solver>
+          <type>quick</type>
+          <max_step_size>0.001</max_step_size>
+          <real_time_update_rate>1000</real_time_update_rate>
+        </solver>
+      </ode>
+      <max_step_size>0.001</max_step_size>
+    </physics>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <!-- Invisible ground plane -->
+    <model name="ground_plane">
+      <link name="link">
+        <collision name="ground_plane_collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100000</mu>
+                <mu2>50000</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+      </link>
+      <static>true</static>
+    </model>
+    <!-- TEST scene -->
+    <include>
+      <uri>model://TESTScene</uri>
+      <name>TESTScene</name>
+      <pose>10.0 0.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+  </world>
+</sdf>

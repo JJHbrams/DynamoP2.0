@@ -50,6 +50,16 @@ if(PKGCONFIG_FOUND)
 endif()
 find_package_handle_standard_args(ODE DEFAULT_MSG ODE_LIBRARIES ODE_INCLUDE_DIRS)
 
+include(FeatureSummary)
+set_package_properties(ODE PROPERTIES
+    URL "http://ode.org"
+    PURPOSE "The Open Dynamics Engine can be used as a \"black box\" for kinodynamic planning.")
+find_package(ODE QUIET)
+set(OMPL_EXTENSION_ODE ${ODE_FOUND})
+if (OMPL_EXTENSION_ODE)
+  include_directories(${ODE_INCLUDE_DIRS})
+endif()
+
 ## System dependencies are found with CMake's conventions
 if(MSVC)
     add_definitions(-DBOOST_ALL_NO_LIB)
@@ -127,14 +137,15 @@ endif()
 add_message_files(
  FILES
  custom_states_msgs.msg
+ data_gen_msgs.msg
  # basepose.msg
 )
 
 ## Generate services in the 'srv' folder
-#add_service_files(
-#  FILES
-#  baseplacement.srv
-#)
+add_service_files(
+ FILES
+ physics_data_sampler.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -195,7 +206,9 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
         include
-        ode/include
+        ../ode/include/
+        ../ode/drawstuff/src/
+        ../ode/ode/src/
         # /opt/ros/kinetic/share/gazebo_ros_control/include
         /usr/local/lib
         ${catkin_INCLUDE_DIRS}
@@ -217,6 +230,8 @@ add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EX
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(main src/main.cpp)
+add_executable(propagator_ODE src/propagator_ODE.cpp)
+add_executable(URDF_sampler src/URDF_sampler.cpp)
 # add_executable(xacro xacro/xacro.py)
 
 ## Rename C++ executable without prefix
@@ -228,7 +243,8 @@ add_executable(main src/main.cpp)
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 add_dependencies(main ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
+add_dependencies(propagator_ODE ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} ../ode/drawstuff/src/libdrawstuff.la ../ode/ode/src/libode.la)
+add_dependencies(URDF_sampler ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 ## Specify libraries to link a library or executable target against
 target_link_libraries(main
         ${PROJECT_NAME}
@@ -239,17 +255,49 @@ target_link_libraries(main
         ${Boost_PROGRAM_OPTIONS_LIBRARY}
         )
 
-add_library(propagator
-        ./src/propagator_ODE.cc
-        )
-target_link_libraries(propagator
+# add_library(propagator
+#         ./src/propagator_ODE.cpp
+#         )
+target_link_libraries(propagator_ODE
         -lode
+        ${PROJECT_NAME}
+        ${catkin_LIBRARIES}
+        ${GAZEBO_LIBRARIES}
+        ${Boost_FILESYSTEM_LIBRARY}
+        ${Boost_SYSTEM_LIBRARY}
+        ${Boost_PROGRAM_OPTIONS_LIBRARY}
+        )
+# target_link_libraries(demo_buggy
+#         propagator
+#         -lode
+#         ${catkin_LIBRARIES}
+#         ${GAZEBO_LIBRARIES}
+#         )
+target_link_libraries(URDF_sampler
+        ${PROJECT_NAME}
+        ${catkin_LIBRARIES}
+        ${GAZEBO_LIBRARIES}
+        ${Boost_FILESYSTEM_LIBRARY}
+        ${Boost_SYSTEM_LIBRARY}
+        ${Boost_PROGRAM_OPTIONS_LIBRARY}
+        )
+# add_library(gazebo_ros_moveit_planning_scene src/gazebo_ros_moveit_planning_scene.cpp)
+# add_dependencies(gazebo_ros_moveit_planning_scene moveit_msgs_gencpp)
+add_library(propagator_GAZEBO
+        ./src/propagator_GAZEBO.cc
+        )
+target_link_libraries(propagator_GAZEBO
         ${catkin_LIBRARIES}
         ${GAZEBO_LIBRARIES}
         )
 
-# add_library(gazebo_ros_moveit_planning_scene src/gazebo_ros_moveit_planning_scene.cpp)
-# add_dependencies(gazebo_ros_moveit_planning_scene moveit_msgs_gencpp)
+add_library(GAZEBO_ODE
+        ./src/GAZEBO_ODE.cc
+        )
+target_link_libraries(GAZEBO_ODE
+        ${catkin_LIBRARIES}
+        ${GAZEBO_LIBRARIES}
+        )
 
 add_library(gazebo_ros_moveit_planning_scene
         ./src/gazebo_ros_moveit_planning_scene.cpp

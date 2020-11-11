@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<sdf version="1.4">
+  <world name="default">
+    <physics type="ode">
+      <ode>
+        <solver>
+          <type>quick</type>
+          <max_step_size>0.001</max_step_size>
+          <real_time_update_rate>1000</real_time_update_rate>
+        </solver>
+      </ode>
+      <max_step_size>0.001</max_step_size>
+    </physics>
+    
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://TEST1</uri>
+    </include>
+    <!-- <include>
+      <uri>model://ground_plane</uri>
+    </include> -->
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>10.0 10.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>-10.0 -10.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>10.0 -10.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>-10.0 10.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>10.0 30.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>30.0 30.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>30.0 10.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>30.0 -10.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>30.0 -30.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>10.0 -30.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>-10.0 -30.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>-30.0 -30.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>-30.0 -10.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>-30.0 10.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>-30.0 30.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://asphalt_plane</uri>
+      <pose>-10.0 30.0 0.0 0.0 0.0 0.0</pose>
+    </include>
+    <!-- A maze -->
+    <!-- <include>
+      <uri>model://Maze</uri>
+      <name>maze</name>
+      <pose>-0.0 0.0 0.0 0.0 0.0 0.0</pose>
+    </include> -->
+    <!-- A maze2 -->
+    <!-- <include>
+      <uri>model://Maze2</uri>
+      <name>maze</name>
+      <pose>-0.0 0.0 0.0 0.0 0.0 0.0</pose>
+    </include> -->
+  </world>
+</sdf>

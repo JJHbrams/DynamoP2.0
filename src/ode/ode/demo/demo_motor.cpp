@@ -92,7 +92,7 @@ static void command (int cmd)
   	dJointSetLMotorParam(lmotor[1],dParamVel2,0);
   	dJointSetLMotorParam(lmotor[1],dParamVel3,0);
   }
-  
+
 }
 
 
@@ -161,7 +161,7 @@ int main (int argc, char **argv)
   body[1] = dBodyCreate (world);
   dBodySetMass (body[1],&m);
   dBodySetPosition (body[1],0,0,2);
-  geom[1] = dCreateBox(space,SIDE,SIDE,SIDE); 
+  geom[1] = dCreateBox(space,SIDE,SIDE,SIDE);
 
   dGeomSetBody(geom[0],body[0]);
   dGeomSetBody(geom[1],body[1]);
@@ -174,7 +174,7 @@ int main (int argc, char **argv)
   dJointAttach(amotor[0], body[0],body[1]);
   amotor[1] = dJointCreateAMotor(world,0);
   dJointAttach(amotor[1], body[0], 0);
-  
+
   for (int i=0; i<2; i++) {
 	  dJointSetAMotorNumAxes(amotor[i], 3);
 	  dJointSetAMotorAxis(amotor[i],0,1,1,0,0);
@@ -192,7 +192,7 @@ int main (int argc, char **argv)
 	  dJointSetLMotorAxis(lmotor[i],0,1,1,0,0);
 	  dJointSetLMotorAxis(lmotor[i],1,1,0,1,0);
 	  dJointSetLMotorAxis(lmotor[i],2,1,0,0,1);
-	 
+
 	  dJointSetLMotorParam(lmotor[i],dParamFMax,0.0001);
 	  dJointSetLMotorParam(lmotor[i],dParamFMax2,0.0001);
 	  dJointSetLMotorParam(lmotor[i],dParamFMax3,0.0001);

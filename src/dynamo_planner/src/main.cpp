@@ -35,7 +35,7 @@
 #include <visualization_msgs/Marker.h>
 #include <std_msgs/Float32.h>
 #include <std_msgs/Float32MultiArray.h>
-#include "dynamo_planner/custom_states_msgs.h"
+#include <dynamo_planner/custom_states_msgs.h>
 #include <sensor_msgs/JointState.h>
 
 // Boost
@@ -52,6 +52,8 @@
 #include <ompl/base/goals/GoalStates.h>
 #include <ompl/base/spaces/SE2StateSpace.h>
 #include <ompl/base/spaces/SE3StateSpace.h>
+// #include "../../../OMPL/src/ompl/base/terminationconditions/CostConvergenceTerminationCondition.h"
+#include "ompl/base/ProblemDefinition.h"
 #include <ompl/datastructures/NearestNeighbors.h>
 #include <ompl/config.h>
 
@@ -85,9 +87,9 @@
 #define MAX_WORDS 20
 
 #define PLANNING_TIME   30
-#define SEARCH_AREA 30.0
-#define VEL_BOUND 1.0
-#define CUR_BOUND 0.9
+#define SEARCH_AREA 15.0
+#define VEL_BOUND 10
+#define CUR_BOUND M_PI/4.
 #define TIME_DENOM  1.0
 
 #define MIN_DIST 0.5
@@ -101,8 +103,9 @@ typedef ompl::control::RealVectorControlSpace::ControlType* ControlTypePtr;
 // Start & goal pose
 geometry_msgs::Pose start_pose;
 geometry_msgs::Pose goal_pose;
-double st[3] = {0.0, 0.0, -M_PI};
-double gl[3] = {20.0, 0.0, -M_PI};
+double st[3] = {0.0, 0.0, 0.0};
+// double gl[3] = {5.0, -5.0, 0.0};
+double gl[3] = {8.0, -2.5, -M_PI};
 // double gl[3] = {5.490, -5.415, -M_PI/6};
 // double gl[3] = {-17.490, 10.415, -M_PI/6};
 // Gazebo map objects
@@ -118,17 +121,24 @@ visualization_msgs::Marker props;
 geometry_msgs::Point prop_pt;
 int call_cnt=0;
 double PropTime=0.;
-class PlannerAndGazeboTest
+class PlannerAndODE
 {
 public:
-  PlannerAndGazeboTest(){
+  PlannerAndODE(){
     //Publish
     pub_ = n_.advertise<dynamo_planner::custom_states_msgs>("/PlannerStates", 1);//13kHz
     sample_pub_ = n_.advertise<visualization_msgs::Marker>("/Samples",1);
     prop_pub_ = n_.advertise<visualization_msgs::Marker>("/Props",1);
     //Subscribe
-    sub_  = n_.subscribe("/GazeboStates", 1, &PlannerAndGazeboTest::GazeboToPlanner, this);//5.1kHz
-    sub_js= n_.subscribe("/joint_states", 1, &PlannerAndGazeboTest::JointStatesCallBack, this);
+    sub_  = n_.subscribe("/Prop_States", 1, &PlannerAndODE::PropagatorToPlanner, this);//20Hz
+    // sub_js= n_.subscribe("/joint_states", 1, &PlannerAndODE::JointStatesCallBack, this);
+
+    Curr_States.index = 0;
+    Next_state.index = 0;
+    Curr_States.flag = false;
+    Next_state.flag = false;
+    Next_state.sub_flag=true;
+    Curr_States.sub_flag=true;
 
     samples.header.frame_id ="world";
     samples.header.stamp= ros::Time();
@@ -154,9 +164,9 @@ public:
     props.color.b = 0.8f;
     props.color.g = 0.1f;
 
-   std::cout<< "I'm alive!" << std::endl;
+    std::cout<< "I'm alive!" << std::endl;
   }
-  ~PlannerAndGazeboTest(){
+  ~PlannerAndODE(){
     this->n_.shutdown();
     free(sub_);
     free(pub_);
@@ -164,11 +174,16 @@ public:
     std::cout<< "I'm dead" << std::endl;
   }
   //Call-back function
-  void GazeboToPlanner(const dynamo_planner::custom_states_msgs& _msg){
+  void PropagatorToPlanner(const dynamo_planner::custom_states_msgs& _msg){
     Next_state.pre_x = _msg.pre_x;
     Next_state.pre_y = _msg.pre_y;
     Next_state.pre_yaw = _msg.pre_yaw;
-    Next_state.flag = _msg.flag;
+
+    Next_state.x = _msg.x;
+    Next_state.y = _msg.y;
+    Next_state.yaw = _msg.yaw;
+    // Next_state = _msg;
+
     // std::cout << Next_state << std::endl;
   }
   void JointStatesCallBack(const sensor_msgs::JointState::ConstPtr& _msg){
@@ -179,25 +194,53 @@ public:
   }
   //Propagation mode selection
   static void calculate(){
-      // dynamo_planner::custom_states_msgs differ_meter;
-      // do{
-      //   pub_.publish(Curr_States);//Enable gazebo plugin's call back
-      //   ros::spinOnce();//Subscribe gazebo plugin's propagated state
-      //
-      //   differ_meter.diff_x = Curr_States.x == Next_state.pre_x ? true:false;
-      //   differ_meter.diff_y = Curr_States.y == Next_state.pre_y ? true:false;
-      //   differ_meter.diff_yaw = Curr_States.yaw == Next_state.pre_yaw ? true:false;
-      //   // std::cout << int(Next_state.flag) << std::endl;
-      // }
-      // while(!differ_meter.diff_x || !differ_meter.diff_y || !differ_meter.diff_yaw);
-      // // while(!Next_state.flag);
-      pub_.publish(Curr_States);//Enable gazebo plugin's call back
-      ros::spinOnce();//Subscribe gazebo plugin's propagated state
-      // Next_state.flag = false;
+      // Synchronize published state and subscribed state pair
+      bool differ_x,differ_y,differ_yaw,differ_c1,differ_c2;
+      do{
+        pub_.publish(Curr_States);//Enable gazebo plugin's call back
+        ros::spinOnce();//Subscribe gazebo plugin's propagated state
+
+        differ_x = (Curr_States.x == Next_state.pre_x) ? true:false;
+        differ_y = (Curr_States.y == Next_state.pre_y) ? true:false;
+        differ_yaw = (Curr_States.yaw == Next_state.pre_yaw) ? true:false;
+        // differ_c1 = Curr_States.controlA == Next_state.controlA ? true:false;
+        // differ_c2 = Curr_States.controlB == Next_state.controlB ? true:false;
+        // std::cout << int(Next_state.flag) << std::endl;
+      }
+      while(!differ_x || !differ_y || !differ_yaw);
+
+      // while(!Next_state.flag);
+
+      /*
+      dynamo_planner::custom_states_msgs Temp_States;
+      Temp_States.x = 5.0;
+      Temp_States.y = 5.0;
+      Temp_States.yaw = 0.0;
+      Temp_States.flag = Next_state.flag;
+      do{
+        pub_.publish(Curr_States);//Enable gazebo plugin's call back
+        Curr_States.flag = true;
+        ros::spinOnce();//Subscribe gazebo plugin's propagated state
+      }
+      while(Next_state.flag != Curr_States.flag);
+      */
+
+      // std::cout << "\nCurr_States : " << Curr_States.x << ", " << Curr_States.y << ", " << Curr_States.yaw*180/M_PI;
+
+
+      // pub_.publish(Curr_States);//Enable gazebo plugin's call back
+      // ros::spinOnce();//Subscribe gazebo plugin's propagated state
 
       // Next_state.x = Curr_States.x + Curr_States.controlX * Curr_States.duration;
       // Next_state.y = Curr_States.y + Curr_States.controlY * Curr_States.duration;
       // Next_state.yaw = Curr_States.yaw    + Curr_States.controlYAW * Curr_States.duration;
+/*
+      Next_state.yaw = Curr_States.yaw    + (Curr_States.controlB-Curr_States.controlA) * Curr_States.duration;
+      Next_state.x = Curr_States.x + (Curr_States.controlA+Curr_States.controlB) * cos(Next_state.yaw) * Curr_States.duration;
+      Next_state.y = Curr_States.y + (Curr_States.controlA+Curr_States.controlB) * sin(Next_state.yaw) * Curr_States.duration;
+
+      Next_state.flag = false;
+*/
   }
   //Faster propagator
   static void propagate(const ompl::base::State *start, const ompl::control::Control *control, const double duration, ompl::base::State *result)
@@ -219,14 +262,14 @@ public:
       Curr_States.y = pos[1];
       Curr_States.yaw = rot;
 
-      Curr_States.controlX = ctrl[0]*cos(rot);
-      Curr_States.controlY = ctrl[0]*sin(rot);
-      Curr_States.controlYAW = ctrl[0]*ctrl[1];
+      // Curr_States.controlX = ctrl[0]*cos(rot);
+      // Curr_States.controlY = ctrl[0]*sin(rot);
+      Curr_States.controlA = ctrl[0];
+      Curr_States.controlB = ctrl[1];
 
       Curr_States.duration = duration/TIME_DENOM;
-
-      /*std::cout << "\nCurr_States : " << Curr_States.x << ", " << Curr_States.y << ", " << Curr_States.yaw;
-      std::cout << " Controls : " << ctrl[0] << ", " << ctrl[1] << std::endl;*/
+      // std::cout << "\nCurr_States : " << Curr_States.x << ", " << Curr_States.y << ", " << Curr_States.yaw;
+      // std::cout << " Controls : " << ctrl[0] << ", " << ctrl[1] << std::endl;
 
       ros::Time begin = ros::Time::now();
       calculate();
@@ -238,12 +281,15 @@ public:
 
       result->as<ompl::base::SE2StateSpace::StateType>()->setXY(Next_state.x, Next_state.y);
       result->as<ompl::base::SE2StateSpace::StateType>()->setYaw(Next_state.yaw);
-
       //Show prop states
       prop_pt.x = Next_state.x;
       prop_pt.y = Next_state.y;
       props.points.push_back(prop_pt);
       prop_pub_.publish(props);// Publish samples
+
+      Curr_States.flag = false;
+      Next_state.flag = false;
+      Curr_States.sub_flag=Next_state.sub_flag;
 
   }
 
@@ -252,6 +298,7 @@ public:
   double rotation;
   double* control;
   double duration;
+
 
 private:
   //Ros setting
@@ -268,14 +315,13 @@ private:
   static dynamo_planner::custom_states_msgs Curr_States;
   static dynamo_planner::custom_states_msgs Next_state;
 
-
-};//End of class PlannerAndGazeboTest
-ros::Publisher PlannerAndGazeboTest::pub_;
-// ros::Subscriber PlannerAndGazeboTest::sub_;
-ros::Publisher PlannerAndGazeboTest::sample_pub_;
-ros::Publisher PlannerAndGazeboTest::prop_pub_;
-dynamo_planner::custom_states_msgs PlannerAndGazeboTest::Curr_States;
-dynamo_planner::custom_states_msgs PlannerAndGazeboTest::Next_state;
+};//End of class PlannerAndODE
+ros::Publisher PlannerAndODE::pub_;
+// ros::Subscriber PlannerAndODE::sub_;
+ros::Publisher PlannerAndODE::sample_pub_;
+ros::Publisher PlannerAndODE::prop_pub_;
+dynamo_planner::custom_states_msgs PlannerAndODE::Curr_States;
+dynamo_planner::custom_states_msgs PlannerAndODE::Next_state;
 
 //Get start position from world
 void get_start_pose(const tf2_msgs::TFMessage::ConstPtr& _msg){
@@ -332,8 +378,8 @@ void get_planning_scene(const moveit_msgs::PlanningScene::ConstPtr& _msg){
 
 int main(int argc, char** argv) {
     ros::init(argc, argv, "dynamo_planner");
-    ros::AsyncSpinner spinner(1);
-    spinner.start();
+    // ros::AsyncSpinner spinner(1);
+    // spinner.start();
     ros::NodeHandle node_handle("~");
     // ros::NodeHandle node_handle;
     // Initialize the global variables
@@ -373,6 +419,9 @@ int main(int argc, char** argv) {
 
     // moveit planning scene
     ScenePtr scene(new Scene(planning_scene, "world"));
+    // obstacles from scene.cpp
+    scene->addCollisionObjects();
+    scene->updateCollisionScene();
 
     //// Please set your start configuration and predefined configuration.
     std::vector<double> s_conf, pre_conf;
@@ -405,216 +454,221 @@ int main(int argc, char** argv) {
 
     // Control space bounds
     ompl::base::RealVectorBounds control_bounds(2);
-    // Acceleration(thrust)
+    /*// Acceleration(thrust)
     control_bounds.setLow(0,-VEL_BOUND);
     control_bounds.setHigh(0,VEL_BOUND);
     // Curvature(husky) or steering(Ackerman model)(or steering)
     control_bounds.setLow(1,-CUR_BOUND);
-    control_bounds.setHigh(1,CUR_BOUND);
+    control_bounds.setHigh(1,CUR_BOUND);*/
+    control_bounds.setLow(-VEL_BOUND);
+    control_bounds.setHigh(VEL_BOUND);
     control_space->setBounds(control_bounds);
 
-    ros::Rate rate(1);//1Hz
+    // ros::Rate rate(1);//1Hz
 
 
-    // while(node_handle.ok()){
-    //
-    // }
-    // wait until the goal is set
-    if(!required_plan){
-        ros::spinOnce();
-        scene->addCollisionObjects(tmp_collision_objects);
-        scene->updateCollisionScene();
+    while(ros::ok()){
+      // wait until the goal is set
+      if(!required_plan){
+          ros::spinOnce();
+          scene->addCollisionObjects(tmp_collision_objects);
+          scene->updateCollisionScene();
 
-        // Start, Goal marker
-        visualization_msgs::Marker points;
-        geometry_msgs::Point pt;
-        points.header.frame_id ="world";
-        points.header.stamp= ros::Time();
+          // Start, Goal marker
+          visualization_msgs::Marker points;
+          geometry_msgs::Point pt;
+          points.header.frame_id ="world";
+          points.header.stamp= ros::Time();
 
-        points.ns="Start_Pt";
-        points.id = 0;
-        points.type = visualization_msgs::Marker::POINTS;
-        points.scale.x = 0.3;
-        points.scale.y = 0.3;
-        points.color.a = 1.0; // Don't forget to set the alpha!
-        points.color.r = 0.0f;
-        points.color.g = 0.0f;
-        points.color.b = 1.0f;
-        pt.x = start_pose.position.x;
-        pt.y = start_pose.position.y;
-        points.points.push_back(pt);
-        point_pub.publish(points);//Pulish Start
+          points.ns="Start_Pt";
+          points.id = 0;
+          points.type = visualization_msgs::Marker::POINTS;
+          points.scale.x = 0.3;
+          points.scale.y = 0.3;
+          points.color.a = 1.0; // Don't forget to set the alpha!
+          points.color.r = 0.0f;
+          points.color.g = 0.0f;
+          points.color.b = 1.0f;
+          pt.x = start_pose.position.x;
+          pt.y = start_pose.position.y;
+          points.points.push_back(pt);
+          point_pub.publish(points);//Pulish Start
 
-        points.points.clear();
-        points.ns="Goal_Pt";
-        points.id = 1;
-        points.type = visualization_msgs::Marker::POINTS;
-        points.scale.x = 0.3;
-        points.scale.y = 0.3;
-        points.color.r = 1.0f;
-        points.color.b = 0.0f;
-        points.color.g = 0.0f;
-        pt.x = goal_pose.position.x;
-        pt.y = goal_pose.position.y;
-        points.points.push_back(pt);
-        point_pub.publish(points);// Publish Goal
-        // continue;
-    }
-    required_plan = false;
-    samples.points.clear();
-    props.points.clear();
+          points.points.clear();
+          points.ns="Goal_Pt";
+          points.id = 1;
+          points.type = visualization_msgs::Marker::POINTS;
+          points.scale.x = 0.3;
+          points.scale.y = 0.3;
+          points.color.r = 1.0f;
+          points.color.b = 0.0f;
+          points.color.g = 0.0f;
+          pt.x = goal_pose.position.x;
+          pt.y = goal_pose.position.y;
+          points.points.push_back(pt);
+          point_pub.publish(points);// Publish Goal
 
-    ROS_INFO("Initializing planning sequence!");
+          PropTime = 0.0;
 
-    while(!map_loading)  ros::spinOnce();
-    ROS_INFO("Load planning scene!");
-    scene->addCollisionObjects(tmp_collision_objects);
-    scene->updateCollisionScene();
+          continue;
+      }
+      required_plan = false;
+      samples.points.clear();
+      props.points.clear();
 
-    // Simpl setup
-    ompl::control::SimpleSetupPtr simple_setup;
-    simple_setup.reset(new ompl::control::SimpleSetup(control_space));
+      ROS_INFO("Initializing planning sequence!");
 
-    // State propagation routine
-    PlannerAndGazeboTest Planner_n_Gazebo;// PlannerAndGazebo Planner_n_Gazebo;
-    simple_setup->setStatePropagator(Planner_n_Gazebo.propagate);
-    // State validity checking
-    StateValidityCheckerPtr validity_checker;
-    validity_checker.reset(new StateValidityChecker(simple_setup->getSpaceInformation(), planning_scene, BASE_GROUP, collisionCheckGroup));
-    simple_setup->setStateValidityChecker(std::static_pointer_cast<ompl::base::StateValidityChecker>(validity_checker));
+      while(!map_loading)  ros::spinOnce();
+      ROS_INFO("Load planning scene!");
+      scene->addCollisionObjects(tmp_collision_objects);
+      scene->updateCollisionScene();
 
-    // Start state
-    ScopedState Start(state_space);
-    Start->setX(st[0]);// x
-    Start->setY(st[1]);// y
-    Start->setYaw(st[2]);// yaw
+      // Simpl setup
+      ompl::control::SimpleSetupPtr simple_setup;
+      simple_setup.reset(new ompl::control::SimpleSetup(control_space));
 
-    // Goal state
-    ScopedState Goal(state_space);
-    double quatx,quaty,quatz,quatw;
-    double roll,pitch,yaw;
-    quatx = goal_pose.orientation.x;
-    quaty = goal_pose.orientation.y;
-    quatz = goal_pose.orientation.z;
-    quatw = goal_pose.orientation.w;
-    tf2::Quaternion quat(quatx,quaty,quatz,quatw);
-    tf2::Matrix3x3 mat(quat);
-    mat.getRPY(roll,pitch,yaw);
-    Goal->setX(goal_pose.position.x);// x
-    Goal->setY(goal_pose.position.y);// y
-    Goal->setYaw(yaw);// yaw
+      // State propagation routine
+      PlannerAndODE Planner_n_ODE;// PlannerAndGazebo Planner_n_Gazebo;
+      simple_setup->setStatePropagator(Planner_n_ODE.propagate);
+      // State validity checking
+      StateValidityCheckerPtr validity_checker;
+      validity_checker.reset(new StateValidityChecker(simple_setup->getSpaceInformation(), planning_scene, BASE_GROUP, collisionCheckGroup));
+      simple_setup->setStateValidityChecker(std::static_pointer_cast<ompl::base::StateValidityChecker>(validity_checker));
 
-    // Start and goal states
-    simple_setup->setStartAndGoalStates(Start, Goal, 0.1);// setStartAndGoalStates(start, goal, threshold)
+      // Start state
+      ScopedState Start(state_space);
+      Start->setX(st[0]);// x
+      Start->setY(st[1]);// y
+      Start->setYaw(st[2]);// yaw
 
-    ROS_INFO("Start : %f , %f , %f   \nGoal : %f , %f , %f", Start[0], Start[1], Start[2], Goal[0], Goal[1], Goal[2]);
+      // Goal state
+      ScopedState Goal(state_space);
+      double quatx,quaty,quatz,quatw;
+      double roll,pitch,yaw;
+      quatx = goal_pose.orientation.x;
+      quaty = goal_pose.orientation.y;
+      quatz = goal_pose.orientation.z;
+      quatw = goal_pose.orientation.w;
+      tf2::Quaternion quat(quatx,quaty,quatz,quatw);
+      tf2::Matrix3x3 mat(quat);
+      mat.getRPY(roll,pitch,yaw);
+      Goal->setX(goal_pose.position.x);// x
+      Goal->setY(goal_pose.position.y);// y
+      Goal->setYaw(gl[2]);// yaw
 
-    // Planning
-    ros::Time plannerST = ros::Time::now();
-    ROS_INFO("Set planner...");
-    simple_setup->setPlanner(ompl::base::PlannerPtr(new ompl::control::DynaMoP(simple_setup->getSpaceInformation())));
-    ROS_INFO("Planning...");
-    simple_setup->solve(ompl::base::timedPlannerTerminationCondition(param));
-    // simple_setup->solve(ompl::base::timedPlannerTerminationCondition(PLANNING_TIME));
-    ros::Time plannerET = ros::Time::now();
+      // Start and goal states
+      simple_setup->setStartAndGoalStates(Start, Goal, 1.5);// setStartAndGoalStates(start, goal, threshold)
 
-    if (simple_setup->haveSolutionPath()){
-      ROS_INFO("Solution Found!!!");
-      ROS_INFO("Number of samples : %lu", samples.points.size());
+      ROS_INFO("Start : %f , %f , %f   \nGoal : %f , %f , %f", Start[0], Start[1], Start[2], Goal[0], Goal[1], Goal[2]);
 
-      // Store path
-      ompl::control::PathControl &path = simple_setup->getSolutionPath();
-      // path.printAsMatrix(std::cout);
+      // Planning
+      ros::Time plannerST = ros::Time::now();
+      ROS_INFO("Set planner...");
+      simple_setup->setPlanner(ompl::base::PlannerPtr(new ompl::control::DynaMoP(simple_setup->getSpaceInformation())));
+      ROS_INFO("Planning...");
+      ompl::base::ProblemDefinitionPtr pdef = simple_setup->getProblemDefinition();
+      simple_setup->solve(plannerOrTerminationCondition (ompl::base::exactSolnPlannerTerminationCondition(pdef), ompl::base::timedPlannerTerminationCondition(param)));
+      // simple_setup->solve(ompl::base::timedPlannerTerminationCondition(param));
+      // simple_setup->solve(ompl::base::timedPlannerTerminationCondition(PLANNING_TIME));
+      ros::Time plannerET = ros::Time::now();
 
-      std::fstream fileout("/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/path/path.txt", std::ios::out);
-      path.printAsMatrix(fileout);
-      fileout.close();
+      if (simple_setup->haveSolutionPath()){
+        ROS_INFO("Solution Found!!!");
+        ROS_INFO("Number of samples : %lu", samples.points.size());
 
-      std::fstream filein("/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/path/path.txt", std::ios::in);
+        // Store path
+        ompl::control::PathControl &path = simple_setup->getSolutionPath();
+        // path.printAsMatrix(std::cout);
 
-      char word;
-      char data[MAX_COLUMN][MAX_ROW][MAX_WORDS]={0};
-      int i=0, j=0, k;
-      //Read text
-      while(filein.get(word)){
-         // filein.get(word);
-          // std::cout << "Word : " << word << std::endl;
-          if((word == ' ') || (word == '\n') || (k>=MAX_WORDS)){
-            //Next column
-            k=0;
-            j++;
-            if(j>=MAX_ROW){
-            //Next row
-                j=0;
-                i++;
+        std::fstream fileout("/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/path/path.txt", std::ios::out);
+        path.printAsMatrix(fileout);
+        fileout.close();
+
+        std::fstream filein("/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/path/path.txt", std::ios::in);
+
+        char word;
+        char data[MAX_COLUMN][MAX_ROW][MAX_WORDS]={0};
+        int i=0, j=0, k;
+        //Read text
+        while(filein.get(word)){
+           // filein.get(word);
+            // std::cout << "Word : " << word << std::endl;
+            if((word == ' ') || (word == '\n') || (k>=MAX_WORDS)){
+              //Next column
+              k=0;
+              j++;
+              if(j>=MAX_ROW){
+              //Next row
+                  j=0;
+                  i++;
+              }
             }
-          }
-          else{
-            data[i][j][k] = word;
-            k++;
-          }
+            else{
+              data[i][j][k] = word;
+              k++;
+            }
+        }
+        filein.close();
+
+        //Robot trajectory
+        moveit_msgs::DisplayTrajectory display_trajectory;
+        moveit_msgs::RobotTrajectory robot_traj;
+
+        //Velocity publish
+        geometry_msgs::Twist vel;
+
+        //Path visualize
+        nav_msgs::Path path_vis;
+        geometry_msgs::PoseStamped robot_pose;
+
+        path_vis.poses.clear();
+        path_vis.header.stamp = ros::Time::now();
+        path_vis.header.frame_id = "world";
+
+        const moveit::core::JointModelGroup* model_group = planning_scene->getRobotModel()->getJointModelGroup(BASE_GROUP);
+        const std::vector<std::string>& active_joint_names = model_group->getActiveJointModelNames();
+        int NoPathPoints = path.getStateCount();//State
+        //uint NoPathPoints = path.getControlCount();//Control
+        robot_traj.joint_trajectory.joint_names = active_joint_names;
+        robot_traj.joint_trajectory.points.resize(NoPathPoints);
+
+        ROS_INFO("No. of States = %d", NoPathPoints);
+        //ROS_INFO("\nNo. of Controls = %d\n", NoPathPoints);
+
+        //States
+        for(uint i = 0; i < NoPathPoints; i++){
+            //StateTypePtr rstate = static_cast<StateTypePtr>(path.getState(i));
+            robot_traj.joint_trajectory.points[i].positions.resize(NUM_BASE_DOF);
+            for (uint j = 0; j < NUM_BASE_DOF; j++){
+                double traj_value = std::stod(static_cast<const std::string>(data[i][j]));
+                //robot_traj.joint_trajectory.points[i].positions[j] = rstate->values[j];
+                robot_traj.joint_trajectory.points[i].positions[j] = traj_value;
+            }
+            robot_pose.pose.position.x = robot_traj.joint_trajectory.points[i].positions[0];
+            robot_pose.pose.position.y = robot_traj.joint_trajectory.points[i].positions[1];
+            path_vis.poses.push_back(robot_pose);
+
+            robot_traj.joint_trajectory.points[i].time_from_start = ros::Duration(0.0);
+        }
+        display_trajectory.trajectory.push_back(robot_traj);
+        display_pub.publish(display_trajectory);
+
+        //Path visulaization
+        path_pub.publish(path_vis);
       }
-      filein.close();
 
-      //Robot trajectory
-      moveit_msgs::DisplayTrajectory display_trajectory;
-      moveit_msgs::RobotTrajectory robot_traj;
+      else
+        ROS_INFO("No solution found");
 
-      //Velocity publish
-      geometry_msgs::Twist vel;
 
-      //Path visualize
-      nav_msgs::Path path_vis;
-      geometry_msgs::PoseStamped robot_pose;
-
-      path_vis.poses.clear();
-      path_vis.header.stamp = ros::Time::now();
-      path_vis.header.frame_id = "world";
-
-      const moveit::core::JointModelGroup* model_group = planning_scene->getRobotModel()->getJointModelGroup(BASE_GROUP);
-      const std::vector<std::string>& active_joint_names = model_group->getActiveJointModelNames();
-      int NoPathPoints = path.getStateCount();//State
-      //uint NoPathPoints = path.getControlCount();//Control
-      robot_traj.joint_trajectory.joint_names = active_joint_names;
-      robot_traj.joint_trajectory.points.resize(NoPathPoints);
-
-      ROS_INFO("No. of States = %d", NoPathPoints);
-      //ROS_INFO("\nNo. of Controls = %d\n", NoPathPoints);
-
-      //States
-      for(uint i = 0; i < NoPathPoints; i++){
-          //StateTypePtr rstate = static_cast<StateTypePtr>(path.getState(i));
-          robot_traj.joint_trajectory.points[i].positions.resize(NUM_BASE_DOF);
-          for (uint j = 0; j < NUM_BASE_DOF; j++){
-              double traj_value = std::stod(static_cast<const std::string>(data[i][j]));
-              //robot_traj.joint_trajectory.points[i].positions[j] = rstate->values[j];
-              robot_traj.joint_trajectory.points[i].positions[j] = traj_value;
-          }
-          robot_pose.pose.position.x = robot_traj.joint_trajectory.points[i].positions[0];
-          robot_pose.pose.position.y = robot_traj.joint_trajectory.points[i].positions[1];
-          path_vis.poses.push_back(robot_pose);
-
-          robot_traj.joint_trajectory.points[i].time_from_start = ros::Duration(0.0);
-      }
-      display_trajectory.trajectory.push_back(robot_traj);
-      display_pub.publish(display_trajectory);
-
-      //Path visulaization
-      path_pub.publish(path_vis);
+      double planningTime = plannerET.toSec()-plannerST.toSec();
+      ROS_INFO("Start Time              : %f sec",plannerST.toSec());
+      ROS_INFO("End Time                : %f sec",plannerET.toSec());
+      ROS_INFO("Total planning time     : %f sec",planningTime);
+      ROS_INFO("Propagation time        : %f sec",PropTime);
+      ROS_INFO("Propagation proportion  : %f %%", PropTime/planningTime*100);
     }
 
-    else
-      ROS_INFO("No solution found");
-
-
-    double planningTime = plannerET.toSec()-plannerST.toSec();
-    ROS_INFO("Start Time              : %f sec",plannerST.toSec());
-    ROS_INFO("End Time                : %f sec",plannerET.toSec());
-    ROS_INFO("Total planning time     : %f sec",planningTime);
-    ROS_INFO("Propagation time        : %f sec",PropTime);
-    ROS_INFO("Propagation proportion  : %f %%", PropTime/planningTime*100);
-
-    ros::Duration(1.0).sleep();
-
+    // ros::Duration(1.0).sleep();
     return 0;
 }

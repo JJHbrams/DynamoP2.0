@@ -2,6 +2,7 @@
 
 #include <DynaMoP/Scene.h>
 #include <tf/LinearMath/Quaternion.h>
+#include <moveit_visual_tools/moveit_visual_tools.h>
 
 Scene::Scene(planning_scene::PlanningScenePtr& planning_scene, std::string frameID){
     planning_scene_ = planning_scene;
@@ -14,6 +15,7 @@ void Scene::addCollisionObjects(){
     //                                                     x            y           z     dx   dy     dz  yaw
     double table_x = 0.0;
     double table_y = 0.0;
+
     //                                                     x            y           z     dx   dy     dz  yaw
     // collision_objects.push_back(addBox("table1.Up",    table_x,     table_y,     0.7,  0.6, 1.2,   0.05, 0.0));
     // collision_objects.push_back(addBox("table1.leg01", table_x-0.2, table_y-0.5, 0.35, 0.1, 0.1,   0.7, 0.0));

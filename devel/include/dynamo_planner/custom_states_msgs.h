@@ -27,35 +27,37 @@ struct custom_states_msgs_
     : x(0.0)
     , y(0.0)
     , yaw(0.0)
-    , controlX(0.0)
-    , controlY(0.0)
+    , controlA(0.0)
+    , controlB(0.0)
+    , control(0.0)
     , controlYAW(0.0)
     , duration(0.0)
     , pre_x(0.0)
     , pre_y(0.0)
     , pre_yaw(0.0)
+    , pre_controlA(0.0)
+    , pre_controlB(0.0)
     , flag(false)
-    , tf_flag(false)
-    , diff_x(false)
-    , diff_y(false)
-    , diff_yaw(false)  {
+    , sub_flag(false)
+    , index(0)  {
     }
   custom_states_msgs_(const ContainerAllocator& _alloc)
     : x(0.0)
     , y(0.0)
     , yaw(0.0)
-    , controlX(0.0)
-    , controlY(0.0)
+    , controlA(0.0)
+    , controlB(0.0)
+    , control(0.0)
     , controlYAW(0.0)
     , duration(0.0)
     , pre_x(0.0)
     , pre_y(0.0)
     , pre_yaw(0.0)
+    , pre_controlA(0.0)
+    , pre_controlB(0.0)
     , flag(false)
-    , tf_flag(false)
-    , diff_x(false)
-    , diff_y(false)
-    , diff_yaw(false)  {
+    , sub_flag(false)
+    , index(0)  {
   (void)_alloc;
     }
 
@@ -70,11 +72,14 @@ struct custom_states_msgs_
    typedef double _yaw_type;
   _yaw_type yaw;
 
-   typedef double _controlX_type;
-  _controlX_type controlX;
+   typedef double _controlA_type;
+  _controlA_type controlA;
 
-   typedef double _controlY_type;
-  _controlY_type controlY;
+   typedef double _controlB_type;
+  _controlB_type controlB;
+
+   typedef double _control_type;
+  _control_type control;
 
    typedef double _controlYAW_type;
   _controlYAW_type controlYAW;
@@ -91,20 +96,20 @@ struct custom_states_msgs_
    typedef double _pre_yaw_type;
   _pre_yaw_type pre_yaw;
 
+   typedef double _pre_controlA_type;
+  _pre_controlA_type pre_controlA;
+
+   typedef double _pre_controlB_type;
+  _pre_controlB_type pre_controlB;
+
    typedef uint8_t _flag_type;
   _flag_type flag;
 
-   typedef uint8_t _tf_flag_type;
-  _tf_flag_type tf_flag;
+   typedef uint8_t _sub_flag_type;
+  _sub_flag_type sub_flag;
 
-   typedef uint8_t _diff_x_type;
-  _diff_x_type diff_x;
-
-   typedef uint8_t _diff_y_type;
-  _diff_y_type diff_y;
-
-   typedef uint8_t _diff_yaw_type;
-  _diff_yaw_type diff_yaw;
+   typedef int8_t _index_type;
+  _index_type index;
 
 
 
@@ -138,18 +143,19 @@ bool operator==(const ::dynamo_planner::custom_states_msgs_<ContainerAllocator1>
   return lhs.x == rhs.x &&
     lhs.y == rhs.y &&
     lhs.yaw == rhs.yaw &&
-    lhs.controlX == rhs.controlX &&
-    lhs.controlY == rhs.controlY &&
+    lhs.controlA == rhs.controlA &&
+    lhs.controlB == rhs.controlB &&
+    lhs.control == rhs.control &&
     lhs.controlYAW == rhs.controlYAW &&
     lhs.duration == rhs.duration &&
     lhs.pre_x == rhs.pre_x &&
     lhs.pre_y == rhs.pre_y &&
     lhs.pre_yaw == rhs.pre_yaw &&
+    lhs.pre_controlA == rhs.pre_controlA &&
+    lhs.pre_controlB == rhs.pre_controlB &&
     lhs.flag == rhs.flag &&
-    lhs.tf_flag == rhs.tf_flag &&
-    lhs.diff_x == rhs.diff_x &&
-    lhs.diff_y == rhs.diff_y &&
-    lhs.diff_yaw == rhs.diff_yaw;
+    lhs.sub_flag == rhs.sub_flag &&
+    lhs.index == rhs.index;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -206,12 +212,12 @@ struct MD5Sum< ::dynamo_planner::custom_states_msgs_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "3b52bf44a08210bd7d5f8e100b5f756a";
+    return "687ab8d67518730041fc3c6e12a166b7";
   }
 
   static const char* value(const ::dynamo_planner::custom_states_msgs_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x3b52bf44a08210bdULL;
-  static const uint64_t static_value2 = 0x7d5f8e100b5f756aULL;
+  static const uint64_t static_value1 = 0x687ab8d675187300ULL;
+  static const uint64_t static_value2 = 0x41fc3c6e12a166b7ULL;
 };
 
 template<class ContainerAllocator>
@@ -235,8 +241,9 @@ struct Definition< ::dynamo_planner::custom_states_msgs_<ContainerAllocator> >
 "float64 y\n"
 "float64 yaw\n"
 "\n"
-"float64 controlX\n"
-"float64 controlY\n"
+"float64 controlA\n"
+"float64 controlB\n"
+"float64 control\n"
 "float64 controlYAW\n"
 "\n"
 "float64 duration\n"
@@ -244,13 +251,13 @@ struct Definition< ::dynamo_planner::custom_states_msgs_<ContainerAllocator> >
 "float64 pre_x\n"
 "float64 pre_y\n"
 "float64 pre_yaw\n"
+"float64 pre_controlA\n"
+"float64 pre_controlB\n"
 "\n"
 "bool flag\n"
-"bool tf_flag\n"
+"bool sub_flag\n"
 "\n"
-"bool diff_x\n"
-"bool diff_y\n"
-"bool diff_yaw\n"
+"int8 index\n"
 ;
   }
 
@@ -272,18 +279,19 @@ namespace serialization
       stream.next(m.x);
       stream.next(m.y);
       stream.next(m.yaw);
-      stream.next(m.controlX);
-      stream.next(m.controlY);
+      stream.next(m.controlA);
+      stream.next(m.controlB);
+      stream.next(m.control);
       stream.next(m.controlYAW);
       stream.next(m.duration);
       stream.next(m.pre_x);
       stream.next(m.pre_y);
       stream.next(m.pre_yaw);
+      stream.next(m.pre_controlA);
+      stream.next(m.pre_controlB);
       stream.next(m.flag);
-      stream.next(m.tf_flag);
-      stream.next(m.diff_x);
-      stream.next(m.diff_y);
-      stream.next(m.diff_yaw);
+      stream.next(m.sub_flag);
+      stream.next(m.index);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -308,10 +316,12 @@ struct Printer< ::dynamo_planner::custom_states_msgs_<ContainerAllocator> >
     Printer<double>::stream(s, indent + "  ", v.y);
     s << indent << "yaw: ";
     Printer<double>::stream(s, indent + "  ", v.yaw);
-    s << indent << "controlX: ";
-    Printer<double>::stream(s, indent + "  ", v.controlX);
-    s << indent << "controlY: ";
-    Printer<double>::stream(s, indent + "  ", v.controlY);
+    s << indent << "controlA: ";
+    Printer<double>::stream(s, indent + "  ", v.controlA);
+    s << indent << "controlB: ";
+    Printer<double>::stream(s, indent + "  ", v.controlB);
+    s << indent << "control: ";
+    Printer<double>::stream(s, indent + "  ", v.control);
     s << indent << "controlYAW: ";
     Printer<double>::stream(s, indent + "  ", v.controlYAW);
     s << indent << "duration: ";
@@ -322,16 +332,16 @@ struct Printer< ::dynamo_planner::custom_states_msgs_<ContainerAllocator> >
     Printer<double>::stream(s, indent + "  ", v.pre_y);
     s << indent << "pre_yaw: ";
     Printer<double>::stream(s, indent + "  ", v.pre_yaw);
+    s << indent << "pre_controlA: ";
+    Printer<double>::stream(s, indent + "  ", v.pre_controlA);
+    s << indent << "pre_controlB: ";
+    Printer<double>::stream(s, indent + "  ", v.pre_controlB);
     s << indent << "flag: ";
     Printer<uint8_t>::stream(s, indent + "  ", v.flag);
-    s << indent << "tf_flag: ";
-    Printer<uint8_t>::stream(s, indent + "  ", v.tf_flag);
-    s << indent << "diff_x: ";
-    Printer<uint8_t>::stream(s, indent + "  ", v.diff_x);
-    s << indent << "diff_y: ";
-    Printer<uint8_t>::stream(s, indent + "  ", v.diff_y);
-    s << indent << "diff_yaw: ";
-    Printer<uint8_t>::stream(s, indent + "  ", v.diff_yaw);
+    s << indent << "sub_flag: ";
+    Printer<uint8_t>::stream(s, indent + "  ", v.sub_flag);
+    s << indent << "index: ";
+    Printer<int8_t>::stream(s, indent + "  ", v.index);
   }
 };
 

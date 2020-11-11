@@ -54,6 +54,8 @@ CMAKE_BINARY_DIR = /home/mrjohd/Kinodynamic_ws/build
 include dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_cpp.dir/progress.make
 
 dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_cpp: /home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner/custom_states_msgs.h
+dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_cpp: /home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner/data_gen_msgs.h
+dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_cpp: /home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner/physics_data_sampler.h
 
 
 /home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner/custom_states_msgs.h: /opt/ros/melodic/lib/gencpp/gen_cpp.py
@@ -62,8 +64,23 @@ dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_cpp: /home/mrjohd/Kin
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from dynamo_planner/custom_states_msgs.msg"
 	cd /home/mrjohd/Kinodynamic_ws/src/dynamo_planner && /home/mrjohd/Kinodynamic_ws/build/catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/custom_states_msgs.msg -Idynamo_planner:/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p dynamo_planner -o /home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner -e /opt/ros/melodic/share/gencpp/cmake/..
 
+/home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner/data_gen_msgs.h: /opt/ros/melodic/lib/gencpp/gen_cpp.py
+/home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner/data_gen_msgs.h: /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg
+/home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner/data_gen_msgs.h: /opt/ros/melodic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating C++ code from dynamo_planner/data_gen_msgs.msg"
+	cd /home/mrjohd/Kinodynamic_ws/src/dynamo_planner && /home/mrjohd/Kinodynamic_ws/build/catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg -Idynamo_planner:/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p dynamo_planner -o /home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner -e /opt/ros/melodic/share/gencpp/cmake/..
+
+/home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner/physics_data_sampler.h: /opt/ros/melodic/lib/gencpp/gen_cpp.py
+/home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner/physics_data_sampler.h: /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv
+/home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner/physics_data_sampler.h: /opt/ros/melodic/share/gencpp/msg.h.template
+/home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner/physics_data_sampler.h: /opt/ros/melodic/share/gencpp/srv.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating C++ code from dynamo_planner/physics_data_sampler.srv"
+	cd /home/mrjohd/Kinodynamic_ws/src/dynamo_planner && /home/mrjohd/Kinodynamic_ws/build/catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv -Idynamo_planner:/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p dynamo_planner -o /home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner -e /opt/ros/melodic/share/gencpp/cmake/..
+
 dynamo_planner_generate_messages_cpp: dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_cpp
 dynamo_planner_generate_messages_cpp: /home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner/custom_states_msgs.h
+dynamo_planner_generate_messages_cpp: /home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner/data_gen_msgs.h
+dynamo_planner_generate_messages_cpp: /home/mrjohd/Kinodynamic_ws/devel/include/dynamo_planner/physics_data_sampler.h
 dynamo_planner_generate_messages_cpp: dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_cpp.dir/build.make
 
 .PHONY : dynamo_planner_generate_messages_cpp

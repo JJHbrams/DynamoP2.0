@@ -54,6 +54,8 @@ CMAKE_BINARY_DIR = /home/mrjohd/Kinodynamic_ws/build
 include dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_lisp.dir/progress.make
 
 dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_lisp: /home/mrjohd/Kinodynamic_ws/devel/share/common-lisp/ros/dynamo_planner/msg/custom_states_msgs.lisp
+dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_lisp: /home/mrjohd/Kinodynamic_ws/devel/share/common-lisp/ros/dynamo_planner/msg/data_gen_msgs.lisp
+dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_lisp: /home/mrjohd/Kinodynamic_ws/devel/share/common-lisp/ros/dynamo_planner/srv/physics_data_sampler.lisp
 
 
 /home/mrjohd/Kinodynamic_ws/devel/share/common-lisp/ros/dynamo_planner/msg/custom_states_msgs.lisp: /opt/ros/melodic/lib/genlisp/gen_lisp.py
@@ -61,8 +63,20 @@ dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_lisp: /home/mrjohd/Ki
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Lisp code from dynamo_planner/custom_states_msgs.msg"
 	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/custom_states_msgs.msg -Idynamo_planner:/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p dynamo_planner -o /home/mrjohd/Kinodynamic_ws/devel/share/common-lisp/ros/dynamo_planner/msg
 
+/home/mrjohd/Kinodynamic_ws/devel/share/common-lisp/ros/dynamo_planner/msg/data_gen_msgs.lisp: /opt/ros/melodic/lib/genlisp/gen_lisp.py
+/home/mrjohd/Kinodynamic_ws/devel/share/common-lisp/ros/dynamo_planner/msg/data_gen_msgs.lisp: /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Lisp code from dynamo_planner/data_gen_msgs.msg"
+	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg/data_gen_msgs.msg -Idynamo_planner:/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p dynamo_planner -o /home/mrjohd/Kinodynamic_ws/devel/share/common-lisp/ros/dynamo_planner/msg
+
+/home/mrjohd/Kinodynamic_ws/devel/share/common-lisp/ros/dynamo_planner/srv/physics_data_sampler.lisp: /opt/ros/melodic/lib/genlisp/gen_lisp.py
+/home/mrjohd/Kinodynamic_ws/devel/share/common-lisp/ros/dynamo_planner/srv/physics_data_sampler.lisp: /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mrjohd/Kinodynamic_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Lisp code from dynamo_planner/physics_data_sampler.srv"
+	cd /home/mrjohd/Kinodynamic_ws/build/dynamo_planner && ../catkin_generated/env_cached.sh /usr/bin/python2 /opt/ros/melodic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/mrjohd/Kinodynamic_ws/src/dynamo_planner/srv/physics_data_sampler.srv -Idynamo_planner:/home/mrjohd/Kinodynamic_ws/src/dynamo_planner/msg -Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg -p dynamo_planner -o /home/mrjohd/Kinodynamic_ws/devel/share/common-lisp/ros/dynamo_planner/srv
+
 dynamo_planner_generate_messages_lisp: dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_lisp
 dynamo_planner_generate_messages_lisp: /home/mrjohd/Kinodynamic_ws/devel/share/common-lisp/ros/dynamo_planner/msg/custom_states_msgs.lisp
+dynamo_planner_generate_messages_lisp: /home/mrjohd/Kinodynamic_ws/devel/share/common-lisp/ros/dynamo_planner/msg/data_gen_msgs.lisp
+dynamo_planner_generate_messages_lisp: /home/mrjohd/Kinodynamic_ws/devel/share/common-lisp/ros/dynamo_planner/srv/physics_data_sampler.lisp
 dynamo_planner_generate_messages_lisp: dynamo_planner/CMakeFiles/dynamo_planner_generate_messages_lisp.dir/build.make
 
 .PHONY : dynamo_planner_generate_messages_lisp

@@ -80,8 +80,17 @@ static void nearCallback (void *data, dGeomID o1, dGeomID o2)
   if (dCollide (o1,o2,1,&contact.geom,sizeof(dContactGeom))) {
     dJointID c = dJointCreateContact (world,contactgroup,&contact);
     dJointAttach (c,b1,b2);
+    // dJointAttach (c, dGeomGetBody(contact.geom.g1), dGeomGetBody(contact.geom.g2));
+
+    // Visulize contact
+    dMatrix3 RI;
+    dRSetIdentity(RI);
+    const dReal ss_rad = 0.05, ss_len = 0.1;
+    dsSetColor(0,1,0);
+    dsDrawCylinder(contact.geom.pos,RI,ss_rad,ss_len);
   }
 }
+
 
 
 /* start simulation - set viewpoint */
@@ -159,6 +168,10 @@ int main (int argc, char **argv)
     k = (i+0.5)*SIDE;
     dJointSetBallAnchor (joint[i],k,k,k+0.4);
   }
+
+  // dSpaceID robot_space = dSimpleSpaceCreate (space);
+  // dSpaceSetCleanup (robot_space,0);
+  // for (i=0; i<NUM ; i++)  dSpaceAdd (robot_space,sphere[i]);
 
   /* run simulation */
   dsSimulationLoop (argc,argv,352,288,&fn);
